@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Outlet } from 'react-router-dom'; 
+import { Outlet } from 'react-router-dom';
 
 const Container = styled.div`
   width: 100vw;
@@ -17,22 +17,25 @@ const Container = styled.div`
 const Box = styled.div`
   position: relative;
   margin: 0 auto;
-  width: 390px;
-  height: 844px;
+  width: 100%;
+  height: 100%;
+  max-width: 390px;
+  max-height: 844px;
   background: #fff;
   display: flex;
   flex-direction: column;
   cursor: default;
 `;
 
+
 const Layout = () => {
-    return (
-        <Container>
-            <Box>
-                <Outlet />
-            </Box>
-        </Container>
-    );
+  return (
+    <Container>
+      <Box>
+        <Outlet />
+      </Box>
+    </Container>
+  );
 };
 
 export default Layout;
