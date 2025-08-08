@@ -82,7 +82,6 @@ function CongestionList({ limit }) {
                                     alt="즐겨찾기"
                                 />
                             </Item>
-
                             <Item>{item.store.name}</Item>
                         </LeftBox>
                         <RightBox>

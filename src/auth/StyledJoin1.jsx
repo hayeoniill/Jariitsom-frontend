@@ -133,6 +133,9 @@ export const NextBtn = styled.button`
     align-items: center;
     display: flex;
     margin-left:24px;
+      &:hover {
+    opacity: 80%;
+  }
 `
 export const GoKakaoBtn = styled.button`
     margin-top:25px;
@@ -151,6 +154,8 @@ export const GoKakaoBtn = styled.button`
     justify-content: center;
     align-items: center;
     display: flex;
-        margin-left:24px;
-
+    margin-left:24px;
+  &:hover {
+    opacity: 80%;
+  }
 `

@@ -33,6 +33,9 @@ export const GoJoin = styled.button`
     align-items: center;
     display: flex;
     margin-left:24px;
+      &:hover {
+    opacity: 80%;
+  }
 `
 export const GoMain = styled.button`
     margin-top:20px;
@@ -52,6 +55,9 @@ export const GoMain = styled.button`
     align-items: center;
     display: flex;
     margin-left:24px;
+      &:hover {
+    opacity: 80%;
+  }
 
 `
 export const GoLogin = styled.div`
@@ -78,4 +84,7 @@ text-decoration-thickness: auto;
 text-underline-offset: auto;
 text-underline-position: from-font;
 margin-left:3px;
+  &:hover {
+    opacity: 80%;
+  }
 `

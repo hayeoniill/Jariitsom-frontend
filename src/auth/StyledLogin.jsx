@@ -72,7 +72,9 @@ export const LoginBtn = styled.button`
     align-items: center;
     display: flex;
     margin-left:24px;
-
+      &:hover {
+    opacity: 80%;
+  }
 `
 export const Bar = styled.div`
     width: 342px;
@@ -102,7 +104,9 @@ export const GoKakaoBtn = styled.button`
     align-items: center;
     display: flex;
     margin-left:24px;
-
+  &:hover {
+    opacity: 80%;
+  }
 `
 export const GoJoinBtn = styled.button`
     margin-top:20px;
@@ -123,5 +127,7 @@ export const GoJoinBtn = styled.button`
     align-items: center;
     display: flex;
     margin-left:24px;
-
+  &:hover {
+    opacity: 80%;
+  }
 `
