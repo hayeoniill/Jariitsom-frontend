@@ -1,32 +1,9 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  margin: 0 auto;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  background: #f0f0f0f0;
-  position: relative;
-`;
-
-export const Box = styled.div`
-  position: relative;
-  margin: 0 auto;
-  width: 393px;
-  height: 852px;
-  background: #fff;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-`;
-
 export const Logo = styled.img`
     margin-top:60px;
     width: 50px;
+    margin-left:170px;
 `
 
 export const JoinBox = styled.div`
@@ -155,6 +132,7 @@ export const NextBtn = styled.button`
     justify-content: center;
     align-items: center;
     display: flex;
+    margin-left:24px;
 `
 export const GoKakaoBtn = styled.button`
     margin-top:25px;
@@ -173,4 +151,6 @@ export const GoKakaoBtn = styled.button`
     justify-content: center;
     align-items: center;
     display: flex;
+        margin-left:24px;
+
 `

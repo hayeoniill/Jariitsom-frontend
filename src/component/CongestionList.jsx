@@ -76,25 +76,26 @@ function CongestionList({ limit }) {
                             <Item>
                                 <img
                                     src={
-                                        item.store.congestion === "low"
-                                            ? process.env.PUBLIC_URL + "/images/Congestion/green.svg"
-                                            : item.store.congestion === "medium"
-                                                ? process.env.PUBLIC_URL + "/images/Congestion/yellow.svg"
-                                                : process.env.PUBLIC_URL + "/images/Congestion/red.svg"
+                                        process.env.PUBLIC_URL +
+                                        "/images/star.svg"
                                     }
-                                    alt="혼잡도"
+                                    alt="즐겨찾기"
                                 />
                             </Item>
+
                             <Item>{item.store.name}</Item>
                         </LeftBox>
                         <RightBox>
                             <Item>
                                 <img
                                     src={
-                                        process.env.PUBLIC_URL +
-                                        "/images/star.svg"
+                                        item.store.congestion === "low"
+                                            ? process.env.PUBLIC_URL + "/images/Congestion/greenSom.svg"
+                                            : item.store.congestion === "medium"
+                                                ? process.env.PUBLIC_URL + "/images/Congestion/yellowSom.svg"
+                                                : process.env.PUBLIC_URL + "/images/Congestion/redSom.svg"
                                     }
-                                    alt="즐겨찾기"
+                                    alt="혼잡도"
                                 />
                             </Item>
                         </RightBox>

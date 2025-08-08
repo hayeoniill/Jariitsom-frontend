@@ -2,28 +2,6 @@ import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-export const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  margin: 0 auto;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  background: #f0f0f0f0;
-  position: relative;
-`;
-
-export const Box = styled.div`
-  position: relative;
-  margin: 0 auto;
-  width: 393px;
-  height: 852px;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  cursor:default;
-`;
 
 export const Title = styled.div`
     color: #000;
@@ -100,20 +78,18 @@ export const ConfirmBtn = styled.button`
     margin-left:25px;
     margin-top:310px;
 `
-function Leave() {
+const Leave = () => {
     const navigate = useNavigate();
     return (
-        <Container>
-            <Box>
-                <Title>회원탈퇴</Title>
-                <BackBtn src="/images/BackBtn_black.svg" alt="뒤로가기" onClick={() => navigate("/MyPage")} />
-                <CautionTxt>정말 회원탈퇴 하시겠습니까?</CautionTxt>
-                <DefaultTxt>비밀번호를 입력하시면 탈퇴가 완료됩니다.<br />이 작업은 취소할 수 없습니다.</DefaultTxt>
-                <DefaultTxt style={{ marginTop: "50px" }}>비밀번호 확인 </DefaultTxt>
-                <InputPw placeholder="비밀번호를 입력해주세요." />
-                <ConfirmBtn>탈퇴하기</ConfirmBtn>
-            </Box>
-        </Container >
+        <>
+            <Title>회원탈퇴</Title>
+            <BackBtn src="/images/BackBtn_black.svg" alt="뒤로가기" onClick={() => navigate("/MyPage")} />
+            <CautionTxt>정말 회원탈퇴 하시겠습니까?</CautionTxt>
+            <DefaultTxt>비밀번호를 입력하시면 탈퇴가 완료됩니다.<br />이 작업은 취소할 수 없습니다.</DefaultTxt>
+            <DefaultTxt style={{ marginTop: "50px" }}>비밀번호 확인 </DefaultTxt>
+            <InputPw placeholder="비밀번호를 입력해주세요." />
+            <ConfirmBtn>탈퇴하기</ConfirmBtn>
+        </>
     );
 }
 export default Leave;

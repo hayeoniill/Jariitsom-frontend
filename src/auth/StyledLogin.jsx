@@ -1,30 +1,7 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  margin: 0 auto;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  background: #f0f0f0f0;
-  position: relative;
-`;
-
-export const Box = styled.div`
-  position: relative;
-  margin: 0 auto;
-  width: 393px;
-  height: 852px;
-  background: #fff;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-`;
-
 export const Logo = styled.img`
+    margin-left:163px;
     margin-top:137px;
     width: 65px;
 `
@@ -46,7 +23,8 @@ export const InputId = styled.input`
     line-height: normal;
     padding-left:20px;
     outline: none;
-    
+    margin-left:24px;
+
     &::placeholder {
     color: #8B2842;
     opacity: 1.5; 
@@ -70,7 +48,8 @@ export const InputPw = styled.input`
     line-height: normal;
     padding-left:20px;
     outline: none;
-    
+    margin-left:24px;
+
     &::placeholder {
     color: #8B2842;
     opacity: 1.5; 
@@ -92,12 +71,16 @@ export const LoginBtn = styled.button`
     justify-content: center;
     align-items: center;
     display: flex;
+    margin-left:24px;
+
 `
 export const Bar = styled.div`
     width: 342px;
     height: 1.5px;
     background:#8B2842;
     margin-top:55px;
+    margin-left:24px;
+
 `
 
 export const GoKakaoBtn = styled.button`
@@ -118,6 +101,8 @@ export const GoKakaoBtn = styled.button`
     justify-content: center;
     align-items: center;
     display: flex;
+    margin-left:24px;
+
 `
 export const GoJoinBtn = styled.button`
     margin-top:20px;
@@ -137,4 +122,6 @@ export const GoJoinBtn = styled.button`
     justify-content: center;
     align-items: center;
     display: flex;
+    margin-left:24px;
+
 `

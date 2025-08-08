@@ -2,28 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import NavigationBar from "../component/NavigationBar";
 import CongestionList from "../component/CongestionList";
-export const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  margin: 0 auto;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  background: #f0f0f0f0;
-  position: relative;
-`;
-
-export const Box = styled.div`
-  position: relative;
-  margin: 0 auto;
-  width: 393px;
-  height: 852px;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  cursor:default;
-`;
 
 export const Title = styled.div`
     color: #000;
@@ -43,17 +21,15 @@ export const Bar = styled.div`
   background: #f0f0f0f0;
     margin-top:100px
 `
-function FavoriteShop() {
+const FavoriteShop = () => {
     return (
-        <Container>
-            <Box>
-                <Title>즐겨찾기 가게</Title>
-                <Bar></Bar>
-                <CongestionList></CongestionList>
+        <>
+            <Title>즐겨찾기 가게</Title>
+            <Bar></Bar>
+            <CongestionList></CongestionList>
 
-                <NavigationBar />
-            </Box>
-        </Container >
+            <NavigationBar />
+        </>
     );
 }
 export default FavoriteShop;
