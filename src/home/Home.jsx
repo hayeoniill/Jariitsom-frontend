@@ -2,6 +2,7 @@ import React from "react";
 import * as H from "./StyledHome";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../component/NavigationBar"
+import CongestionList from "../component/CongestionList";
 function Home() {
     const navigate = useNavigate();
 
@@ -96,10 +97,16 @@ function Home() {
                     </H.CategoryContainer>
                 </H.IconBox>
 
-                <H.FavoriteBox>
+                <H.TitleBox>
                     <H.HomeTitle>즐겨찾기 가게 혼잡도</H.HomeTitle>
                     <H.plusBtn onClick={goFavorite}> 더보기 &gt; </H.plusBtn>
-                </H.FavoriteBox>
+                </H.TitleBox>
+                <CongestionList limit={2} />
+
+                <H.TitleBox>
+                    <H.placeImg src="/images/place.svg" />
+                    <H.HomeTitle>지금 여유로운 곳</H.HomeTitle>
+                </H.TitleBox>
 
                 <NavigationBar />
             </H.Box>

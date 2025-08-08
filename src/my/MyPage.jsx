@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import * as MP from "./StyledMyPage";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../component/NavigationBar"
-import LogoutModal from "./Logout";
+import Logout from "./Logout";
 function MyPage() {
     const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ function MyPage() {
                 <MP.NavLeave onClick={() => navigate("/Leave")}>회원탈퇴</MP.NavLeave>
                 <NavigationBar />
                 {open && (
-                    <LogoutModal onClose={() => setOpen(false)} onConfirm={() => navigate("/Login")} />
+                    <Logout onClose={() => setOpen(false)} onConfirm={() => navigate("/Login")} />
                 )}
             </MP.Box>
         </MP.Container >

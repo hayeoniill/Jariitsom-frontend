@@ -102,9 +102,13 @@ font-weight: 600;
 margin-left:140px;
 cursor:pointer;
 `
-export const FavoriteBox = styled.div`
+export const TitleBox = styled.div`
 display: flex;
 align-items: center;
 height:30;
 margin-top:30px;
+`
+export const placeImg = styled.img`
+width: 16px;
+margin-left:25px;
 `

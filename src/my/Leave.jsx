@@ -100,7 +100,7 @@ export const ConfirmBtn = styled.button`
     margin-left:25px;
     margin-top:310px;
 `
-function FavoriteShop() {
+function Leave() {
     const navigate = useNavigate();
     return (
         <Container>
@@ -116,4 +116,4 @@ function FavoriteShop() {
         </Container >
     );
 }
-export default FavoriteShop;
+export default Leave;

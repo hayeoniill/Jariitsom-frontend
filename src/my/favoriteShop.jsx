@@ -1,8 +1,7 @@
 import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import NavigationBar from "../component/NavigationBar"
-
+import NavigationBar from "../component/NavigationBar";
+import CongestionList from "../component/CongestionList";
 export const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -38,15 +37,6 @@ export const Title = styled.div`
     top:64px;
     left:147px;
 `
-export const BackBtn = styled.img`
-    width: 17px;
-    height: 16.918px;
-    flex-shrink: 0;
-    top:70px;
-    left:25px;
-    position:absolute;
-    cursor:pointer;
-`
 
 export const Bar = styled.div`
     height:1.5px;
@@ -54,13 +44,13 @@ export const Bar = styled.div`
     margin-top:100px
 `
 function FavoriteShop() {
-    const navigate = useNavigate();
     return (
         <Container>
             <Box>
                 <Title>즐겨찾기 가게</Title>
-                <BackBtn src="/images/BackBtn_black.svg" alt="뒤로가기" onClick={() => navigate("/MyPage")} />
                 <Bar></Bar>
+                <CongestionList></CongestionList>
+
                 <NavigationBar />
             </Box>
         </Container >

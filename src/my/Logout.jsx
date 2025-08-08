@@ -61,19 +61,19 @@ const Btn = styled.button`
     border-right: 1.5px solid black;
   }`;
 
-function LogoutModal({ onClose, onConfirm }) {
-    return (
-        <ModalOverlay>
-            <ModalBox>
-                <TitleLogo src="/images/Logo/logoText.svg" />
-                <Title>로그아웃 하시겠습니까?</Title>
-                <ButtonRow>
-                    <Btn onClick={onClose}>아니오</Btn>
-                    <Btn onClick={onConfirm}>예</Btn>
-                </ButtonRow>
-            </ModalBox>
-        </ModalOverlay>
-    );
+function Logout({ onClose, onConfirm }) {
+  return (
+    <ModalOverlay>
+      <ModalBox>
+        <TitleLogo src="/images/Logo/logoText.svg" />
+        <Title>로그아웃 하시겠습니까?</Title>
+        <ButtonRow>
+          <Btn onClick={onClose}>아니오</Btn>
+          <Btn onClick={onConfirm}>예</Btn>
+        </ButtonRow>
+      </ModalBox>
+    </ModalOverlay>
+  );
 }
 
-export default LogoutModal;
+export default Logout;
