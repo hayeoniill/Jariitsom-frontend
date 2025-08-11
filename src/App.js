@@ -1,16 +1,17 @@
 // App.js
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import StartPage from './auth/StartPage';
-import Login from './auth/Login';
-import Join1 from './auth/Join';
-import Home from './home/Home';
-import Search from './search/Search';
-import Sombot from './sombot/Sombot';
-import Map from './map/Map';
-import MyPage from './my/MyPage';
-import FavoriteShop from './my/FavoriteShop';
-import Leave from './my/Leave';
-import Layout from './component/Layout'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import StartPage from "./auth/StartPage";
+import Login from "./auth/Login";
+import Join1 from "./auth/Join";
+import Home from "./home/Home";
+import Search from "./search/Search";
+import Sombot from "./sombot/Sombot";
+import Map from "./map/Map";
+import MyPage from "./my/MyPage";
+import FavoriteShop from "./my/FavoriteShop";
+import Leave from "./my/Leave";
+import Layout from "./component/Layout";
+import Change from "./my/Change";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/" element={<StartPage />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Join" element={<Join1 />} />
+          <Route path="/Change" element={<Change />} />
         </Route>
       </Routes>
     </BrowserRouter>

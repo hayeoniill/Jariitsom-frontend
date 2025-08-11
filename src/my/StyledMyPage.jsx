@@ -1,20 +1,20 @@
 import styled from "styled-components";
 
 export const Title = styled.div`
-  color:  #8B2842;
+  color: #8b2842;
   font-family: Pretendard;
   font-size: 24px;
   font-weight: 600;
-  margin-top:60px;
-  margin-left:143px;
+  margin-top: 60px;
+  margin-left: 143px;
 `;
 
 export const profileBox = styled.div`
-  margin-top:30px;  
-  margin-left:135px;
+  margin-top: 30px;
+  margin-left: 135px;
   width: 120px;
   height: 120px;
-  border: 1.5px solid #8B2842;
+  border: 1.5px solid #8b2842;
   border-radius: 50%;
   justify-content: center;
   align-items: center;
@@ -28,14 +28,14 @@ export const profilePic = styled.img`
 `;
 
 export const NameTitle = styled.div`
-  color:  #8B2842;
+  color: #8b2842;
   font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  margin-top:54px;
-  margin-left:25px;
+  margin-top: 54px;
+  margin-left: 25px;
 `;
 export const EditBtn = styled.button`
   display: flex;
@@ -47,22 +47,23 @@ export const EditBtn = styled.button`
   gap: 10px;
   flex-shrink: 0;
   border-radius: 5px;
-  background:  #F2F4F6;
+  background: #f2f4f6;
   color: #000;
   font-family: Pretendard;
   font-size: 12px;
   font-weight: 500;
-  border:none;
+  border: none;
   position: absolute;
-  top:350px;
-  right:30px;
-`
+  top: 340px;
+  right: 25px;
+  cursor: pointer;
+`;
 export const NameBar = styled.div`
-  margin-left:25px;
-  margin-top:20px;
+  margin-left: 25px;
+  margin-top: 20px;
   width: 342px;
   height: 20px;
-  border-bottom: 1.5px solid #8B2842;
+  border-bottom: 1.5px solid #8b2842;
   align-items: center;
   color: #000;
   font-family: Pretendard;
@@ -70,8 +71,8 @@ export const NameBar = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  padding-bottom:10px;
-  margin-bottom:60px;
+  padding-bottom: 10px;
+  margin-bottom: 60px;
 `;
 
 export const NavTitle = styled.div`
@@ -81,13 +82,12 @@ export const NavTitle = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  margin-left:25px;
-  margin-bottom:20px;
-  cursor:pointer;
-`
+  margin-left: 25px;
+  margin-bottom: 20px;
+  cursor: pointer;
+`;
 
 export const NavFavorite = NavTitle;
 export const NavChange = NavTitle;
 export const NavLogout = NavTitle;
 export const NavLeave = NavTitle;
-
