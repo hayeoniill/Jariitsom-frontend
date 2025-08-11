@@ -1,22 +1,21 @@
 import styled from "styled-components";
-export const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  margin: 0 auto;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  background: #f0f0f0f0;
-  position: relative;
-`;
+export const Container = styled.div``;
 
-export const Box = styled.div`
+export const MapContainer = styled.div`
   position: relative;
-  margin: 0 auto;
-  width: 393px;
-  height: 852px;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
 `;
+export const SearchBox = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 310px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  border: 1.5px solid #8b2842;
+  background: #fff;
+`;
+export const Input = styled.input``;
+export const SearchBtn = styled.img``;
+export const Warp = styled.div``;
+export const BackBtn = styled.img``;

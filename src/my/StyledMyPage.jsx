@@ -57,6 +57,9 @@ export const EditBtn = styled.button`
   top: 340px;
   right: 25px;
   cursor: pointer;
+  &:hover {
+    opacity: 80%;
+  }
 `;
 export const NameBar = styled.div`
   margin-left: 25px;

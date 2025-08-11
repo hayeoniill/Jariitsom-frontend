@@ -118,4 +118,7 @@ export const ChangeBtn = styled.button`
   line-height: normal;
   border: none;
   cursor: pointer;
+  &:hover {
+    opacity: 80%;
+  }
 `;
