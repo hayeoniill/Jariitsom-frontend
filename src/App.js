@@ -12,6 +12,7 @@ import FavoriteShop from "./my/FavoriteShop";
 import Leave from "./my/Leave";
 import Layout from "./component/Layout";
 import Change from "./my/Change";
+import KakaoCallback from "./auth/KakaoCallback";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/Leave" element={<Leave />} />
           <Route path="/" element={<StartPage />} />
           <Route path="/Login" element={<Login />} />
+          <Route path="/auth/kakao/callback" element={<KakaoCallback />} />
           <Route path="/Join" element={<Join1 />} />
           <Route path="/Change" element={<Change />} />
         </Route>
