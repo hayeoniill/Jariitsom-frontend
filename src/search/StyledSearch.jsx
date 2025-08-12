@@ -1,19 +1,10 @@
 import styled from "styled-components";
 
-export const Container = styled.div``;
-
-export const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  jutify-content: center;
-`;
-
 export const SearchBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 60px;
+  margin-top: 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -24,11 +15,12 @@ export const SearchBox = styled.div`
   border-radius: 20px;
   border: 1.5px solid #8b2842;
   background: #fff;
+  margin-left:25px;
 `;
 
 export const Input = styled.input`
   width: 270px;
-  height: 36px;
+  height: 30px;
   color: #000;
   font-family: Pretendard;
   font-size: 17px;
@@ -65,7 +57,7 @@ export const LocationImg = styled.div`
 `;
 
 export const IconBox = styled.div`
-  margin-right: 20px;
+  margin-right: 10px;
   border-bottom: 1px solid transparent;
   transition: border-bottom 0.2s ease;
 
@@ -73,8 +65,6 @@ export const IconBox = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  //   flex: 0 0 auto;
-  //   scroll-snap-align: start;
 
   &.active {
     border-bottom: 1.5px solid #8b2842;
@@ -107,7 +97,7 @@ export const TopBox = styled.div`
   left: 25px;
   display: flex;
   gap: 12px;
-  width: calc(100% - 50px);
+  width: calc(100% - 30px);
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
@@ -143,6 +133,7 @@ export const BasicLayer = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  
 `;
 export const ModalBox = styled.div`
   position: absolute;
@@ -224,6 +215,7 @@ export const ShopWrapper = styled.div`
   align-items: center;
   height: 512px;
   overflow-y: auto;
+  margin-left:15px;
 
   &::-webkit-scrollbar {
     display: none;

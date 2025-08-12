@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const LogoImg = styled.img`
-  margin-top: 280px;
+  margin-top: 240px;
   width: 127px;
   height: 143px;
   flex-shrink: 0;
@@ -17,7 +17,7 @@ export const LogoTxt = styled.img`
   margin-left: 105px;
 `;
 export const GoJoin = styled.button`
-  margin-top: 125px;
+  margin-top: 75px;
   border: none;
   width: 342px;
   height: 50px;

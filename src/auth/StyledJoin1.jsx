@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Logo = styled.img`
-  margin-top: 60px;
+  margin-top: 20px;
   width: 50px;
   margin-left: 170px;
 `;
@@ -24,7 +24,7 @@ export const JoinTxt = styled.div`
   margin-bottom: 30px;
 `;
 export const TitleTxt = styled.div`
-  margin-top: 20px;
+  margin-top: 15px;
   color: #8b2842;
   font-family: Pretendard;
   font-size: 17px;

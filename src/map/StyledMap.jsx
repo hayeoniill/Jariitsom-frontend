@@ -45,7 +45,7 @@ export const SearchBox = styled.div`
 
 export const Input = styled.input`
   width: 270px;
-  height: 36px;
+  height: 30px;
   color: #000;
   font-family: Pretendard;
   font-size: 17px;
