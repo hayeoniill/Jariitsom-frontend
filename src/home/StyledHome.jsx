@@ -62,7 +62,10 @@ display:flex
 `
 export const CategoryContainer = styled.div`
 margin-right:15px;
-`
+ &:hover {
+    opacity: 60%;
+  }
+`;
 export const CategoryBox = styled.div`
 width: 50px;
 height: 50px;
@@ -101,12 +104,21 @@ font-size: 13px;
 font-weight: 600;
 margin-left:140px;
 cursor:pointer;
+&:hover{
+    opacity: 60%;
+}
+`
+export const TitleContainer = styled.div`
+display: flex;
+align-items: center;
+height:30;
+margin-top:30px;
 `
 export const TitleBox = styled.div`
 display: flex;
 align-items: center;
 height:30;
-margin-top:30px;
+margin-top:20px;
 `
 export const placeImg = styled.img`
 width: 16px;

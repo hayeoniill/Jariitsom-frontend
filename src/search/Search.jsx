@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as S from "./StyledSearch";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../component/NavigationBar";
 import { useLocation } from "react-router-dom";
@@ -17,8 +18,7 @@ const Search = () => {
   // 버튼 값 가져오기
   const location = useLocation();
   const [mainCategory] = useState(location.state?.category || "restaurant");
-  const [subCategory, setSubCategory] = useState("전체");
-
+  const [subCategory, setSubCategory] = useState(location.state?.subCategory || "전체");
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
   };
@@ -190,7 +190,10 @@ const Search = () => {
 
   //     fetchData();
   //   }, [mainCategory, subCategory, isActive, sortText]);
-
+  const topBoxRef = useRef(null);
+  useEffect(() => {
+    if (topBoxRef.current) topBoxRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
   return (
     <>
       <S.SearchBox>
@@ -211,21 +214,20 @@ const Search = () => {
         />
       </S.LocationImg>
       <S.LocationText>성북구 하월곡동</S.LocationText>
-      <S.TopBox>
-        <S.IconBox
-          onClick={() => handleCategoryClick("전체")}
-          className={subCategory === "전체" ? "active" : ""}
-        >
-          <S.TopIcon className="Home">
-            {" "}
-            <img
-              src={`${process.env.PUBLIC_URL}/images/Category/House.svg`}
-              alt="Home"
-              width="40px"
-            />
-          </S.TopIcon>
-          <S.TopIconText className="HomeTxt"> 홈 </S.TopIconText>
-        </S.IconBox>
+      <S.TopBox ref={topBoxRef}>        <S.IconBox
+        onClick={() => handleCategoryClick("전체")}
+        className={subCategory === "전체" ? "active" : ""}
+      >
+        <S.TopIcon className="Home">
+          {" "}
+          <img
+            src={`${process.env.PUBLIC_URL}/images/Category/House.svg`}
+            alt="Home"
+            width="40px"
+          />
+        </S.TopIcon>
+        <S.TopIconText className="HomeTxt"> 홈 </S.TopIconText>
+      </S.IconBox>
 
         <S.IconBox
           onClick={() => setSubCategory("cake")}

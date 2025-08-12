@@ -3,8 +3,17 @@ import * as H from "./StyledHome";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../component/NavigationBar";
 import CongestionList from "../component/CongestionList";
+import LowList from "../component/LowList";
 const Home = () => {
     const navigate = useNavigate();
+    const goSearchWith = (sub) => {
+        navigate('/Search', {
+            state: {
+                category: 'restaurant',   // 필요 시 다른 메인 카테고리로 변경
+                subCategory: sub,
+            },
+        });
+    };
 
     const goSearch = () => {
         navigate(`/Search`);
@@ -23,21 +32,24 @@ const Home = () => {
             </H.SearchBar>
 
             <H.IconBox>
-                <H.CategoryContainer style={{ marginLeft: "40px" }}>
+                {/*카페 디저트*/}
+                <H.CategoryContainer style={{ marginLeft: "40px" }} onClick={() => goSearchWith('cake')}>
                     <H.CategoryBox>
                         <H.CategoryImg src="/images/Category/cake.svg" />
                     </H.CategoryBox>
-                    <H.CategoryTxt>카페•디저트</H.CategoryTxt>
+                    <H.CategoryTxt>카페/디저트</H.CategoryTxt>
                 </H.CategoryContainer>
 
-                <H.CategoryContainer>
+                {/*한식*/}
+                <H.CategoryContainer onClick={() => goSearchWith('korean')}>
                     <H.CategoryBox>
                         <H.CategoryImg src="/images/Category/kfood.svg" />
                     </H.CategoryBox>
                     <H.CategoryTxt>한식</H.CategoryTxt>
                 </H.CategoryContainer>
 
-                <H.CategoryContainer>
+                {/*중식*/}
+                <H.CategoryContainer onClick={() => goSearchWith('chinese')}>
                     <H.CategoryBox
                         style={{ paddingBottom: "10px", boxSizing: "border-box" }}
                     >
@@ -46,7 +58,8 @@ const Home = () => {
                     <H.CategoryTxt>중식</H.CategoryTxt>
                 </H.CategoryContainer>
 
-                <H.CategoryContainer>
+                {/*일식*/}
+                <H.CategoryContainer onClick={() => goSearchWith('japanese')}>
                     <H.CategoryBox
                         style={{ paddingTop: "10px", boxSizing: "border-box" }}
                     >
@@ -55,7 +68,8 @@ const Home = () => {
                     <H.CategoryTxt>일식</H.CategoryTxt>
                 </H.CategoryContainer>
 
-                <H.CategoryContainer>
+                {/*패스트푸드*/}
+                <H.CategoryContainer onClick={() => goSearchWith('fastfood')}>
                     <H.CategoryBox>
                         <H.CategoryImg src="/images/Category/hamberger.svg" />
                     </H.CategoryBox>
@@ -64,35 +78,40 @@ const Home = () => {
             </H.IconBox>
 
             <H.IconBox>
-                <H.CategoryContainer style={{ marginLeft: "40px" }}>
+                {/*분식*/}
+                <H.CategoryContainer style={{ marginLeft: "40px" }} onClick={() => goSearchWith('snack')}>
                     <H.CategoryBox>
                         <H.CategoryImg src="/images/Category/bunsik.svg" />
                     </H.CategoryBox>
                     <H.CategoryTxt>분식</H.CategoryTxt>
                 </H.CategoryContainer>
 
-                <H.CategoryContainer>
+                {/*건강식*/}
+                <H.CategoryContainer onClick={() => goSearchWith('salad')}>
                     <H.CategoryBox>
                         <H.CategoryImg width={"40px"} src="/images/Category/salad.svg" />
                     </H.CategoryBox>
                     <H.CategoryTxt>건강식</H.CategoryTxt>
                 </H.CategoryContainer>
 
-                <H.CategoryContainer>
+                {/*양식*/}
+                <H.CategoryContainer onClick={() => goSearchWith('pasta')}>
                     <H.CategoryBox>
                         <H.CategoryImg src="/images/Category/pasta.svg" />
                     </H.CategoryBox>
                     <H.CategoryTxt>양식</H.CategoryTxt>
                 </H.CategoryContainer>
 
-                <H.CategoryContainer>
+                {/*고깃집*/}
+                <H.CategoryContainer onClick={() => goSearchWith('beef')}>
                     <H.CategoryBox>
                         <H.CategoryImg src="/images/Category/beef.svg" />
                     </H.CategoryBox>
                     <H.CategoryTxt>고깃집</H.CategoryTxt>
                 </H.CategoryContainer>
 
-                <H.CategoryContainer>
+                {/*주점*/}
+                <H.CategoryContainer onClick={() => goSearchWith('beer')}>
                     <H.CategoryBox>
                         <H.CategoryImg src="/images/Category/beer.svg" />
                     </H.CategoryBox>
@@ -100,16 +119,18 @@ const Home = () => {
                 </H.CategoryContainer>
             </H.IconBox>
 
-            <H.TitleBox>
+            <H.TitleContainer>
                 <H.HomeTitle>즐겨찾기 가게 혼잡도</H.HomeTitle>
                 <H.plusBtn onClick={goFavorite}> 더보기 &gt; </H.plusBtn>
-            </H.TitleBox>
+            </H.TitleContainer>
             <CongestionList limit={2} />
 
             <H.TitleBox>
                 <H.placeImg src="/images/place.svg" />
                 <H.HomeTitle>지금 여유로운 곳</H.HomeTitle>
             </H.TitleBox>
+            <LowList />
+
             <H.TitleBox>
                 <H.placeImg src="/images/place.svg" />
                 <H.HomeTitle>잇솜이의 추천 메뉴</H.HomeTitle>
