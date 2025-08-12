@@ -60,7 +60,7 @@ export const Row = styled.div`
         `}
 `;
 
-/* 유저 말풍선: 배경 #8B2842, 글자 흰색, 오른쪽 정렬 */
+/* 유저 말풍선*/
 export const UserBubble = styled.div`
   max-width: 78%;
   padding: 10px 14px;
@@ -74,7 +74,7 @@ export const UserBubble = styled.div`
   box-shadow: 0 2px 8px rgba(139, 40, 66, 0.2);
 `;
 
-/* AI 말풍선: 흰 배경, #8B2842 테두리/글자, 왼쪽 정렬 */
+/* AI 말풍선*/
 export const AIBubble = styled.div`
   max-width: 78%;
   padding: 10px 14px;
