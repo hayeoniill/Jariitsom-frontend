@@ -27,7 +27,7 @@ const FavoriteShop = () => {
       <Title>즐겨찾기 가게</Title>
       <Bar></Bar>
       <CongestionList></CongestionList>
-
+      페이지
       <NavigationBar />
     </>
   );

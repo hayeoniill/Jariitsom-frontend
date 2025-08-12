@@ -61,10 +61,6 @@ export const SearchBtn = styled.img`
   cursor: pointer;
 `;
 
-export const BackBtn = styled.img`
-  cursor: pointer;
-`;
-
 export const FilterWrap = styled.div`
   display: flex;
   gap: 24px;
