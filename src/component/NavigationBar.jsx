@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 //네비게이션바
 const Bar = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   width: 390px;
   height: 75px;

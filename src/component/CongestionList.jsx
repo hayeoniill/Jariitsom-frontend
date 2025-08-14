@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 // 메인화면에서 즐겨찾기 가게 혼잡도를 불러옵니다.
 
-//스타일 속성 나중에 다시 바꾸기
-
 const Box = styled.div`
   width: 345px;
   height: 45px;

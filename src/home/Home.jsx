@@ -120,7 +120,7 @@ const Home = () => {
             </H.IconBox>
 
             <H.TitleContainer>
-                <H.HomeTitle>즐겨찾기 가게 혼잡도</H.HomeTitle>
+                <H.FavoriteShopTitle>즐겨찾기 가게 혼잡도</H.FavoriteShopTitle>
                 <H.plusBtn onClick={goFavorite}> 더보기 &gt; </H.plusBtn>
             </H.TitleContainer>
             <CongestionList limit={2} />
@@ -135,7 +135,12 @@ const Home = () => {
                 <H.placeImg src="/images/place.svg" />
                 <H.HomeTitle>잇솜이의 추천 메뉴</H.HomeTitle>
             </H.TitleBox>
-
+            <H.RecommendBox>
+                <H.RecommendImg src="/images/Logo/logoSom.svg" />
+                <H.RecommendChat>
+                    아무거나 먹어
+                </H.RecommendChat>
+            </H.RecommendBox>
             <NavigationBar />
         </>
     );
