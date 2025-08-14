@@ -27,11 +27,8 @@ const Box = styled.div`
   cursor: default;
   overflow-y: auto;
   overflow-x: hidden;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0,0,0,.35) transparent;
-  &::-webkit-scrollbar { width: 8px; }
-  &::-webkit-scrollbar-thumb { background: rgba(0,0,0,.35); border-radius: 999px; }
-`;
+   `
+  ;
 
 
 const Layout = () => {
