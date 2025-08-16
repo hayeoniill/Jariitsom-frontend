@@ -12,9 +12,9 @@ const Join1 = () => {
                 <J.TitleTxt>아이디</J.TitleTxt>
                 <J.InputId placeholder="아이디를 입력하세요. (숫자, 영문 조합 8자 이상)"></J.InputId>
                 <J.TitleTxt>비밀번호</J.TitleTxt>
-                <J.InputPw placeholder="비밀번호를 입력하세요. (숫자, 영문 조합 8자 이상)"></J.InputPw>
+                <J.InputPw type="password" placeholder="비밀번호를 입력하세요. (숫자, 영문 조합 8자 이상)"></J.InputPw>
                 <J.TitleTxt>비밀번호 확인</J.TitleTxt>
-                <J.InputPwConfirm placeholder="비밀번호를 다시 입력하세요."></J.InputPwConfirm>
+                <J.InputPwConfirm type="password" placeholder="비밀번호를 다시 입력하세요."></J.InputPwConfirm>
                 <J.TitleTxt>닉네임</J.TitleTxt>
                 <J.InputName placeholder="닉네임을 입력하세요."></J.InputName>
                 <J.TitleTxt>전화번호</J.TitleTxt>
