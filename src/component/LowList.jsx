@@ -40,7 +40,7 @@ function LowList() {
                 lng: 126.9785,
                 rating: 4.6,
                 bookmarked: true,
-                congestion: "low", // low|medium|high
+                congestion: "high", // low|medium|high
             },
             {
                 id: 2,
@@ -50,7 +50,7 @@ function LowList() {
                 lng: 126.981,
                 rating: 4.2,
                 bookmarked: false,
-                congestion: "low",
+                congestion: "high",
             },
             {
                 id: 3,
@@ -60,7 +60,7 @@ function LowList() {
                 lng: 126.976,
                 rating: 4.9,
                 bookmarked: true,
-                congestion: "low",
+                congestion: "high",
             },
             {
                 id: 4,
@@ -70,7 +70,7 @@ function LowList() {
                 lng: 126.976,
                 rating: 4.9,
                 bookmarked: true,
-                congestion: "low",
+                congestion: "high",
             },
             {
                 id: 5,
@@ -80,7 +80,7 @@ function LowList() {
                 lng: 126.976,
                 rating: 4.9,
                 bookmarked: true,
-                congestion: "low",
+                congestion: "high",
             },
             {
                 id: 6,
@@ -90,7 +90,7 @@ function LowList() {
                 lng: 126.976,
                 rating: 4.9,
                 bookmarked: true,
-                congestion: "low",
+                congestion: "high",
             },
             {
                 id: 7,
@@ -100,7 +100,7 @@ function LowList() {
                 lng: 126.976,
                 rating: 4.9,
                 bookmarked: true,
-                congestion: "low",
+                congestion: "high",
             },
         ];
         setDataList(mock);
@@ -120,17 +120,35 @@ function LowList() {
 
         setRecommended(pickRandom(lowList, 2)); // low가 2개보다 적으면 있는 만큼만
     }, [dataList]);
-
     return (
         <BoxContainer>
-            {recommended.map((shop) => (
-                <Box key={shop.id} onClick={() => navigate(`/ClickedSearch/${shop.id}`, {
-                    state: { shop }
-                })}>{shop.name}</Box>
-            ))}
+            {recommended.length === 0 ? (
+                <p
+                    style={{
+                        textAlign: "center",
+                        marginTop: "20px",
+                        color: "#888",
+                    }}
+                >
+                    현재 여유로운 가게가 없습니다.
+                </p>
+            ) : (
+                recommended.map((shop) => (
+                    <Box
+                        key={shop.id}
+                        onClick={() =>
+                            navigate(`/ClickedSearch/${shop.id}`, {
+                                state: { shop },
+                            })
+                        }
+                    >
+                        {shop.name}
+                    </Box>
+                ))
+            )}
         </BoxContainer>
-
     );
+
 }
 
 export default LowList;
