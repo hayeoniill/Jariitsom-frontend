@@ -27,12 +27,12 @@ const Login = () => {
         type="password"
         placeholder="비밀번호를 입력해주세요."
       ></L.InputPw>
-      <L.LoginBtn>로그인</L.LoginBtn>
+      <L.LoginBtn onClick={() => navigate("/Home")}> 로그인</L.LoginBtn>
       <L.Bar></L.Bar>
-      {/*  <L.GoKakaoBtn onClick={loginWithKakao}>
+      <L.GoKakaoBtn /*onClick={loginWithKakao}*/>
         카카오톡으로 간편 로그인
-      </L.GoKakaoBtn> */}
-      <L.GoJoinBtn onClick={() => navigate("/Join")}>회원가입 하기</L.GoJoinBtn>
+      </L.GoKakaoBtn>
+      <L.GoJoinBtn onClick={() => navigate("/Join")}>회원가입</L.GoJoinBtn>
     </>
   );
 };
