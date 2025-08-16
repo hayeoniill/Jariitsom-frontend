@@ -22,7 +22,7 @@ const ModalBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 16px;
+  padding: 16px 0px 0px 0px;
   
 `;
 const TitleLogo = styled.img`
@@ -36,7 +36,6 @@ const Title = styled.div`
   font-weight: 500;
   text-align: center;
   height:100px;
-  border-bottom: 1.5px solid black;
    justify-content: center;
   align-items: center;
   display: flex;
@@ -44,6 +43,7 @@ const Title = styled.div`
 
 const ButtonRow = styled.div`
   display: flex;
+  border-top: 1.5px solid black;
 `;
 
 const Btn = styled.button`
@@ -57,7 +57,10 @@ const Btn = styled.button`
   font-family: Pretendard;
   font-size: 16px;
   font-weight: 500;
+  border-radius: 9px;
+
  &:first-child {
+   border-radius: 0px 0px 0px 9px;
     border-right: 1.5px solid black;
   }`;
 

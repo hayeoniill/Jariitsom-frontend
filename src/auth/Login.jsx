@@ -5,19 +5,19 @@ import { useEffect } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    if (!window.Kakao?.isInitialized?.()) {
-      window.Kakao?.init(process.env.REACT_APP_KAKAO_JS_KEY);
-    }
-  }, []);
-
-  const loginWithKakao = () => {
-    window.Kakao?.Auth.authorize({
-      redirectUri: "http://localhost:3000/auth/kakao/callback",
-      scope: "profile_nickname profile_image",
-      state: "kakao_oauth_" + Date.now(),
-    });
-  };
+  /* useEffect(() => {
+     if (!window.Kakao?.isInitialized?.()) {
+       window.Kakao?.init(process.env.REACT_APP_KAKAO_JS_KEY);
+     }
+   }, []);
+ 
+   const loginWithKakao = () => {
+     window.Kakao?.Auth.authorize({
+       redirectUri: "http://localhost:3000/auth/kakao/callback",
+       scope: "profile_nickname profile_image",
+       state: "kakao_oauth_" + Date.now(),
+     });
+   };*/
 
   return (
     <>
@@ -29,9 +29,9 @@ const Login = () => {
       ></L.InputPw>
       <L.LoginBtn>로그인</L.LoginBtn>
       <L.Bar></L.Bar>
-      <L.GoKakaoBtn onClick={loginWithKakao}>
+      {/*  <L.GoKakaoBtn onClick={loginWithKakao}>
         카카오톡으로 간편 로그인
-      </L.GoKakaoBtn>
+      </L.GoKakaoBtn> */}
       <L.GoJoinBtn onClick={() => navigate("/Join")}>회원가입 하기</L.GoJoinBtn>
     </>
   );
