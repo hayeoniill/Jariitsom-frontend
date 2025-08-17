@@ -22,13 +22,15 @@ export const Bar = styled.div`
   margin-top: 100px;
 `;
 const FavoriteShop = () => {
-    return (
-        <>
-            <Title>즐겨찾기 가게</Title>
-            <Bar></Bar>
-            <CongestionList></CongestionList>
-            <NavigationBar />
-        </>
-    );
+  return (
+    <>
+      <Title>즐겨찾기 가게</Title>
+      <Bar></Bar>
+      <CongestionList></CongestionList>
+      <NavigationBar />
+    </>
+  );
 };
 export default FavoriteShop;
+
+// 파일명 변경
