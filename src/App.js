@@ -8,12 +8,14 @@ import Search from "./search/Search";
 import Sombot from "./sombot/Sombot";
 import Map from "./map/Map";
 import MyPage from "./my/MyPage";
-import FavoriteShop from "./my/FavoriteShop";
+import favoriteShop from "./my/favoriteShop";
 import Leave from "./my/Leave";
 import Layout from "./component/Layout";
 import Change from "./my/Change";
 import KakaoCallback from "./auth/KakaoCallback";
 import ShopDetail from "./search/ShopDetail";
+import SendCongestion from "./component/SendCongestion";
+import InputCust from "./component/InputCust";
 
 function App() {
   return (
@@ -25,14 +27,16 @@ function App() {
           <Route path="/Sombot" element={<Sombot />} />
           <Route path="/MapPage" element={<Map />} />
           <Route path="/MyPage" element={<MyPage />} />
-          <Route path="/FavoriteShop" element={<FavoriteShop />} />
+          <Route path="/favoriteShop" element={<favoriteShop />} />
           <Route path="/Leave" element={<Leave />} />
           <Route path="/" element={<StartPage />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/auth/kakao/callback" element={<KakaoCallback />} />
           <Route path="/Join" element={<Join1 />} />
           <Route path="/Change" element={<Change />} />
-          <Route path="/ShopDetail" element={<ShopDetail />} />
+          <Route path="/ShopDetail/:id" element={<ShopDetail />} />
+          <Route path="/SendCongestion" element={<SendCongestion />} />
+          <Route path="/InputCust" element={<InputCust />} />
         </Route>
       </Routes>
     </BrowserRouter>

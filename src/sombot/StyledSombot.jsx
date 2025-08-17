@@ -5,6 +5,10 @@ export const SombotWrapper = styled.div`
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Background = styled.img`
@@ -45,6 +49,10 @@ export const ChatContainer = styled.div`
   padding: 16px;
   height: calc(100vh - 240px);
   box-sizing: border-box;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Row = styled.div`

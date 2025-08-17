@@ -15,7 +15,7 @@ export const SearchBox = styled.div`
   border-radius: 20px;
   border: 1.5px solid #8b2842;
   background: #fff;
-  margin-left:25px;
+  margin-left: 25px;
 `;
 
 export const Input = styled.input`
@@ -133,7 +133,6 @@ export const BasicLayer = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  
 `;
 export const ModalBox = styled.div`
   position: absolute;
@@ -215,7 +214,7 @@ export const ShopWrapper = styled.div`
   align-items: center;
   height: 512px;
   overflow-y: auto;
-  margin-left:15px;
+  margin-left: 15px;
 
   &::-webkit-scrollbar {
     display: none;

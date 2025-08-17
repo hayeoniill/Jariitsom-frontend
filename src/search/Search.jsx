@@ -6,6 +6,53 @@ import NavigationBar from "../component/NavigationBar";
 import { useLocation } from "react-router-dom";
 // import axios from "axios";
 
+// ---------- 시간 유틸 ----------
+const toToday = (hhmm) => {
+  const [h, m] = hhmm.split(":").map(Number);
+  const d = new Date();
+  d.setHours(h, m, 0, 0);
+  return d;
+};
+
+const getCurrentPeriod = (now, periods) =>
+  periods.find((p) => toToday(p.start) <= now && now < toToday(p.end));
+
+const getNextPeriod = (now, periods) =>
+  periods.find((p) => now < toToday(p.start));
+
+const formatRange = (p) => `${p.start}~${p.end}`;
+
+const formatRemain = (end, now) => {
+  const min = Math.max(0, Math.round((toToday(end) - now) / 60000));
+  if (min >= 60) {
+    const h = Math.ceil(min / 60);
+    return `${h}시간`;
+  }
+  return `${min}분`;
+};
+
+// Search 리스트용: "영업중 11:30~15:30" / "영업준비중 11:30 오픈" / "영업종료"
+const buildSearchStatus = (periods, now = new Date()) => {
+  const cur = getCurrentPeriod(now, periods);
+  if (cur) return `영업중 ${formatRange(cur)}`;
+  const next = getNextPeriod(now, periods);
+  if (next) return `영업준비중 ${next.start} 오픈`;
+  return "영업종료";
+};
+
+// 상세용: "영업중 브레이크 타임 X 1시간 뒤 영업종료"
+const buildDetailStatus = (periods, now = new Date()) => {
+  const hasBreak = periods.length > 1 ? "O" : "X";
+  const cur = getCurrentPeriod(now, periods);
+  if (cur) {
+    const remain = formatRemain(cur.end, now);
+    return `영업중 브레이크 타임 ${hasBreak} ${remain} 뒤 영업종료`;
+  }
+  const next = getNextPeriod(now, periods);
+  if (next) return `영업준비중 브레이크 타임 ${hasBreak} ${next.start} 오픈`;
+  return `영업종료 브레이크 타임 ${hasBreak}`;
+};
+
 const Search = () => {
   const [dataList, setDataList] = useState([]);
   const [error, setError] = useState("");
@@ -18,7 +65,9 @@ const Search = () => {
   // 버튼 값 가져오기
   const location = useLocation();
   const [mainCategory] = useState(location.state?.category || "restaurant");
-  const [subCategory, setSubCategory] = useState(location.state?.subCategory || "전체");
+  const [subCategory, setSubCategory] = useState(
+    location.state?.subCategory || "전체"
+  );
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
   };
@@ -68,7 +117,7 @@ const Search = () => {
     setSubCategory(category);
   };
 
-  //더미데이터
+  // 더미데이터
   useEffect(() => {
     // TODO: 백엔드 붙으면 이 블록 삭제하고 fetch/axios 해제
     const mock = [
@@ -76,71 +125,80 @@ const Search = () => {
         id: 1,
         name: "슬기카페",
         subcategory: "cake",
-        lat: 37.5655,
-        lng: 126.9785,
+        distanceText: "도보 3분",
         rating: 4.6,
         bookmarked: true,
-        congestion: "low", // low|medium|high
+        congestion: "low",
+        address: "서울 성북구 화랑로13길 60",
+        periods: [{ start: "10:00", end: "22:00" }], // 브레이크 X
+        businessHours: [
+          "일요일: 휴무",
+          "월요일: 10:00 ~ 22:00",
+          "화요일: 10:00 ~ 22:00",
+          "수요일: 10:00 ~ 22:00",
+          "목요일: 10:00 ~ 22:00",
+          "금요일: 10:00 ~ 22:00",
+          "토요일: 11:00 ~ 20:00",
+        ],
+        breakTime: null,
+        link: "https://map.naver.com/v5/search/슬기카페",
       },
       {
         id: 2,
         name: "하월곡 분식",
         subcategory: "snack",
-        lat: 37.568,
-        lng: 126.981,
+        distanceText: "도보 3분",
         rating: 4.2,
         bookmarked: false,
         congestion: "medium",
+        address: "서울 성북구 장위로 45",
+        periods: [{ start: "11:00", end: "21:00" }],
+        businessHours: [
+          "월~금 10:00 - 22:00",
+          "토요일 10:00 - 20:00",
+          "일요일 휴무",
+        ],
+        breakTime: null,
+        link: "https://map.naver.com/v5/search/하월곡분식",
       },
       {
         id: 3,
         name: "도쿄라멘",
         subcategory: "japanese",
-        lat: 37.5672,
-        lng: 126.976,
+        distanceText: "도보 3분",
         rating: 4.9,
         bookmarked: true,
         congestion: "high",
+        address: "서울 성북구 화랑로 110",
+        periods: [
+          { start: "11:30", end: "15:30" },
+          { start: "17:00", end: "21:00" }, // 브레이크 O
+        ],
+        businessHours: [
+          "월~금 10:00 - 22:00",
+          "토요일 10:00 - 20:00",
+          "일요일 휴무",
+        ],
+        breakTime: "15:30 ~ 17:00",
+        link: "https://map.naver.com/v5/search/도쿄라멘",
       },
       {
         id: 4,
-        name: "도쿄라멘",
-        subcategory: "japanese",
-        lat: 37.5672,
-        lng: 126.976,
-        rating: 4.9,
+        name: "행복은 간장밥 동덕여대점",
+        subcategory: "snack",
+        distanceText: "도보 5분",
+        rating: 5.0,
         bookmarked: true,
         congestion: "high",
-      },
-      {
-        id: 5,
-        name: "도쿄라멘",
-        subcategory: "japanese",
-        lat: 37.5672,
-        lng: 126.976,
-        rating: 4.9,
-        bookmarked: true,
-        congestion: "high",
-      },
-      {
-        id: 6,
-        name: "도쿄라멘",
-        subcategory: "japanese",
-        lat: 37.5672,
-        lng: 126.976,
-        rating: 4.9,
-        bookmarked: true,
-        congestion: "high",
-      },
-      {
-        id: 7,
-        name: "도쿄라멘",
-        subcategory: "japanese",
-        lat: 37.5672,
-        lng: 126.976,
-        rating: 4.9,
-        bookmarked: true,
-        congestion: "high",
+        address: "서울 성북구 동소문동 3길 21",
+        periods: [{ start: "11:30", end: "15:30" }], // 요청사항: 점심만
+        businessHours: [
+          "월~금 10:00 - 22:00",
+          "토요일 10:00 - 20:00",
+          "일요일 휴무",
+        ],
+        breakTime: null,
+        link: "https://map.naver.com/v5/search/행복은간장밥",
       },
     ];
     setDataList(mock);
@@ -192,7 +250,8 @@ const Search = () => {
   //   }, [mainCategory, subCategory, isActive, sortText]);
   const topBoxRef = useRef(null);
   useEffect(() => {
-    if (topBoxRef.current) topBoxRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (topBoxRef.current)
+      topBoxRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
   return (
     <>
@@ -214,21 +273,22 @@ const Search = () => {
         />
       </S.LocationImg>
       <S.LocationText>성북구 하월곡동</S.LocationText>
-      <S.TopBox ref={topBoxRef}>        <S.IconBox
-        onClick={() => handleCategoryClick("전체")}
-        className={subCategory === "전체" ? "active" : ""}
-      >
-        <S.TopIcon className="Home">
-          {" "}
-          <img
-            src={`${process.env.PUBLIC_URL}/images/Category/House.svg`}
-            alt="Home"
-            width="40px"
-          />
-        </S.TopIcon>
-        <S.TopIconText className="HomeTxt"> 홈 </S.TopIconText>
-      </S.IconBox>
-
+      <S.TopBox ref={topBoxRef}>
+        {" "}
+        <S.IconBox
+          onClick={() => handleCategoryClick("전체")}
+          className={subCategory === "전체" ? "active" : ""}
+        >
+          <S.TopIcon className="Home">
+            {" "}
+            <img
+              src={`${process.env.PUBLIC_URL}/images/Category/House.svg`}
+              alt="Home"
+              width="40px"
+            />
+          </S.TopIcon>
+          <S.TopIconText className="HomeTxt"> 홈 </S.TopIconText>
+        </S.IconBox>
         <S.IconBox
           onClick={() => setSubCategory("cake")}
           className={subCategory === "cake" ? "active" : ""}
@@ -243,7 +303,6 @@ const Search = () => {
           </S.TopIcon>
           <S.TopIconText className="cakeText"> 카페/디저트 </S.TopIconText>
         </S.IconBox>
-
         <S.IconBox
           onClick={() => setSubCategory("korean")}
           className={subCategory === "korean" ? "active" : ""}
@@ -258,7 +317,6 @@ const Search = () => {
           </S.TopIcon>
           <S.TopIconText className="KFoodTxt"> 한식 </S.TopIconText>
         </S.IconBox>
-
         <S.IconBox
           onClick={() => setSubCategory("chinese")}
           className={subCategory === "chinese" ? "active" : ""}
@@ -273,7 +331,6 @@ const Search = () => {
           </S.TopIcon>
           <S.TopIconText className="cfoodText"> 중식 </S.TopIconText>
         </S.IconBox>
-
         <S.IconBox
           onClick={() => setSubCategory("japanese")}
           className={subCategory === "japanese" ? "active" : ""}
@@ -288,7 +345,6 @@ const Search = () => {
           </S.TopIcon>
           <S.TopIconText className="JFoodTxt"> 일식 </S.TopIconText>
         </S.IconBox>
-
         <S.IconBox
           onClick={() => setSubCategory("fastfood")}
           className={subCategory === "fastfood" ? "active" : ""}
@@ -303,7 +359,6 @@ const Search = () => {
           </S.TopIcon>
           <S.TopIconText className="FastFoodTxt"> 패스트푸드 </S.TopIconText>
         </S.IconBox>
-
         <S.IconBox
           onClick={() => setSubCategory("snack")}
           className={subCategory === "snack" ? "active" : ""}
@@ -318,7 +373,6 @@ const Search = () => {
           </S.TopIcon>
           <S.TopIconText className="SnackFoodTxt"> 분식 </S.TopIconText>
         </S.IconBox>
-
         <S.IconBox
           onClick={() => setSubCategory("salad")}
           className={subCategory === "salad" ? "active" : ""}
@@ -333,7 +387,6 @@ const Search = () => {
           </S.TopIcon>
           <S.TopIconText className="SaladTxt"> 건강식 </S.TopIconText>
         </S.IconBox>
-
         <S.IconBox
           onClick={() => setSubCategory("pasta")}
           className={subCategory === "pasta" ? "active" : ""}
@@ -413,8 +466,9 @@ const Search = () => {
       {/* 버튼 누르면 색 변경 */}
       <S.Favorite isActive={isActive} onClick={on_Click}>
         <img
-          src={`${process.env.PUBLIC_URL}/images/Filter/${isActive ? "heart_red.svg" : "heart_gray.svg"
-            }`}
+          src={`${process.env.PUBLIC_URL}/images/Filter/${
+            isActive ? "heart_red.svg" : "heart_gray.svg"
+          }`}
           alt="Favorite"
           width="14px"
           style={{ marginRight: "4px" }}
@@ -423,74 +477,70 @@ const Search = () => {
       </S.Favorite>
       {/* 가게정보 보여주기 */}
       <S.ShopWrapper>
-        {filteredData.map(
-          (e) => (
-            console.log("shop정보:", e),
-            (
-              <S.ShopInform
-                key={e.id}
-                onClick={() =>
-                  navigate(`/ShopDetail/${e.id}`, { state: { shop: e } })
-                }
-              >
-                <S.LeftBox>
-                  <S.ShopImg
-                    src={`http://localhost:8000/store_photo/${e.name}.png`}
-                    width="55px"
-                    alt={e.name}
-                    style={{ marginRight: "16px" }}
-                  />
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <S.ShopName>{e.name}</S.ShopName>
-                    <S.ReviewText>
-                      <img
-                        src={`${process.env.PUBLIC_URL}/images/star_yellow.svg`}
-                        alt="Star"
-                        width="18px"
-                      />{" "}
-                      {e.rating}/5.0
-                    </S.ReviewText>
-                    <S.DistanceText>
-                      {/* <img
-                          style={{ paddingRight: "2px" }}
-                          src={`${process.env.PUBLIC_URL}/images/Distance.svg`}
-                          alt="Distance"
-                          width="13px"
-                        /> */}
-                      {e.latitude}오늘 휴무 •{" "}
-                      <S.Minute>도보{e.longitude}분</S.Minute>
-                    </S.DistanceText>
-                  </div>
-                </S.LeftBox>
+        {filteredData.map((e) => {
+          const searchStatus = buildSearchStatus(e.periods);
+          const detailStatus = buildDetailStatus(e.periods);
 
-                <S.CongestionImg>
-                  <img
-                    src={
-                      e.congestion === "low"
-                        ? "/images/Congestion/green_text.svg"
-                        : e.congestion === "medium"
-                          ? "/images/Congestion/yellow_text.svg"
-                          : "/images/Congestion/red_text.svg"
-                    }
-                    alt="CongestionImg"
-                    width="42px"
-                  />
-                </S.CongestionImg>
-              </S.ShopInform>
-            )
-          )
-        )}
+          const payload = { ...e, statusText: detailStatus }; // 상세에서 쓸 문구 포함
+          // 새로고침 대비 (선택)
+          // sessionStorage.setItem("lastShop", JSON.stringify(payload));
+
+          return (
+            <S.ShopInform
+              key={e.id}
+              onClick={() =>
+                navigate(`/ShopDetail/${e.id}`, { state: payload })
+              }
+            >
+              <S.LeftBox>
+                <S.ShopImg
+                  src={`/images/TestImg/${e.name}.png`}
+                  width="55px"
+                  alt={e.name}
+                  style={{ marginRight: "16px" }}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                  }}
+                >
+                  <S.ShopName>{e.name}</S.ShopName>
+
+                  <S.ReviewText>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/images/star_yellow.svg`}
+                      alt="Star"
+                      width="18px"
+                    />{" "}
+                    {e.rating}/5.0
+                  </S.ReviewText>
+
+                  <S.DistanceText>{searchStatus}</S.DistanceText>
+                </div>
+              </S.LeftBox>
+
+              <S.CongestionImg>
+                <img
+                  src={
+                    e.congestion === "low"
+                      ? "/images/Congestion/green_text.svg"
+                      : e.congestion === "medium"
+                      ? "/images/Congestion/yellow_text.svg"
+                      : "/images/Congestion/red_text.svg"
+                  }
+                  alt="CongestionImg"
+                  width="42px"
+                />
+              </S.CongestionImg>
+            </S.ShopInform>
+          );
+        })}
       </S.ShopWrapper>
+
       <NavigationBar />
-
     </>
-
   );
 };
 

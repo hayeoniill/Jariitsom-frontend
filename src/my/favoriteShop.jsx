@@ -32,5 +32,3 @@ const FavoriteShop = () => {
   );
 };
 export default FavoriteShop;
-
-// 파일명 변경
