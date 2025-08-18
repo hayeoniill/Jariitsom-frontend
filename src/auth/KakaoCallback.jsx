@@ -20,7 +20,7 @@ export default function KakaoCallback() {
 
     (async () => {
       try {
-        // 1) 토큰 요청
+        // 1) 토큰 요청 - 백에서 해야함
         const tokenRes = await fetch("https://kauth.kakao.com/oauth/token", {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },

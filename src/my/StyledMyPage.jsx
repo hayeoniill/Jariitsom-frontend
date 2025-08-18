@@ -61,6 +61,25 @@ export const EditBtn = styled.button`
     opacity: 80%;
   }
 `;
+export const NameInput = styled.input`
+  /* NameBar랑 비슷하게 꾸며줌 */
+  all: unset;
+  margin-left: 25px;
+  margin-top: 20px;
+  width: 342px;
+  height: 20px;
+  border-bottom: 1.5px solid #8b2842;
+  align-items: center;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding-bottom: 10px;
+  margin-bottom: 60px;
+`;
+
 export const NameBar = styled.div`
   margin-left: 25px;
   margin-top: 20px;

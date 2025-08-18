@@ -3,12 +3,8 @@ import styled, { css } from "styled-components";
 export const SombotWrapper = styled.div`
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  min-height: 80vh;
   overflow: hidden;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 export const Background = styled.img`
@@ -47,7 +43,7 @@ export const ChatContainer = styled.div`
   z-index: 1;
   overflow-y: auto;
   padding: 16px;
-  height: calc(100vh - 240px);
+  height: calc(80vh - 140px);
   box-sizing: border-box;
 
   &::-webkit-scrollbar {
@@ -99,7 +95,7 @@ export const AIBubble = styled.div`
 
 export const MessageInputWrapper = styled.div`
   position: absolute;
-  bottom: 105px;
+  bottom: 0px;
   left: 25px;
   width: calc(100% - 50px);
   max-width: 342px;
@@ -113,6 +109,7 @@ export const MessageInputWrapper = styled.div`
   padding: 0 12px 0 16px;
   box-sizing: border-box;
   gap: 10px;
+  z-index: 1;
 `;
 
 export const MessageBar = styled.input`
