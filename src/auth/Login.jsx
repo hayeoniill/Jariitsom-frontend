@@ -28,7 +28,7 @@ const Login = () => {
     const password = pwRef.current.value;
 
     if (!username || !password) {
-      alert("아이디와 비밀번호를 입력해줘.");
+      alert("아이디와 비밀번호를 입력해주세요.");
       return;
     }
 

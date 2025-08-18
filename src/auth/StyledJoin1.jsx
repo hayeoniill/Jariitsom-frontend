@@ -24,7 +24,7 @@ export const JoinTxt = styled.div`
   margin-bottom: 30px;
 `;
 export const TitleTxt = styled.div`
-  margin-top: 15px;
+  margin-top: 10px;
   color: #8b2842;
   font-family: Pretendard;
   font-size: 17px;
@@ -123,7 +123,7 @@ export const NextBtn = styled.button`
   height: 50px;
   border-radius: 25px;
   background: #8b2842;
-  box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 1px 2px 2px 0 rgba(0, 0, 0, 0.25);
   color: #fff;
   font-family: Pretendard;
   font-size: 17px;
@@ -134,6 +134,10 @@ export const NextBtn = styled.button`
   display: flex;
   margin-left: 24px;
   cursor: pointer;
+  
+  &:disabled {
+    background:#D0D0D0;
+  }
   &:hover {
     opacity: 80%;
   }
@@ -161,3 +165,12 @@ export const GoKakaoBtn = styled.button`
     opacity: 80%;
   }
 `;
+
+export const Caution = styled.div`
+color: #F00;
+font-family: Pretendard;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+`
