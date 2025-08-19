@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Outlet } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import { Outlet } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -25,12 +25,9 @@ const Box = styled.div`
   display: flex;
   flex-direction: column;
   cursor: default;
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
-   `
-  ;
-
-
+`;
 const Layout = () => {
   return (
     <Container>

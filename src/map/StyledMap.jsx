@@ -1,9 +1,18 @@
 import styled from "styled-components";
-export const Container = styled.div``;
+export const Container = styled.div`
+  --nav-h: 75px;
+  height: 100%; /* min-height 말고 height */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+`;
 
 export const MapContainer = styled.div`
   position: relative;
-  overflow: visible;
+  flex: 0 0 auto;
+  height: calc(100% - var(--nav-h)); /* 핵심 */
+  min-height: 0;
+  z-index: 0;
 `;
 
 export const Wrap = styled.div`

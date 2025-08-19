@@ -3,22 +3,25 @@ import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 //네비게이션바
 const Bar = styled.div`
-  position: fixed;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
-  width: 390px;
-  height: 75px;
+  width: 100%;
+  height: 65px;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
   background: #fff;
-  bottom: 0;
   box-sizing: border-box;
-  padding-left: 35px;
+  padding-left: 50px;
+  padding-bottom: 8px;
 `;
 const Item = styled.div`
   margin-top: 15px;
   width: 78px;
-  height: 75px;
+  height: 65px;
   flex-shrink: 0;
   cursor: pointer;
 `;

@@ -12,7 +12,7 @@ const MyPage = () => {
   const [Logoutopen, setLogoutOpen] = useState(false);
   const [LeaveOpen, setLeaveOpen] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
-  // 닉네임 수정 상태
+  // 닉네임 수정
   const [editing, setEditing] = useState(false);
   const [newNickname, setNewNickname] = useState("");
 
