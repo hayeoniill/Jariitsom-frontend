@@ -9,7 +9,7 @@ const Bar = styled.div`
   bottom: 0;
   display: flex;
   width: 100%;
-  height: 65px;
+  height: 10%;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;

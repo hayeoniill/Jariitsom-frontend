@@ -49,7 +49,7 @@ export const ChatContainer = styled.div`
   z-index: 1;
   overflow-y: auto;
   padding: 16px;
-  height: calc(80vh - 180px);
+  height: calc(80vh - 100px);
   box-sizing: border-box;
 
   &::-webkit-scrollbar {
@@ -100,12 +100,13 @@ export const AIBubble = styled.div`
 `;
 
 export const MessageInputWrapper = styled.div`
-  position: absolute;
-  bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px) - 40px);
-  left: 6.5%;
-  width: calc(100% - 50px);
-  max-width: 342px;
-  height: 45px;
+  position: fixed;            
+  left: 50%;                   
+  transform: translateX(-50%);
+  bottom: 105px;                
+  width: 342px;                
+  height: 45px;              
+  z-index: 1000;               
   display: flex;
   align-items: center;
   border-radius: 20px;
@@ -115,8 +116,8 @@ export const MessageInputWrapper = styled.div`
   padding: 0 12px 0 16px;
   box-sizing: border-box;
   gap: 10px;
-  z-index: 3;
 `;
+
 
 export const MessageBar = styled.input`
   flex: 1;
