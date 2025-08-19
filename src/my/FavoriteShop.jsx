@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import NavigationBar from "../component/NavigationBar";
+import FavoriteList from "../component/FavoriteList";
 import CongestionList from "../component/CongestionList";
 
 export const Title = styled.div`
@@ -26,7 +27,7 @@ const FavoriteShop = () => {
     <>
       <Title>즐겨찾기 가게</Title>
       <Bar></Bar>
-      <CongestionList></CongestionList>
+      <FavoriteList></FavoriteList>
       <NavigationBar />
     </>
   );
