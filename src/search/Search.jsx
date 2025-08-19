@@ -466,9 +466,8 @@ const Search = () => {
       {/* 버튼 누르면 색 변경 */}
       <S.Favorite isActive={isActive} onClick={on_Click}>
         <img
-          src={`${process.env.PUBLIC_URL}/images/Filter/${
-            isActive ? "heart_red.svg" : "heart_gray.svg"
-          }`}
+          src={`${process.env.PUBLIC_URL}/images/Filter/${isActive ? "heart_red.svg" : "heart_gray.svg"
+            }`}
           alt="Favorite"
           width="14px"
           style={{ marginRight: "4px" }}
@@ -527,8 +526,8 @@ const Search = () => {
                     e.congestion === "low"
                       ? "/images/Congestion/green_text.svg"
                       : e.congestion === "medium"
-                      ? "/images/Congestion/yellow_text.svg"
-                      : "/images/Congestion/red_text.svg"
+                        ? "/images/Congestion/yellow_text.svg"
+                        : "/images/Congestion/red_text.svg"
                   }
                   alt="CongestionImg"
                   width="42px"

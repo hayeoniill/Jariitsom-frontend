@@ -4,10 +4,12 @@ import * as S from "./StyledShopDetail";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import SendCongestion from "../component/SendCongestion";
 import InputCust from "../component/InputCust";
+import axios from "axios";
 
 const TABS = { CONGESTION: "congestion", INFO: "info", MENU: "menu" };
 
 const ShopDetail = () => {
+
   const [activeTab, setActiveTab] = useState(TABS.CONGESTION);
   const location = useLocation();
   const { id } = useParams();
@@ -45,6 +47,37 @@ const ShopDetail = () => {
     return `${diffHours}시간 전`;
   };
 
+  //즐겨찾기 관련
+  // 즐겨찾기 버튼 관련
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    if (!shop) return;
+
+    const stored = JSON.parse(localStorage.getItem("favoriteList") || "[]");
+    if (stored.some((item) => item.id === shop.id)) {
+      setIsActive(true);
+    }
+  }, [shop]);
+
+  const on_Click = () => {
+    if (!shop || !shop.id) return;
+
+    const stored = JSON.parse(localStorage.getItem("favoriteList") || "[]");
+    let updated;
+
+    if (isActive) {
+      // 제거
+      updated = stored.filter((item) => item.id !== shop.id);
+    } else {
+      // shop 전체 저장
+      updated = [...stored, shop];
+    }
+
+    localStorage.setItem("favoriteList", JSON.stringify(updated));
+    setIsActive((prev) => !prev);
+  };
+
   // 새로고침 폴백
   useEffect(() => {
     if (!shop) {
@@ -69,9 +102,17 @@ const ShopDetail = () => {
         </S.IconButton>
 
         <img src="/images/Logo/logoSom.svg" alt="서비스 로고" width="34" />
-
-        <S.IconButton type="button" aria-label="즐겨찾기">
-          <img src="/images/star.svg" alt="" />
+        <S.IconButton
+          type="button"
+          aria-label="즐겨찾기"
+          isActive={isActive}
+          onClick={on_Click}
+        >
+          <img
+            src={`${process.env.PUBLIC_URL}/images/${isActive ? "star.svg" : "empty_star.svg"
+              }`}
+            alt="Favorite"
+          />
         </S.IconButton>
       </S.Topbox>
       <S.ShopinfoWrap>
@@ -141,8 +182,8 @@ const ShopDetail = () => {
                         cLevel === "low"
                           ? "/images/Congestion/greenSom.svg"
                           : cLevel === "medium"
-                          ? "/images/Congestion/yellowSom.svg"
-                          : "/images/Congestion/redSom.svg"
+                            ? "/images/Congestion/yellowSom.svg"
+                            : "/images/Congestion/redSom.svg"
                       }
                       alt="CongestionImg"
                       width="42px"
@@ -169,8 +210,8 @@ const ShopDetail = () => {
                         cLevel === "low"
                           ? "/images/Congestion/green_text.svg"
                           : cLevel === "medium"
-                          ? "/images/Congestion/yellow_text.svg"
-                          : "/images/Congestion/red_text.svg"
+                            ? "/images/Congestion/yellow_text.svg"
+                            : "/images/Congestion/red_text.svg"
                       }
                       alt="CongestionImg"
                       width="42px"

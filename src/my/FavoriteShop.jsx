@@ -1,35 +1,69 @@
-import React from "react";
+// src/component/FavoriteList.jsx
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
-import NavigationBar from "../component/NavigationBar";
-import FavoriteList from "../component/FavoriteList";
-import CongestionList from "../component/CongestionList";
 
-export const Title = styled.div`
-  color: #000;
-  font-family: Pretendard;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 22px; /* 122.222% */
-  letter-spacing: -0.408px;
-  position: absolute;
-  top: 64px;
-  left: 147px;
+const ListContainer = styled.div`
+  padding: 20px;
 `;
 
-export const Bar = styled.div`
-  height: 1.5px;
-  background: #f0f0f0f0;
-  margin-top: 100px;
+const ShopCard = styled.div`
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 `;
-const FavoriteShop = () => {
+
+const ShopName = styled.div`
+  font-weight: 600;
+  font-size: 16px;
+`;
+
+const ShopInfo = styled.div`
+  margin-top: 5px;
+  font-size: 14px;
+  color: #555;
+`;
+
+const FavoriteList = () => {
+  const [bookmarks, setBookmarks] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token"); // 로그인 후 저장해둔 토큰
+    axios.get("http://127.0.0.1:8000/bookmarks/", {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    })
+      .then((res) => {
+        setBookmarks(res.data);
+      })
+      .catch((err) => {
+        console.error("즐겨찾기 불러오기 실패:", err);
+      });
+  }, []);
+
+  if (bookmarks.length === 0) {
+    return <ListContainer>즐겨찾기한 가게가 없습니다.</ListContainer>;
+  }
+
   return (
-    <>
-      <Title>즐겨찾기 가게</Title>
-      <Bar></Bar>
-      <FavoriteList></FavoriteList>
-      <NavigationBar />
-    </>
+    <ListContainer>
+      {bookmarks.map((bm) => (
+        <ShopCard key={bm.id}>
+          <ShopName>{bm.store.name}</ShopName>
+          <ShopInfo>현재 혼잡도: {bm.store.ai_congestion_now}</ShopInfo>
+          <ShopInfo>
+            카카오맵:{" "}
+            <a href={bm.store.kakao_url} target="_blank" rel="noreferrer">
+              보러가기
+            </a>
+          </ShopInfo>
+        </ShopCard>
+      ))}
+    </ListContainer>
   );
 };
-export default FavoriteShop;
+
+export default FavoriteList;
