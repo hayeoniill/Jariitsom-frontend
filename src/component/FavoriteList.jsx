@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
-// 메인화면에서 즐겨찾기 가게 혼잡도를 불러옵니다.
+import axios from "axios";
 
 const Box = styled.div`
   width: 345px;
@@ -14,6 +13,7 @@ const Box = styled.div`
   align-items: center;
   margin: 13px auto;
 `;
+
 const LeftBox = styled.div`
   display: flex;
   justify-content: center;
@@ -30,8 +30,7 @@ const Item = styled.span`
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
-  line-height: 22px; /* 157.143% */
-
+  line-height: 22px;
 
   img {
     object-fit: cover;
@@ -44,20 +43,36 @@ const RightBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top:10px;
+  margin-top: 10px;
 `;
-//porps값으로 리밋값을줘서 그만큼 혼잡도를 보여줌 home에서는 2개, 즐겨찾기페이지에서는 전체
+
 function FavoriteList({ limit }) {
     const [favoriteList, setFavoriteList] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        // localStorage에서 불러오기
-        const stored = JSON.parse(localStorage.getItem("favoriteList") || "[]");
-        setFavoriteList(stored);
+        const fetchBookmarks = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) return;
+
+                const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+                const res = await axios.get(`${API_URL}/bookmarks/`, {
+                    headers: { Authorization: `Token ${token}` },
+                });
+
+                // API 응답에서 store 객체만 꺼내서 리스트로 변환
+                const stores = res.data.map((bookmark) => bookmark.store);
+                setFavoriteList(stores);
+            } catch (err) {
+                console.error("즐겨찾기 목록 불러오기 실패:", err);
+            }
+        };
+
+        fetchBookmarks();
     }, []);
 
-    // ↓ limit이 있으면 잘라서, 없으면 전체
+    // limit 있으면 제한, 없으면 전체
     const visibleList = limit ? favoriteList.slice(0, limit) : favoriteList;
 
     return (
@@ -67,16 +82,11 @@ function FavoriteList({ limit }) {
                     즐겨찾는 가게가 없습니다.
                 </p>
             ) : (
-                visibleList.map((item, idx) => (
+                visibleList.map((store) => (
                     <Box
-                        key={idx}
-                        onClick={() =>
-                            navigate(`/ShopDetail/${item.id}`, {
-                                state: { id: item.id },
-                            })
-                        }
+                        key={store.id}
+                        onClick={() => navigate(`/ShopDetail/${store.id}`, { state: store })}
                     >
-
                         <LeftBox>
                             <Item>
                                 <img
@@ -84,15 +94,15 @@ function FavoriteList({ limit }) {
                                     alt="즐겨찾기"
                                 />
                             </Item>
-                            <Item>{item.name}</Item>
+                            <Item>{store.name}</Item>
                         </LeftBox>
                         <RightBox>
                             <Item>
                                 <img
                                     src={
-                                        item.congestion === "low"
+                                        store.ai_congestion_now === "low"
                                             ? process.env.PUBLIC_URL + "/images/Congestion/green_text.svg"
-                                            : item.congestion === "medium"
+                                            : store.ai_congestion_now === "medium"
                                                 ? process.env.PUBLIC_URL + "/images/Congestion/yellow_text.svg"
                                                 : process.env.PUBLIC_URL + "/images/Congestion/red_text.svg"
                                     }
@@ -106,6 +116,5 @@ function FavoriteList({ limit }) {
         </div>
     );
 }
-
 
 export default FavoriteList;

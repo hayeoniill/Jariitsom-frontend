@@ -46,35 +46,51 @@ const ShopDetail = () => {
     return `${diffHours}시간 전`;
   };
 
-  //즐겨찾기 관련
-  // 즐겨찾기 버튼 관련
+  // 즐겨찾기 상태
   const [isActive, setIsActive] = useState(false);
 
+  // 현재 가게가 즐겨찾기인지 초기화
   useEffect(() => {
     if (!shop) return;
 
-    const stored = JSON.parse(localStorage.getItem("favoriteList") || "[]");
-    if (stored.some((item) => item.id === shop.id)) {
-      setIsActive(true);
-    }
+    const checkBookmark = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await axios.get(
+          `${API_URL}/stores/?bookmarked=true`,
+          {
+            headers: { Authorization: `Token ${token}` },
+          }
+        );
+        setIsActive(res.data.some((item) => item.id === shop.id));
+      } catch (err) {
+        console.error("즐겨찾기 상태 확인 실패:", err);
+      }
+    };
+
+    checkBookmark();
   }, [shop]);
 
-  const on_Click = () => {
+  const API_URL = "http://localhost:8000";
+
+  const on_Click = async () => {
     if (!shop || !shop.id) return;
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.post(
+        `${API_URL}/stores/${shop.id}/bookmark/`,
+        {},
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      );
 
-    const stored = JSON.parse(localStorage.getItem("favoriteList") || "[]");
-    let updated;
+      if (res.status === 201) setIsActive(true);
+      else if (res.status === 200) setIsActive(false);
 
-    if (isActive) {
-      // 제거
-      updated = stored.filter((item) => item.id !== shop.id);
-    } else {
-      // shop 전체 저장
-      updated = [...stored, shop];
+    } catch (err) {
+      console.error("즐겨찾기 토글 실패:", err);
     }
-
-    localStorage.setItem("favoriteList", JSON.stringify(updated));
-    setIsActive((prev) => !prev);
   };
 
   // 새로고침 폴백
@@ -86,8 +102,6 @@ const ShopDetail = () => {
   }, [shop]);
 
   // 특정가게 상세페이지 조화
-  // ...
-
   useEffect(() => {
     // 1) location.state로 넘어온 shop이 없을 경우 → API 호출
     if (!shop && id) {
@@ -100,9 +114,31 @@ const ShopDetail = () => {
               headers: { Authorization: `Token ${token}` },
             }
           );
-          setShop(res.data);
-          // 새로고침 대비해서 sessionStorage에도 저장
-          sessionStorage.setItem("lastShop", JSON.stringify(res.data));
+
+          // 서버 응답(JSON)
+          const s = res.data;
+          const mappedShop = {
+            ...s,
+            businessHours: s.business_hours || [],
+            walking_time: {
+              front_gate: s.main_gate_distance
+                ? `${s.main_gate_distance}분`
+                : "정보 없음",
+              back_gate: s.back_gate_distance
+                ? `${s.back_gate_distance}분`
+                : "정보 없음",
+            },
+            link: s.kakao_url || null,
+            statusText: s.is_open ? "영업중" : "영업종료",
+            distanceText: s.user_distance
+              ? `${s.user_distance}m`
+              : "거리 정보 없음",
+          };
+
+          setShop(mappedShop);
+
+          // 새로고침 대비
+          sessionStorage.setItem("lastShop", JSON.stringify(mappedShop));
         } catch (err) {
           console.error("가게 상세 불러오기 실패:", err);
         }
@@ -110,6 +146,7 @@ const ShopDetail = () => {
       fetchShop();
     }
   }, [id, shop]);
+
 
   const handleBack = () => navigate(-1);
 
@@ -130,16 +167,14 @@ const ShopDetail = () => {
         <S.IconButton
           type="button"
           aria-label="즐겨찾기"
-          isActive={isActive}
           onClick={on_Click}
         >
           <img
-            src={`${process.env.PUBLIC_URL}/images/${
-              isActive ? "star.svg" : "empty_star.svg"
-            }`}
+            src={isActive ? "/images/star.svg" : "/images/empty_star.svg"}
             alt="Favorite"
           />
         </S.IconButton>
+
       </S.Topbox>
       <S.ShopinfoWrap>
         <S.ShopTopInfoWrap>
@@ -208,8 +243,8 @@ const ShopDetail = () => {
                         cLevel === "low"
                           ? "/images/Congestion/greenSom.svg"
                           : cLevel === "medium"
-                          ? "/images/Congestion/yellowSom.svg"
-                          : "/images/Congestion/redSom.svg"
+                            ? "/images/Congestion/yellowSom.svg"
+                            : "/images/Congestion/redSom.svg"
                       }
                       alt="CongestionImg"
                       width="42px"
@@ -236,8 +271,8 @@ const ShopDetail = () => {
                         cLevel === "low"
                           ? "/images/Congestion/green_text.svg"
                           : cLevel === "medium"
-                          ? "/images/Congestion/yellow_text.svg"
-                          : "/images/Congestion/red_text.svg"
+                            ? "/images/Congestion/yellow_text.svg"
+                            : "/images/Congestion/red_text.svg"
                       }
                       alt="CongestionImg"
                       width="42px"

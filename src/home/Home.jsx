@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import NavigationBar from "../component/NavigationBar";
 import CongestionList from "../component/CongestionList";
 import LowList from "../component/LowList";
+import axios from "axios";
+
 const Home = () => {
     const navigate = useNavigate();
     const goSearchWith = (sub) => {
@@ -123,7 +125,7 @@ const Home = () => {
                 <H.FavoriteShopTitle>즐겨찾기 가게 혼잡도</H.FavoriteShopTitle>
                 <H.plusBtn onClick={goFavorite}> 더보기 &gt; </H.plusBtn>
             </H.TitleContainer>
-            <CongestionList limit={2} />
+            <CongestionList />
 
             <H.TitleBox>
                 <H.placeImg src="/images/place.svg" />

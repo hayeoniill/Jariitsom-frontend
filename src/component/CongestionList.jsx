@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
-// 메인화면에서 즐겨찾기 가게 혼잡도를 불러옵니다.
+import axios from "axios";
 
 const Box = styled.div`
   width: 345px;
@@ -14,6 +13,7 @@ const Box = styled.div`
   align-items: center;
   margin: 13px auto;
 `;
+
 const LeftBox = styled.div`
   display: flex;
   justify-content: center;
@@ -30,7 +30,7 @@ const Item = styled.span`
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 22px; /* 157.143% */
+  line-height: 22px;
 
   img {
     width: 27px;
@@ -46,19 +46,32 @@ const RightBox = styled.div`
   justify-content: center;
   align-items: center;
 `;
-//porps값으로 리밋값을줘서 그만큼 혼잡도를 보여줌 home에서는 2개, 즐겨찾기페이지에서는 전체
-function CongestionList({ limit }) {
+
+function CongestionList() {
     const [favoriteList, setFavoriteList] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        // localStorage에서 불러오기
-        const stored = JSON.parse(localStorage.getItem("favoriteList") || "[]");
-        setFavoriteList(stored);
-    }, []);
+        const fetchBookmarks = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) return;
 
-    // ↓ limit이 있으면 잘라서, 없으면 전체
-    const visibleList = limit ? favoriteList.slice(0, limit) : favoriteList;
+                const API_URL = "http://localhost:8000";
+                const res = await axios.get(`${API_URL}/stores/?bookmarked=true`, {
+                    headers: { Authorization: `Token ${token}` },
+                });
+
+                // 랜덤 2개만 뽑기
+                const shuffled = [...res.data].sort(() => Math.random() - 0.5);
+                setFavoriteList(shuffled.slice(0, 2));
+            } catch (err) {
+                console.error("즐겨찾기 목록 불러오기 실패:", err);
+            }
+        };
+
+        fetchBookmarks();
+    }, []);
 
     return (
         <div>
@@ -67,16 +80,13 @@ function CongestionList({ limit }) {
                     즐겨찾는 가게가 없습니다.
                 </p>
             ) : (
-                visibleList.map((item, idx) => (
+                favoriteList.map((item) => (
                     <Box
-                        key={idx}
+                        key={item.id}
                         onClick={() =>
-                            navigate(`/ShopDetail/${item.id}`, {
-                                state: { id: item.id },
-                            })
+                            navigate(`/ShopDetail/${item.id}`, { state: item })
                         }
                     >
-
                         <LeftBox>
                             <Item>
                                 <img
@@ -90,9 +100,9 @@ function CongestionList({ limit }) {
                             <Item>
                                 <img
                                     src={
-                                        item.congestion === "low"
+                                        item.ai_congestion_now === "low"
                                             ? process.env.PUBLIC_URL + "/images/Congestion/greenSom.svg"
-                                            : item.congestion === "medium"
+                                            : item.ai_congestion_now === "medium"
                                                 ? process.env.PUBLIC_URL + "/images/Congestion/yellowSom.svg"
                                                 : process.env.PUBLIC_URL + "/images/Congestion/redSom.svg"
                                     }
@@ -106,6 +116,5 @@ function CongestionList({ limit }) {
         </div>
     );
 }
-
 
 export default CongestionList;
