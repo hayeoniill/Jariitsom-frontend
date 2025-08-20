@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../component/NavigationBar";
 import { useLocation } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 
 // ---------- 시간 유틸 ----------
 const toToday = (hhmm) => {
@@ -77,11 +77,11 @@ const Search = () => {
       case "별점 높은 순":
         return "-rating";
       case "여유로운 순":
-        return "population_ratio";
+        return "relaxed";
       case "가까운 순":
         return "distance";
       default:
-        return ""; //기본 순
+        return "";
     }
   };
 
@@ -117,137 +117,179 @@ const Search = () => {
     setSubCategory(category);
   };
 
-  // 더미데이터
+  // // 더미데이터
+  // useEffect(() => {
+  //   // TODO: 백엔드 붙으면 이 블록 삭제하고 fetch/axios 해제
+  //   const mock = [
+  //     {
+  //       id: 1,
+  //       name: "슬기카페",
+  //       subcategory: "cake",
+  //       distanceText: "도보 3분",
+  //       rating: 4.6,
+  //       bookmarked: true,
+  //       congestion: "low",
+  //       address: "서울 성북구 화랑로13길 60",
+  //       periods: [{ start: "10:00", end: "22:00" }], // 브레이크 X
+  //       businessHours: [
+  //         "일요일: 휴무",
+  //         "월요일: 10:00 ~ 22:00",
+  //         "화요일: 10:00 ~ 22:00",
+  //         "수요일: 10:00 ~ 22:00",
+  //         "목요일: 10:00 ~ 22:00",
+  //         "금요일: 10:00 ~ 22:00",
+  //         "토요일: 11:00 ~ 20:00",
+  //       ],
+  //       breakTime: null,
+  //       link: "https://map.naver.com/v5/search/슬기카페",
+  //     },
+  //     {
+  //       id: 2,
+  //       name: "하월곡 분식",
+  //       subcategory: "snack",
+  //       distanceText: "도보 3분",
+  //       rating: 4.2,
+  //       bookmarked: false,
+  //       congestion: "medium",
+  //       address: "서울 성북구 장위로 45",
+  //       periods: [{ start: "11:00", end: "21:00" }],
+  //       businessHours: [
+  //         "월~금 10:00 - 22:00",
+  //         "토요일 10:00 - 20:00",
+  //         "일요일 휴무",
+  //       ],
+  //       breakTime: null,
+  //       link: "https://map.naver.com/v5/search/하월곡분식",
+  //     },
+  //     {
+  //       id: 3,
+  //       name: "도쿄라멘",
+  //       subcategory: "japanese",
+  //       distanceText: "도보 3분",
+  //       rating: 4.9,
+  //       bookmarked: true,
+  //       congestion: "high",
+  //       address: "서울 성북구 화랑로 110",
+  //       periods: [
+  //         { start: "11:30", end: "15:30" },
+  //         { start: "17:00", end: "21:00" }, // 브레이크 O
+  //       ],
+  //       businessHours: [
+  //         "월~금 10:00 - 22:00",
+  //         "토요일 10:00 - 20:00",
+  //         "일요일 휴무",
+  //       ],
+  //       breakTime: "15:30 ~ 17:00",
+  //       link: "https://map.naver.com/v5/search/도쿄라멘",
+  //     },
+  //     {
+  //       id: 4,
+  //       name: "행복은 간장밥 동덕여대점",
+  //       subcategory: "snack",
+  //       distanceText: "도보 5분",
+  //       rating: 5.0,
+  //       bookmarked: true,
+  //       congestion: "high",
+  //       address: "서울 성북구 동소문동 3길 21",
+  //       periods: [{ start: "11:30", end: "15:30" }], // 요청사항: 점심만
+  //       businessHours: [
+  //         "월~금 10:00 - 22:00",
+  //         "토요일 10:00 - 20:00",
+  //         "일요일 휴무",
+  //       ],
+  //       breakTime: null,
+  //       link: "https://map.naver.com/v5/search/행복은간장밥",
+  //     },
+  //   ];
+  //   setDataList(mock);
+  // }, []);
+
   useEffect(() => {
-    // TODO: 백엔드 붙으면 이 블록 삭제하고 fetch/axios 해제
-    const mock = [
-      {
-        id: 1,
-        name: "슬기카페",
-        subcategory: "cake",
-        distanceText: "도보 3분",
-        rating: 4.6,
-        bookmarked: true,
-        congestion: "low",
-        address: "서울 성북구 화랑로13길 60",
-        periods: [{ start: "10:00", end: "22:00" }], // 브레이크 X
-        businessHours: [
-          "일요일: 휴무",
-          "월요일: 10:00 ~ 22:00",
-          "화요일: 10:00 ~ 22:00",
-          "수요일: 10:00 ~ 22:00",
-          "목요일: 10:00 ~ 22:00",
-          "금요일: 10:00 ~ 22:00",
-          "토요일: 11:00 ~ 20:00",
-        ],
-        breakTime: null,
-        link: "https://map.naver.com/v5/search/슬기카페",
-      },
-      {
-        id: 2,
-        name: "하월곡 분식",
-        subcategory: "snack",
-        distanceText: "도보 3분",
-        rating: 4.2,
-        bookmarked: false,
-        congestion: "medium",
-        address: "서울 성북구 장위로 45",
-        periods: [{ start: "11:00", end: "21:00" }],
-        businessHours: [
-          "월~금 10:00 - 22:00",
-          "토요일 10:00 - 20:00",
-          "일요일 휴무",
-        ],
-        breakTime: null,
-        link: "https://map.naver.com/v5/search/하월곡분식",
-      },
-      {
-        id: 3,
-        name: "도쿄라멘",
-        subcategory: "japanese",
-        distanceText: "도보 3분",
-        rating: 4.9,
-        bookmarked: true,
-        congestion: "high",
-        address: "서울 성북구 화랑로 110",
-        periods: [
-          { start: "11:30", end: "15:30" },
-          { start: "17:00", end: "21:00" }, // 브레이크 O
-        ],
-        businessHours: [
-          "월~금 10:00 - 22:00",
-          "토요일 10:00 - 20:00",
-          "일요일 휴무",
-        ],
-        breakTime: "15:30 ~ 17:00",
-        link: "https://map.naver.com/v5/search/도쿄라멘",
-      },
-      {
-        id: 4,
-        name: "행복은 간장밥 동덕여대점",
-        subcategory: "snack",
-        distanceText: "도보 5분",
-        rating: 5.0,
-        bookmarked: true,
-        congestion: "high",
-        address: "서울 성북구 동소문동 3길 21",
-        periods: [{ start: "11:30", end: "15:30" }], // 요청사항: 점심만
-        businessHours: [
-          "월~금 10:00 - 22:00",
-          "토요일 10:00 - 20:00",
-          "일요일 휴무",
-        ],
-        breakTime: null,
-        link: "https://map.naver.com/v5/search/행복은간장밥",
-      },
-    ];
-    setDataList(mock);
-  }, []);
+    const fetchData = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setError("로그인이 필요합니다.");
+        return;
+      }
 
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       const token = localStorage.getItem("token");
+      let url = `http://localhost:8000/stores/?category=${mainCategory}`;
+      if (mainCategory === "restaurant" && subCategory !== "전체") {
+        url += `&subcategory=${subCategory}`;
+      }
+      if (isActive) {
+        url += `&bookmarked=true`;
+      }
 
-  //       //음식점별 조회 api
-  //       let url = `http://localhost:8000/stores/?category=${mainCategory}`;
-  //       // 음식 카테고리별 조회
-  //       if (mainCategory === "restaurant" && subCategory !== "전체") {
-  //         url += `&subcategory=${subCategory}`;
-  //       }
-  //       // 즐겨찾기한 가게만 필터링
-  //       if (isActive) {
-  //         url += `&bookmarked=true`;
-  //       }
+      const ordering = getOrdering();
+      if (ordering) {
+        url += `&ordering=${ordering}`;
+      }
 
-  //       // 정렬
-  //       const ordering = getOrdering();
-  //       if (ordering) {
-  //         url += `&ordering=${ordering}`;
-  //       }
+      try {
+        const res = await axios.get(url, {
+          headers: { Authorization: `Token ${token}` },
+        });
+        let fetchedData = res.data;
 
-  //       try {
-  //         const res = await axios.get(url, {
-  //           headers: { Authorization: `Token ${token}` },
-  //         });
-  //         //가까운순
-  //         let fetchedData = res.data;
+        if (ordering === "distance") {
+          fetchedData = [...fetchedData].sort(
+            (a, b) => a.latitude - b.latitude
+          );
+        }
+        setDataList(fetchedData);
+      } catch (err) {
+        console.error("가게 데이터 불러오기 실패:", err);
+        setError("데이터를 불러오지 못했습니다.");
+      }
+    };
 
-  //         const ordering = getOrdering();
-  //         if (ordering === "distance") {
-  //           fetchedData = [...fetchedData].sort(
-  //             (a, b) => a.latitude - b.latitude
-  //           ); // 가까운순
-  //         }
+    fetchData();
+  }, [mainCategory, subCategory, isActive, sortText]);
 
-  //         setDataList(fetchedData);
-  //       } catch (err) {
-  //         console.error("가게 데이터 불러오기 실패:", err);
-  //         setError("데이터를 불러오지 못했습니다.");
-  //       }
-  //     };
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = localStorage.getItem("token");
 
-  //     fetchData();
-  //   }, [mainCategory, subCategory, isActive, sortText]);
+      //음식점별 조회 api
+      let url = `http://localhost:8000/stores/?category=${mainCategory}`;
+      // 음식 카테고리별 조회
+      if (mainCategory === "restaurant" && subCategory !== "전체") {
+        url += `&subcategory=${subCategory}`;
+      }
+      // 즐겨찾기한 가게만 필터링
+      if (isActive) {
+        url += `&bookmarked=true`;
+      }
+
+      // 정렬
+      const ordering = getOrdering();
+      if (ordering) {
+        url += `&ordering=${ordering}`;
+      }
+
+      try {
+        const res = await axios.get(url, {
+          headers: { Authorization: `Token ${token}` },
+        });
+        //가까운순
+        let fetchedData = res.data;
+
+        const ordering = getOrdering();
+        if (ordering === "distance") {
+          fetchedData = [...fetchedData].sort(
+            (a, b) => a.latitude - b.latitude
+          ); // 가까운순
+        }
+
+        setDataList(fetchedData);
+      } catch (err) {
+        console.error("가게 데이터 불러오기 실패:", err);
+        setError("데이터를 불러오지 못했습니다.");
+      }
+    };
+
+    fetchData();
+  }, [mainCategory, subCategory, isActive, sortText]);
   const topBoxRef = useRef(null);
   useEffect(() => {
     if (topBoxRef.current)
@@ -466,8 +508,9 @@ const Search = () => {
       {/* 버튼 누르면 색 변경 */}
       <S.Favorite isActive={isActive} onClick={on_Click}>
         <img
-          src={`${process.env.PUBLIC_URL}/images/Filter/${isActive ? "heart_red.svg" : "heart_gray.svg"
-            }`}
+          src={`${process.env.PUBLIC_URL}/images/Filter/${
+            isActive ? "heart_red.svg" : "heart_gray.svg"
+          }`}
           alt="Favorite"
           width="14px"
           style={{ marginRight: "4px" }}
@@ -526,8 +569,8 @@ const Search = () => {
                     e.congestion === "low"
                       ? "/images/Congestion/green_text.svg"
                       : e.congestion === "medium"
-                        ? "/images/Congestion/yellow_text.svg"
-                        : "/images/Congestion/red_text.svg"
+                      ? "/images/Congestion/yellow_text.svg"
+                      : "/images/Congestion/red_text.svg"
                   }
                   alt="CongestionImg"
                   width="42px"

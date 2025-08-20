@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function KakaoCallback() {
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -11,41 +14,28 @@ export default function KakaoCallback() {
       return;
     }
 
-    const body = new URLSearchParams({
-      grant_type: "authorization_code",
-      client_id: process.env.REACT_APP_KAKAO_REST_KEY,
-      redirect_uri: "http://localhost:3000/auth/kakao/callback",
-      code,
-    });
-
     (async () => {
       try {
-        // 1) 토큰 요청 - 백에서 해야함
-        const tokenRes = await fetch("https://kauth.kakao.com/oauth/token", {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body,
-        });
-        const token = await tokenRes.json();
-        if (!token.access_token) throw new Error(JSON.stringify(token));
+        // 👉 인가코드를 백엔드에 넘겨줌
+        const res = await axios.post(
+          `${process.env.REACT_APP_API_URL}/authaccounts/kakao/callback/`,
+          { code }
+        );
 
-        // 2) 사용자 정보 요청
-        const meRes = await fetch("https://kapi.kakao.com/v2/user/me", {
-          headers: { Authorization: `Bearer ${token.access_token}` },
-        });
-        const profile = await meRes.json();
+        const token = res.data?.token;
+        if (!token) throw new Error("토큰이 없습니다.");
 
-        // 3) 로컬에 저장(임시)
-        localStorage.setItem("kakao_access_token", token.access_token);
-        localStorage.setItem("kakao_profile", JSON.stringify(profile));
+        // 로컬스토리지에 토큰 저장
+        localStorage.setItem("token", token);
 
-        // 4) 메인 페이지로 이동
-        window.location.replace("/Home");
+        // 메인 페이지 이동
+        navigate("/Home");
       } catch (e) {
-        setError("로그인 실패: " + e.message);
+        console.error(e);
+        setError("로그인 실패");
       }
     })();
-  }, []);
+  }, [navigate]);
 
   return <div>{error ? error : "카카오 로그인 처리 중..."}</div>;
 }

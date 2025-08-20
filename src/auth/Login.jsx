@@ -23,6 +23,10 @@ const Login = () => {
      });
    };*/
 
+  const handleKakaoLogin = () => {
+    window.location.href = "http://127.0.0.1:8000/authaccounts/kakao/login/";
+  };
+
   const handleLogin = async () => {
     const username = idRef.current.value;
     const password = pwRef.current.value;
@@ -41,14 +45,14 @@ const Login = () => {
       const token = res.data?.key;
       if (token) {
         localStorage.setItem("token", token);
-        navigate("/mypage");
+        navigate("/home");
       } else {
         alert("토큰이 반환되지 않았습니다.");
       }
     } catch (err) {
       const msg =
         err.response?.data?.non_field_errors?.[0] ||
-        "로그인 실패. 아이디/비밀번호를 확인해줘.";
+        "아이디/비밀번호를 확인해주세요.";
       alert(msg);
       console.error(err.response?.data);
     }
@@ -56,7 +60,11 @@ const Login = () => {
 
   return (
     <>
-      <L.Logo src="/images/Logo/logo.svg" alt="logo" />
+      <L.Logo
+        src="/images/Logo/logo.svg"
+        alt="logo"
+        onClick={() => navigate("/")}
+      />
       <L.InputId ref={idRef} placeholder="아이디를 입력해주세요." />
       <L.InputPw
         ref={pwRef}
@@ -65,9 +73,9 @@ const Login = () => {
       />
       <L.LoginBtn onClick={handleLogin}>로그인</L.LoginBtn>
       <L.Bar />
-      {/*  <L.GoKakaoBtn onClick={loginWithKakao}>
+      <L.GoKakaoBtn onClick={handleKakaoLogin}>
         카카오톡으로 간편 로그인
-      </L.GoKakaoBtn> */}
+      </L.GoKakaoBtn>
       <L.GoJoinBtn onClick={() => navigate("/Join")}>회원가입 하기</L.GoJoinBtn>
     </>
   );

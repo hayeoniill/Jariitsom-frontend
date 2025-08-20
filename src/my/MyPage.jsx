@@ -41,7 +41,7 @@ const MyPage = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.patch(
-        `http://127.0.0.1:8000/user/${userInfo.pk}/`,
+        "http://127.0.0.1:8000/rest-auth/user/",
         { first_name: newNickname },
         { headers: { Authorization: `Token ${token}` } }
       );
@@ -131,9 +131,22 @@ const MyPage = () => {
       {Logoutopen && (
         <Logout
           onClose={() => setLogoutOpen(false)}
-          onConfirm={() => {
-            localStorage.removeItem("token");
-            navigate("/Login");
+          onConfirm={async () => {
+            try {
+              const token = localStorage.getItem("token");
+              if (token) {
+                await axios.post("http://127.0.0.1:8000/rest-auth/logout/", {
+                  headers: { Authorization: `Token ${token}` },
+                });
+              }
+              localStorage.removeItem("token");
+              navigate("/Login");
+            } catch (err) {
+              console.error("로그아웃 실패:", err.response?.data || err);
+
+              localStorage.removeItem("token");
+              navigate("/Login");
+            }
           }}
         />
       )}
@@ -141,9 +154,22 @@ const MyPage = () => {
       {LeaveOpen && (
         <Leave
           onClose={() => setLeaveOpen(false)}
-          onConfirm={() => {
-            localStorage.removeItem("token");
-            navigate("/Login");
+          onConfirm={async () => {
+            try {
+              const token = localStorage.getItem("token");
+              if (token) {
+                await axios.delete("http://127.0.0.1:8000/account/", {
+                  headers: { Authorization: `Token ${token}` },
+                });
+              }
+              alert("회원탈퇴가 완료되었습니다.");
+            } catch (err) {
+              console.error("회원탈퇴 실패:", err.response?.data || err);
+              alert("회원탈퇴 중 오류가 발생했습니다.");
+            } finally {
+              localStorage.removeItem("token");
+              navigate("/Login");
+            }
           }}
         />
       )}

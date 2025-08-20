@@ -9,7 +9,6 @@ import axios from "axios";
 const TABS = { CONGESTION: "congestion", INFO: "info", MENU: "menu" };
 
 const ShopDetail = () => {
-
   const [activeTab, setActiveTab] = useState(TABS.CONGESTION);
   const location = useLocation();
   const { id } = useParams();
@@ -86,6 +85,32 @@ const ShopDetail = () => {
     }
   }, [shop]);
 
+  // 특정가게 상세페이지 조화
+  // ...
+
+  useEffect(() => {
+    // 1) location.state로 넘어온 shop이 없을 경우 → API 호출
+    if (!shop && id) {
+      const fetchShop = async () => {
+        try {
+          const token = localStorage.getItem("token");
+          const res = await axios.get(
+            `${process.env.REACT_APP_API_URL}/stores/${id}/`,
+            {
+              headers: { Authorization: `Token ${token}` },
+            }
+          );
+          setShop(res.data);
+          // 새로고침 대비해서 sessionStorage에도 저장
+          sessionStorage.setItem("lastShop", JSON.stringify(res.data));
+        } catch (err) {
+          console.error("가게 상세 불러오기 실패:", err);
+        }
+      };
+      fetchShop();
+    }
+  }, [id, shop]);
+
   const handleBack = () => navigate(-1);
 
   if (!shop) return null;
@@ -109,8 +134,9 @@ const ShopDetail = () => {
           onClick={on_Click}
         >
           <img
-            src={`${process.env.PUBLIC_URL}/images/${isActive ? "star.svg" : "empty_star.svg"
-              }`}
+            src={`${process.env.PUBLIC_URL}/images/${
+              isActive ? "star.svg" : "empty_star.svg"
+            }`}
             alt="Favorite"
           />
         </S.IconButton>
@@ -182,8 +208,8 @@ const ShopDetail = () => {
                         cLevel === "low"
                           ? "/images/Congestion/greenSom.svg"
                           : cLevel === "medium"
-                            ? "/images/Congestion/yellowSom.svg"
-                            : "/images/Congestion/redSom.svg"
+                          ? "/images/Congestion/yellowSom.svg"
+                          : "/images/Congestion/redSom.svg"
                       }
                       alt="CongestionImg"
                       width="42px"
@@ -210,8 +236,8 @@ const ShopDetail = () => {
                         cLevel === "low"
                           ? "/images/Congestion/green_text.svg"
                           : cLevel === "medium"
-                            ? "/images/Congestion/yellow_text.svg"
-                            : "/images/Congestion/red_text.svg"
+                          ? "/images/Congestion/yellow_text.svg"
+                          : "/images/Congestion/red_text.svg"
                       }
                       alt="CongestionImg"
                       width="42px"

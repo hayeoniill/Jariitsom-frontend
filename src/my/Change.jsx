@@ -53,10 +53,11 @@ const Change = () => {
         return;
       }
       await axios.patch(
-        `http://127.0.0.1:8000/user/${me.pk}/`,
+        "http://127.0.0.1:8000/rest-auth/user/",
         { username: v },
         { headers: { Authorization: `Token ${token}` } }
       );
+
       alert("아이디가 변경되었습니다.");
       navigate("/MyPage");
     } catch (err) {

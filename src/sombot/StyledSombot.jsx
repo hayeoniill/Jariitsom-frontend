@@ -7,7 +7,10 @@ export const SombotWrapper = styled.div`
   position: relative;
   z-index: 2;
   width: 100%;
-  min-height: 80vh;
+  height: 100vh;
+  // min-height: 80vh;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 
   padding-bottom: calc(var(--nav-h) + var(--gap));
@@ -46,10 +49,12 @@ export const Bar = styled.div`
 
 export const ChatContainer = styled.div`
   position: relative;
-  z-index: 1;
+  // z-index: 1;
+  flex: 1;
   overflow-y: auto;
   padding: 16px;
-  height: calc(80vh - 100px);
+  height: calc(100vh - var(--nav-h) - 20px);
+  padding-bottom: calc(var(--input-h) + 110px);
   box-sizing: border-box;
 
   &::-webkit-scrollbar {
@@ -100,13 +105,13 @@ export const AIBubble = styled.div`
 `;
 
 export const MessageInputWrapper = styled.div`
-  position: fixed;            
-  left: 50%;                   
+  position: fixed;
+  left: 50%;
   transform: translateX(-50%);
-  bottom: 105px;                
-  width: 342px;                
-  height: 45px;              
-  z-index: 1000;               
+  bottom: calc(var(--nav-h) + 100px);
+  width: 342px;
+  height: 45px;
+  z-index: 1000;
   display: flex;
   align-items: center;
   border-radius: 20px;
@@ -116,8 +121,11 @@ export const MessageInputWrapper = styled.div`
   padding: 0 12px 0 16px;
   box-sizing: border-box;
   gap: 10px;
+  pointer-events: auto;
+  .someOverlay {
+    pointer-events: none;
+  }
 `;
-
 
 export const MessageBar = styled.input`
   flex: 1;
@@ -134,4 +142,10 @@ export const SendImg = styled.img`
   cursor: pointer;
   user-select: none;
   -webkit-user-drag: none;
+`;
+
+export const NavigationBarWrapper = styled.div`
+  width: 100%;
+  height: var(--nav-h);
+  z-index: 2000; /* 인풋창보다 위에 오도록 */
 `;
