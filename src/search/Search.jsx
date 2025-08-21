@@ -1,3 +1,4 @@
+// src/pages/Search.jsx
 import React, { useState, useEffect, useRef } from "react";
 import * as S from "./StyledSearch";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -8,7 +9,7 @@ import axios from "axios";
 const getOrdering = (sortText) => {
   switch (sortText) {
     case "별점 높은 순":
-      return "rating";
+      return "-rating"; // ⭐ 내림차순 정렬
     case "여유로운 순":
       return "relaxed";
     case "가까운 순":
@@ -21,9 +22,8 @@ const getOrdering = (sortText) => {
 const Search = () => {
   const [dataList, setDataList] = useState([]);
   const [error, setError] = useState("");
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(false); // 즐겨찾기 버튼 상태
 
-  // 검색창 모달
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sortText, setSortText] = useState("기본 순");
 
@@ -32,7 +32,6 @@ const Search = () => {
   const [mainCategory, setMainCategory] = useState(
     location.state?.category || "home"
   );
-
 
   const navigate = useNavigate();
 
@@ -54,17 +53,11 @@ const Search = () => {
     setSortText(text);
     setIsModalOpen(false);
   };
+
   // 데이터 불러오기
   useEffect(() => {
     const fetchData = async () => {
-      {/*    const token = localStorage.getItem("token");
-      if (!token) {
-        setError("로그인이 필요합니다.");
-        return;
-      }
-      */}
       const API_URL = "http://localhost:8000";
-
       let url = `${API_URL}/stores/?`;
 
       // 카테고리
@@ -84,7 +77,6 @@ const Search = () => {
       } else if (ordering) {
         url += `ordering=${ordering}&limit=300&`;
       }
-
       try {
         let headers = {};
 
@@ -105,19 +97,19 @@ const Search = () => {
         console.error("가게 데이터 불러오기 실패:", err);
         setError("데이터를 불러오지 못했습니다.");
       }
-
     };
 
     fetchData();
   }, [mainCategory, isActive, sortText]);
 
-
-
   // 스크롤 맨 위로
   const topBoxRef = useRef(null);
   useEffect(() => {
     if (topBoxRef.current)
-      topBoxRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      topBoxRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
   }, []);
 
   // 검색 필터링 (이름만 적용)
@@ -320,10 +312,18 @@ const Search = () => {
         <>
           <S.ModalOverlay onClick={() => setIsModalOpen(false)} />
           <S.ModalBox>
-            <S.ModalItem onClick={() => handleSelect("기본 순")}>기본 순</S.ModalItem>
-            <S.ModalItem onClick={() => handleSelect("가까운 순")}>가까운 순</S.ModalItem>
-            <S.ModalItem onClick={() => handleSelect("여유로운 순")}>여유로운 순</S.ModalItem>
-            <S.ModalItem onClick={() => handleSelect("별점 높은 순")}>별점 높은 순</S.ModalItem>
+            <S.ModalItem onClick={() => handleSelect("기본 순")}>
+              기본 순
+            </S.ModalItem>
+            <S.ModalItem onClick={() => handleSelect("가까운 순")}>
+              가까운 순
+            </S.ModalItem>
+            <S.ModalItem onClick={() => handleSelect("여유로운 순")}>
+              여유로운 순
+            </S.ModalItem>
+            <S.ModalItem onClick={() => handleSelect("별점 높은 순")}>
+              별점 높은 순
+            </S.ModalItem>
           </S.ModalBox>
         </>
       )}
@@ -331,7 +331,8 @@ const Search = () => {
       {/* 즐겨찾기 버튼 */}
       <S.Favorite isActive={isActive} onClick={on_Click}>
         <img
-          src={`${process.env.PUBLIC_URL}/images/Filter/${isActive ? "heart_red.svg" : "heart_gray.svg"}`}
+          src={`${process.env.PUBLIC_URL}/images/Filter/${isActive ? "heart_red.svg" : "heart_gray.svg"
+            }`}
           alt="Favorite"
           width="14px"
           style={{ marginRight: "4px" }}
@@ -369,10 +370,9 @@ const Search = () => {
             <S.CongestionImg>
               <img
                 src={
-                  //ai_congestion_now 라서 congestion과는 다른 이미지 뜸 
-                  e.ai_congestion_now === 'low'
+                  e.ai_congestion_now === "low"
                     ? "/images/Congestion/green_text.svg"
-                    : e.ai_congestion_now === 'medium'
+                    : e.ai_congestion_now === "medium"
                       ? "/images/Congestion/yellow_text.svg"
                       : "/images/Congestion/red_text.svg"
                 }
