@@ -5,7 +5,7 @@ import axios from "axios";
 
 const Box = styled.div`
   width: 345px;
-  height: 45px;
+  height: 55px;
   border-radius: 12px;
   background: #f4f5f7;
   display: flex;

@@ -57,11 +57,12 @@ const Search = () => {
   // 데이터 불러오기
   useEffect(() => {
     const fetchData = async () => {
-      const token = localStorage.getItem("token");
+      {/*    const token = localStorage.getItem("token");
       if (!token) {
         setError("로그인이 필요합니다.");
         return;
       }
+      */}
       const API_URL = "http://localhost:8000";
 
       let url = `${API_URL}/stores/?`;
@@ -85,14 +86,26 @@ const Search = () => {
       }
 
       try {
-        const res = await axios.get(url, {
-          headers: { Authorization: `Token ${token}` },
-        });
+        let headers = {};
+
+        if (isActive) {
+          // 즐겨찾기 보기 -> 토큰 필요
+          const token = localStorage.getItem("token");
+          if (!token) {
+            setError("로그인이 필요합니다.");
+            return;
+          }
+          headers.Authorization = `Token ${token}`;
+        }
+
+        const res = await axios.get(url, { headers });
         setDataList(res.data);
+
       } catch (err) {
         console.error("가게 데이터 불러오기 실패:", err);
         setError("데이터를 불러오지 못했습니다.");
       }
+
     };
 
     fetchData();

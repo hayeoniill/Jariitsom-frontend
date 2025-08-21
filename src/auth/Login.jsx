@@ -77,6 +77,8 @@ const Login = () => {
         카카오톡으로 간편 로그인
       </L.GoKakaoBtn>
       <L.GoJoinBtn onClick={() => navigate("/Join")}>회원가입 하기</L.GoJoinBtn>
+      <L.GoMain onClick={() => navigate("/Home")}> 비회원으로 시작하기 </L.GoMain>
+
     </>
   );
 };

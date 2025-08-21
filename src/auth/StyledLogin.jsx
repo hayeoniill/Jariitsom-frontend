@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Logo = styled.img`
   margin-left: 163px;
-  margin-top: 137px;
+  margin-top: 100px;
   width: 65px;
 `;
 
@@ -129,6 +129,31 @@ export const GoJoinBtn = styled.button`
   display: flex;
   margin-left: 24px;
   cursor: pointer;
+  &:hover {
+    opacity: 80%;
+  }
+`;
+export const GoMain = styled.button`
+  margin-top: 20px;
+  width: 342px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 25px;
+  border: 1.5px solid #8b2842;
+  background: #fff;
+  color: var(--Main, #8b2842);
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin-left: 24px;
+  cursor: pointer;
+  box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.25);
+
   &:hover {
     opacity: 80%;
   }

@@ -123,10 +123,10 @@ const Home = () => {
 
             <H.TitleBox>
                 <H.placeImg src="/images/place.svg" />
-                <H.HomeTitle>지금 여유로운 곳</H.HomeTitle>
+                <H.HomeTitle>지금 여유로운 곳 추천</H.HomeTitle>
             </H.TitleBox>
             <LowList />
-
+            {/*
             <H.TitleBox>
                 <H.placeImg src="/images/place.svg" />
                 <H.HomeTitle>잇솜이의 추천 메뉴</H.HomeTitle>
@@ -137,6 +137,7 @@ const Home = () => {
                     아무거나 먹어
                 </H.RecommendChat>
             </H.RecommendBox>
+            */}
             <NavigationBar />
         </>
     );

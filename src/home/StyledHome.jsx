@@ -4,7 +4,8 @@ export const TopLogo = styled.img`
 width: 50px;
 height: 56px;
 margin-left:170px;
-margin-top:50px;
+margin-top:60px;
+margin-bottom:10px;
 `;
 
 export const SearchBar = styled.div`
@@ -24,6 +25,7 @@ padding-left:16px;
 align-items: center;
 display: flex;
 box-sizing: border-box;
+margin-bottom:15px;
 
 `;
 export const SearchImg = styled.img`
@@ -80,6 +82,7 @@ font-family: Pretendard;
 font-size: 16px;
 font-weight: 600;
 margin-left:25px;
+margin-top:10px;
 `;
 export const plusBtn = styled.div`
 color:  #8B2842;

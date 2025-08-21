@@ -80,6 +80,7 @@ const ShopDetail = () => {
       const res = await axios.post(
         `${API_URL}/stores/${shop.id}/bookmark/`,
         {},
+
         {
           headers: { Authorization: `Token ${token}` },
         }
@@ -107,12 +108,12 @@ const ShopDetail = () => {
     if (!shop && id) {
       const fetchShop = async () => {
         try {
-          const token = localStorage.getItem("token");
+          {/*  const token = localStorage.getItem("token");*/ }
           const res = await axios.get(
             `${process.env.REACT_APP_API_URL}/stores/${id}/`,
-            {
+            {/**  {
               headers: { Authorization: `Token ${token}` },
-            }
+            } */}
           );
 
           // 서버 응답(JSON)
@@ -180,7 +181,7 @@ const ShopDetail = () => {
         <S.ShopTopInfoWrap>
           <S.ShopImage>
             <img
-              src={`/images/TestImg/${shop.name}.png`}
+              src={shop.photo || `/images/TestImg/${shop.name}.png`}
               alt={`${shop.name} 대표 이미지`}
             />
           </S.ShopImage>
