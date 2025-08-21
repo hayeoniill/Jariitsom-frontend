@@ -3,7 +3,8 @@ import styled, { css } from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 40vh;
+  margin-bottom: 10px;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -237,7 +238,7 @@ export const FutureBox = styled.div`
 export const Ftext = styled.div`
   color: #000;
   font-family: Pretendard;
-  font-size: 13px;
+  font-size: 11px;
   font-style: normal;
   font-weight: 600;
   line-height: 22px; /* 169.231% */
@@ -261,7 +262,7 @@ export const PlusBtn = styled.div`
 `;
 export const realtimeBox = styled.div`
   margin: 10px 0;
-  width: 312px;
+  width: 322px;
   height: 40px;
   flex-shrink: 0;
   border-radius: 15px;
@@ -295,7 +296,7 @@ export const realText = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  padding-left: 30px;
+  padding-left: 40px;
 `;
 export const rightBtn = styled.div`
   width: 342px;

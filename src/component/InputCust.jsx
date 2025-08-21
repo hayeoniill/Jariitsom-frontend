@@ -14,7 +14,6 @@ function InputCust({ onClose, setInputData }) {
     "10분 이내",
     "20분 이내",
     "30분 이내",
-    "1시간 이내",
     "1시간 이상",
   ];
   const congestionOptions = ["여유", "보통", "혼잡"];

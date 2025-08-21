@@ -1,6 +1,7 @@
 import styled from "styled-components";
 //스타일 속성
-export const Container = styled.div``;
+export const Container = styled.div`
+ cursor: pointer;`;
 
 export const SendBtn = styled.div`
   width: 342px;

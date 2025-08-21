@@ -78,20 +78,15 @@ function LowList() {
 
     return (
         <BoxContainer>
-            {recommended.length === 0 ? (
-                <p style={{ textAlign: "center", marginTop: "20px", color: "#888" }}>
-                    현재 여유로운 가게가 없습니다.
-                </p>
-            ) : (
-                recommended.map((shop) => (
-                    <Box
-                        key={shop.id}
-                        onClick={() => navigate(`/ShopDetail/${shop.id}`, { state: shop })}
-                    >
-                        {shop.name}
-                    </Box>
-                ))
-            )}
+            {recommended.map((shop) => (
+                <Box
+                    key={shop.id}
+                    onClick={() => navigate(`/ShopDetail/${shop.id}`, { state: shop })}
+                >
+                    {shop.name.length > 10 ? shop.name.slice(0, 10) + "..." : shop.name}
+                </Box>
+            ))}
+
         </BoxContainer>
     );
 }

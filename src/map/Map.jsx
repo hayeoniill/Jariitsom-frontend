@@ -38,6 +38,7 @@ const MapPage = () => {
   }, []);
 
   // 2) 내 위치 + 반경으로 가게 마커 불러오기
+  //URLSearchParams가 현위치 파라미터로 보내줌
   useEffect(() => {
     if (!myPos) return;
     const fetchMarkers = async () => {
