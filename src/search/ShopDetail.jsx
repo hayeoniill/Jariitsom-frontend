@@ -46,6 +46,45 @@ const ShopDetail = () => {
     return `${diffHours}시간 전`;
   };
 
+  //방문기록 조회
+  useEffect(() => {
+    if (!shop || !shop.id) return;
+
+    const fetchVisitLogs = async () => {
+      try {
+        const res = await axios.get(
+          `${API_URL}/stores/${shop.id}/visitlogs/list/?expand=${showAll}&days=7`
+        );
+
+        if (res.data && res.data.groups) {
+          // groups 안의 items를 flat하게 뽑아서 state에 저장
+          const merged = res.data.groups.flatMap(group =>
+            group.items.map(item => ({
+              person: `${item.visit_count}명`,
+              waitTime: item.wait_time,
+              congestion:
+                item.congestion === "low"
+                  ? "여유"
+                  : item.congestion === "medium"
+                    ? "보통"
+                    : "혼잡",
+              createdAt: item.created_at,
+              when: item.when,       // API에서 내려준 '방금 전 / n분 전 / 날짜'
+              dayLabel: item.day_label,
+            }))
+          );
+
+          setCustInputList(merged);
+        }
+      } catch (err) {
+        console.error("방문 기록 불러오기 실패:", err);
+      }
+    };
+
+    fetchVisitLogs();
+  }, [shop, showAll]); // shop 로드되거나 '더보기' 눌렀을 때
+
+
   // 즐겨찾기 상태
   const [isActive, setIsActive] = useState(false);
 
@@ -382,13 +421,14 @@ const ShopDetail = () => {
         </S.ShopBodyInfo>
       </S.ShopinfoWrap>
       {showModal === null && <NavigationBar />}
-
       {showModal === "cust" && (
         <InputCust
+          storeId={shop.id}
           onClose={() => setShowModal(null)}
           setInputData={setCustInputList}
         />
       )}
+
     </S.Container>
   );
 };
