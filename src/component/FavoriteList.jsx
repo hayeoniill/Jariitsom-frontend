@@ -56,7 +56,7 @@ function FavoriteList({ limit }) {
                 const token = localStorage.getItem("token");
                 if (!token) return;
 
-                const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+                const API_URL = process.env.REACT_APP_API_URL;
                 const res = await axios.get(`${API_URL}/bookmarks/`, {
                     headers: { Authorization: `Token ${token}` },
                 });

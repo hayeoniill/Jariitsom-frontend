@@ -57,7 +57,7 @@ const Search = () => {
   // 데이터 불러오기
   useEffect(() => {
     const fetchData = async () => {
-      const API_URL = "http://localhost:8000";
+      const API_URL = process.env.REACT_APP_API_URL;
       let url = `${API_URL}/stores/?`;
 
       // 카테고리

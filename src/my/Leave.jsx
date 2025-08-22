@@ -66,19 +66,19 @@ const Btn = styled.button`
     border-right: 1.5px solid black;
   }`;
 function Leave({ onClose, onConfirm }) {
-    return (
-        <ModalOverlay>
-            <ModalBox>
-                <TitleLogo src="/images/Logo/logoText.svg" />
-                <Title>회원 탈퇴를 진행하시겠습니까?</Title>
-                <div style={{ marginLeft: "40px" }}>이 작업은 돌이킬 수 없습니다.</div>
-                <ButtonRow>
-                    <Btn onClick={onClose}>아니오</Btn>
-                    <Btn onClick={onConfirm}>예</Btn>
-                </ButtonRow>
-            </ModalBox>
-        </ModalOverlay>
-    );
+  return (
+    <ModalOverlay>
+      <ModalBox>
+        <TitleLogo src="/images/Logo/logoText.svg" />
+        <Title>회원 탈퇴를 진행하시겠습니까?</Title>
+        <div style={{ marginLeft: "40px" }}>이 작업은 돌이킬 수 없습니다.</div>
+        <ButtonRow>
+          <Btn onClick={onClose}>아니오</Btn>
+          <Btn onClick={onConfirm}>예</Btn>
+        </ButtonRow>
+      </ModalBox>
+    </ModalOverlay>
+  );
 }
 
 export default Leave;
