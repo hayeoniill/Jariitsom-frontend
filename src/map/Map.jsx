@@ -5,10 +5,16 @@ import NavigationBar from "../component/NavigationBar";
 import { Map as KakaoMap, MapMarker } from "react-kakao-maps-sdk";
 
 const FILTERS = ["전체", "음식점", "카페"];
+
+// const CATEGORY_MAP = {
+//   카페: ["cafe"],
+//   음식점: ["korean", "japanese", "chinese"], // DB에 실제 저장된 값들
+// };
+
 const CONGESTION_ICON = {
-  green: "/images/Congestion/greenSom.svg", // 여유
-  yellow: "/images/Congestion/yellowSom.svg", // 보통
-  red: "/images/Congestion/redSom.svg", // 혼잡
+  low: "/images/Congestion/greenSom.svg", //여유
+  medium: "/images/Congestion/yellowSom.svg", //보통
+  high: "/images/Congestion/redSom.svg", //혼잡
 };
 
 const API = process.env.REACT_APP_API_URL;
@@ -16,29 +22,37 @@ const API = process.env.REACT_APP_API_URL;
 const MapPage = () => {
   const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState("전체");
-  const [myPos, setMyPos] = useState(null);
+  // const [myPos, setMyPos] = useState(null); 실시간 내위치 받아오기
 
-  // 1) 현위치 추적
-  useEffect(() => {
-    if (!navigator.geolocation) {
-      alert("위치 정보를 지원하지 않는 브라우저입니다.");
-      return;
-    }
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const { latitude, longitude } = pos.coords;
-        setMyPos({ lat: latitude, lng: longitude });
-      },
-      (err) => {
-        console.error(err);
-        // 기본 좌표 (서울시청)
-        setMyPos({ lat: 37.5665, lng: 126.978 });
-      }
-    );
-  }, []);
+  // 기본 좌표: 동덕여대
+  const [myPos, setMyPos] = useState({ lat: 37.605873, lng: 127.041239 });
 
-  // 2) 내 위치 + 반경으로 가게 마커 불러오기
-  //URLSearchParams가 현위치 파라미터로 보내줌
+  // 가게 데이터
+  const [stores, setStores] = useState([]);
+  const [statusById, setStatusById] = useState({});
+  const [bounds, setBounds] = useState(null);
+  const startedRef = useRef(false);
+
+  // // 1) 현위치 추적 (실시간 위치정보 가져오기 주석처리)
+  // useEffect(() => {
+  //   if (!navigator.geolocation) {
+  //     alert("위치 정보를 지원하지 않는 브라우저입니다.");
+  //     return;
+  //   }
+  //   navigator.geolocation.getCurrentPosition(
+  //     (pos) => {
+  //       const { latitude, longitude } = pos.coords;
+  //       setMyPos({ lat: latitude, lng: longitude });
+  //     },
+  //     (err) => {
+  //       console.error(err);
+  //       // 기본 좌표 (동덕여대)
+  //       setMyPos({ lat: 37.605873, lng: 127.041239 });
+  //     }
+  //   );
+  // }, []);
+
+  // 1) 내 위치 + 필터로 가게 마커 불러오기
   useEffect(() => {
     if (!myPos) return;
     const fetchMarkers = async () => {
@@ -48,9 +62,13 @@ const MapPage = () => {
           lng: myPos.lng,
           radius: 1200,
         });
-        if (activeFilter !== "전체") {
-          qs.append("category", activeFilter);
+
+        if (activeFilter === "카페") {
+          qs.append("category", "cafe");
+        } else if (activeFilter === "음식점") {
+          qs.append("exclude_category", "cafe");
         }
+
         const res = await fetch(`${API}/stores/markers/?${qs.toString()}`);
         if (!res.ok) throw new Error("GET /stores/markers failed");
         const data = await res.json();
@@ -62,74 +80,44 @@ const MapPage = () => {
     fetchMarkers();
   }, [myPos, activeFilter]);
 
-  // 가게 기본 메타: [{id, name, lat, lng, category}]
-  const [stores, setStores] = useState([]);
-  // 혼잡도 상태만 따로 보관: { [id]: 'green'|'yellow'|'red' }
-  const [statusById, setStatusById] = useState({});
-  // 현재 지도 bounds (선택)
-  const [bounds, setBounds] = useState(null);
+  // // 2) 혼잡도 상태 주기적으로 갱신
+  // useEffect(() => {
+  //   if (startedRef.current) return;
+  //   startedRef.current = true;
 
-  // StrictMode 중복 인터벌 방지
-  const startedRef = useRef(false);
+  //   let timer;
+  //   const fetchStatus = async () => {
+  //     try {
+  //       const res = await fetch(`${API}/api/stores/status`);
+  //       if (!res.ok) throw new Error("GET /api/stores/status failed");
+  //       const list = await res.json();
+  //       setStatusById((prev) => {
+  //         const next = { ...prev };
+  //         list.forEach(({ id, congestion }) => {
+  //           const color = congestion;
+  //           next[id] = color in CONGESTION_ICON ? color : "green";
+  //         });
+  //         return next;
+  //       });
+  //     } catch (e) {
+  //       console.error(e);
+  //     }
+  //   };
 
-  // 1) 초기 가게 목록 로드
-  useEffect(() => {
-    let ignore = false;
-    (async () => {
-      try {
-        const res = await fetch(`${API}/api/stores`);
-        if (!res.ok) throw new Error("GET /api/stores failed");
-        const data = await res.json();
-        if (!ignore) setStores(data);
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-    return () => {
-      ignore = true;
-    };
-  }, []);
+  //   fetchStatus();
+  //   timer = setInterval(fetchStatus, 10000);
+  //   return () => clearInterval(timer);
+  // }, []);
 
-  // 2) 혼잡도 주기 갱신 (10초) — bounds를 쿼리에 넣고 싶으면 주석 해제
-  useEffect(() => {
-    if (startedRef.current) return;
-    startedRef.current = true;
+  // 필터링된 가게 목록
+  // const filteredStores = useMemo(() => {
+  //   if (activeFilter === "전체") return stores;
+  //   return stores.filter((s) => s.category === CATEGORY_MAP[activeFilter]);
+  // }, [stores, activeFilter]);
 
-    let timer;
-    const fetchStatus = async () => {
-      try {
-        // const qs = bounds ? `?swLat=${bounds.swLat}&swLng=${bounds.swLng}&neLat=${bounds.neLat}&neLng=${bounds.neLng}` : "";
-        // const res = await fetch(`${API}/api/stores/status${qs}`);
-        const res = await fetch(`${API}/api/stores/status`);
-        if (!res.ok) throw new Error("GET /api/stores/status failed");
-        // 예: [{id: 1, congestion: "yellow"}, {id: 2, congestion: "red"}]
-        const list = await res.json();
-        setStatusById((prev) => {
-          const next = { ...prev };
-          list.forEach(({ id, congestion }) => {
-            // 백엔드가 low/mid/high로 준다면 여기서 green/yellow/red로 매핑해도 됨
-            const color = congestion; // 이미 green|yellow|red 가정
-            next[id] = color in CONGESTION_ICON ? color : "green";
-          });
-          return next;
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    };
+  const filteredStores = useMemo(() => stores, [stores]);
 
-    fetchStatus();
-    timer = setInterval(fetchStatus, 10000);
-    return () => clearInterval(timer);
-  }, [bounds]);
-
-  // 3) 필터링된 가게 목록
-  const filteredStores = useMemo(() => {
-    if (activeFilter === "전체") return stores;
-    return stores.filter((s) => s.category === activeFilter);
-  }, [stores, activeFilter]);
-
-  // 4) 지도 idle 이벤트에서 bounds 업데이트(선택)
+  // 3) 지도 idle 이벤트에서 bounds 업데이트
   const handleIdle = (map) => {
     const b = map.getBounds();
     setBounds({
@@ -140,19 +128,36 @@ const MapPage = () => {
     });
   };
 
+  // 4) 지도 클릭 시 내 위치 옮기기
+  const handleMapClick = (_t, mouseEvent) => {
+    const latlng = mouseEvent.latLng;
+    setMyPos({ lat: latlng.getLat(), lng: latlng.getLng() });
+  };
+
+  useEffect(() => {
+    const qs = new URLSearchParams({
+      lat: 37.605873,
+      lng: 127.041239,
+      radius: 1200,
+    });
+    console.log("요청 URL:", `${API}/stores/markers/?${qs.toString()}`);
+  }, []);
+
   return (
     <M.Container>
       <M.MapContainer>
         <KakaoMap
-          center={myPos || { lat: 37.5665, lng: 126.978 }}
+          center={myPos}
           level={5}
           style={{ width: "100%", height: "100%" }}
           onIdle={handleIdle}
+          onClick={handleMapClick}
         >
           {/* 내 위치 표시 */}
           {myPos && (
             <MapMarker
               position={myPos}
+              zIndex={1}
               image={{
                 src: "/images/Map/mypos.svg",
                 size: { width: 35, height: 35 },
@@ -160,20 +165,20 @@ const MapPage = () => {
               }}
             />
           )}
-          {/* 가게 마커들 */}
-          {filteredStores.map((s) => {
-            const congestion = statusById[s.id] || "green";
+          {/* 가게 마커 */}
+          {stores.map((s) => {
+            const congestion = s.congestion || "green"; // 응답에 포함된 congestion 사용
             const iconSrc = CONGESTION_ICON[congestion];
+
             return (
               <MapMarker
                 key={s.id}
-                position={{ lat: s.lat, lng: s.lng }}
+                position={{ lat: s.latitude, lng: s.longitude }} // lat/lng 필드명 맞춤
                 image={{
                   src: iconSrc,
-                  size: { width: 40, height: 40 },
+                  size: { width: 25, height: 25 },
                   options: { offset: { x: 20, y: 40 } },
                 }}
-                onClick={() => alert(`${s.name} (${congestion})`)}
               />
             );
           })}
