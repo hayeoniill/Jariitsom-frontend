@@ -185,10 +185,10 @@ const MapPage = () => {
         </KakaoMap>
 
         <M.Wrap>
-          <M.SearchBox>
+          {/* <M.SearchBox>
             <M.Input type="text" placeholder="가게 검색" />
             <M.SearchBtn src="/images/Search.svg" alt="Search" />
-          </M.SearchBox>
+          </M.SearchBox> */}
 
           <M.FilterWrap>
             {FILTERS.map((f) => (

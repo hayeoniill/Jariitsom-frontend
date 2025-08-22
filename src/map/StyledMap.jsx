@@ -28,29 +28,29 @@ export const Wrap = styled.div`
   gap: 5px;
 `;
 
-export const SearchBox = styled.div`
-  width: 100%;
-  position: absolute;
-  z-index: 1000;
-  pointer-events: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+// export const SearchBox = styled.div`
+//   width: 100%;
+//   position: absolute;
+//   z-index: 1000;
+//   pointer-events: auto;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
 
-  top: 20px;
-  gap: 5px;
+//   top: 20px;
+//   gap: 5px;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  width: 305px;
-  height: 40px;
-  flex-shrink: 0;
-  border-radius: 20px;
-  border: 1.5px solid #8b2842;
-  background: #fff;
-`;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   padding: 0 20px;
+//   width: 305px;
+//   height: 40px;
+//   flex-shrink: 0;
+//   border-radius: 20px;
+//   border: 1.5px solid #8b2842;
+//   background: #fff;
+// `;
 
 export const Input = styled.input`
   width: 270px;
@@ -74,7 +74,7 @@ export const FilterWrap = styled.div`
   display: flex;
   gap: 24px;
   position: absolute;
-  top: 80px;
+  top: 0;
 `;
 export const FilterBtn = styled.div`
   display: flex;
