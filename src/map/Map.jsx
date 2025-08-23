@@ -6,11 +6,6 @@ import { Map as KakaoMap, MapMarker } from "react-kakao-maps-sdk";
 
 const FILTERS = ["전체", "음식점", "카페"];
 
-// const CATEGORY_MAP = {
-//   카페: ["cafe"],
-//   음식점: ["korean", "japanese", "chinese"], // DB에 실제 저장된 값들
-// };
-
 const CONGESTION_ICON = {
   low: "/images/Congestion/greenSom.svg", //여유
   medium: "/images/Congestion/yellowSom.svg", //보통

@@ -15,12 +15,34 @@ const ShopDetail = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(null);
   const [custInputList, setCustInputList] = useState([]);
-  // location.state가 곧 shop 객체 (Search에서 state: e로 넘겼다고 가정)
-  const [shop, setShop] = useState(location.state || null);
+  // 거리 시간
+  const [shop, setShop] = useState(() => {
+    if (location.state) {
+      const s = location.state;
+      return {
+        ...s,
+        businessHours: s.business_hours || [],
+        walking_time: {
+          front_gate: s.main_gate_walk_minutes
+            ? `${s.main_gate_walk_minutes}분`
+            : "정보 없음",
+          back_gate: s.back_gate_walk_minutes
+            ? `${s.back_gate_walk_minutes}분`
+            : "정보 없음",
+        },
+      };
+    }
+    return null;
+  });
+
   const [showAll, setShowAll] = useState(false);
   // 영업중 표시
   const [showAllHours, setShowAllHours] = useState(false);
   const today = new Date().getDay();
+
+  // 영업시간
+  const daysKor = ["일", "월", "화", "수", "목", "금", "토"];
+  const todayKey = daysKor[new Date().getDay()];
 
   // 실시간 방문 현황 시간 계산하기
   const getTimeDiffText = (createdAt) => {
@@ -80,18 +102,18 @@ const ShopDetail = () => {
 
         if (res.data && res.data.groups) {
           // groups 안의 items를 flat하게 뽑아서 state에 저장
-          const merged = res.data.groups.flatMap(group =>
-            group.items.map(item => ({
+          const merged = res.data.groups.flatMap((group) =>
+            group.items.map((item) => ({
               person: `${item.visit_count}명`,
               waitTime: item.wait_time,
               congestion:
                 item.congestion === "low"
                   ? "여유"
                   : item.congestion === "medium"
-                    ? "보통"
-                    : "혼잡",
+                  ? "보통"
+                  : "혼잡",
               createdAt: item.created_at,
-              when: item.when,       // API에서 내려준 '방금 전 / n분 전 / 날짜'
+              when: item.when, // API에서 내려준 '방금 전 / n분 전 / 날짜'
               dayLabel: item.day_label,
             }))
           );
@@ -106,7 +128,6 @@ const ShopDetail = () => {
     fetchVisitLogs();
   }, [shop, showAll]); // shop 로드되거나 더보기 눌렀을 때
 
-
   // 즐겨찾기 상태
   const [isActive, setIsActive] = useState(false);
 
@@ -117,12 +138,9 @@ const ShopDetail = () => {
     const checkBookmark = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(
-          `${API_URL}/stores/?bookmarked=true`,
-          {
-            headers: { Authorization: `Token ${token}` },
-          }
-        );
+        const res = await axios.get(`${API_URL}/stores/?bookmarked=true`, {
+          headers: { Authorization: `Token ${token}` },
+        });
         setIsActive(res.data.some((item) => item.id === shop.id));
       } catch (err) {
         console.error("즐겨찾기 상태 확인 실패:", err);
@@ -149,7 +167,6 @@ const ShopDetail = () => {
 
       if (res.status === 201) setIsActive(true);
       else if (res.status === 200) setIsActive(false);
-
     } catch (err) {
       console.error("즐겨찾기 토글 실패:", err);
     }
@@ -169,12 +186,16 @@ const ShopDetail = () => {
     if (!shop && id) {
       const fetchShop = async () => {
         try {
-          {/*  const token = localStorage.getItem("token");*/ }
+          {
+            /*  const token = localStorage.getItem("token");*/
+          }
           const res = await axios.get(
             `${process.env.REACT_APP_API_URL}/stores/${id}/`,
-            {/**  {
+            {
+              /**  {
               headers: { Authorization: `Token ${token}` },
-            } */}
+            } */
+            }
           );
 
           // 서버 응답(JSON)
@@ -183,11 +204,11 @@ const ShopDetail = () => {
             ...s,
             businessHours: s.business_hours || [],
             walking_time: {
-              front_gate: s.main_gate_distance
-                ? `${s.main_gate_distance}분`
+              front_gate: s.main_gate_walk_minutes
+                ? `${s.main_gate_walk_minutes}분`
                 : "정보 없음",
-              back_gate: s.back_gate_distance
-                ? `${s.back_gate_distance}분`
+              back_gate: s.back_gate_walk_minutes
+                ? `${s.back_gate_walk_minutes}분`
                 : "정보 없음",
             },
             link: s.kakao_url || null,
@@ -209,7 +230,6 @@ const ShopDetail = () => {
     }
   }, [id, shop]);
 
-
   const handleBack = () => navigate(-1);
 
   if (!shop) return null;
@@ -217,7 +237,6 @@ const ShopDetail = () => {
   const cLevel = shop?.congestion ?? "medium"; // low | medium | high
   const cLabel =
     cLevel === "low" ? "여유" : cLevel === "medium" ? "보통" : "혼잡";
-
 
   return (
     <S.Container>
@@ -227,17 +246,12 @@ const ShopDetail = () => {
         </S.IconButton>
 
         <img src="/images/Logo/logoSom.svg" alt="서비스 로고" width="34" />
-        <S.IconButton
-          type="button"
-          aria-label="즐겨찾기"
-          onClick={on_Click}
-        >
+        <S.IconButton type="button" aria-label="즐겨찾기" onClick={on_Click}>
           <img
             src={isActive ? "/images/star.svg" : "/images/empty_star.svg"}
             alt="Favorite"
           />
         </S.IconButton>
-
       </S.Topbox>
       <S.ShopinfoWrap>
         <S.ShopTopInfoWrap>
@@ -306,8 +320,8 @@ const ShopDetail = () => {
                         cLevel === "low"
                           ? "/images/Congestion/greenSom.svg"
                           : cLevel === "medium"
-                            ? "/images/Congestion/yellowSom.svg"
-                            : "/images/Congestion/redSom.svg"
+                          ? "/images/Congestion/yellowSom.svg"
+                          : "/images/Congestion/redSom.svg"
                       }
                       alt="CongestionImg"
                       width="42px"
@@ -321,9 +335,13 @@ const ShopDetail = () => {
               <S.SubWrap>
                 <S.SubTitleWrap>
                   <S.Subtitle>미래 예상 혼잡도</S.Subtitle>
-                  <S.Rsub>※ AI가 요일·시간대 기반으로 예측한 결과입니다.</S.Rsub>
+                  <S.Rsub>
+                    ※ AI가 요일·시간대 기반으로 예측한 결과입니다.
+                  </S.Rsub>
                 </S.SubTitleWrap>
-                <div style={{ display: "flex", gap: "12px", marginTop: "10px" }}>
+                <div
+                  style={{ display: "flex", gap: "12px", marginTop: "10px" }}
+                >
                   {forecast.length > 0 ? (
                     forecast
                       .filter((f) => f.minutes_ahead > 0) // 0분(현재)은 제외
@@ -332,12 +350,12 @@ const ShopDetail = () => {
                           f.minutes_ahead === 10
                             ? "10분 후"
                             : f.minutes_ahead === 20
-                              ? "20분 후"
-                              : f.minutes_ahead === 30
-                                ? "30분 후"
-                                : f.minutes_ahead === 60
-                                  ? "1시간 후"
-                                  : `${f.minutes_ahead}분 후`;
+                            ? "20분 후"
+                            : f.minutes_ahead === 30
+                            ? "30분 후"
+                            : f.minutes_ahead === 60
+                            ? "1시간 후"
+                            : `${f.minutes_ahead}분 후`;
 
                         return (
                           <S.FutureBox key={idx} $level={f.ai_level}>
@@ -348,8 +366,8 @@ const ShopDetail = () => {
                                   f.ai_level === "low"
                                     ? "/images/Congestion/green_text.svg"
                                     : f.ai_level === "medium"
-                                      ? "/images/Congestion/yellow_text.svg"
-                                      : "/images/Congestion/red_text.svg"
+                                    ? "/images/Congestion/yellow_text.svg"
+                                    : "/images/Congestion/red_text.svg"
                                 }
                                 alt="예상 혼잡도"
                                 width="42px"
@@ -359,10 +377,11 @@ const ShopDetail = () => {
                         );
                       })
                   ) : (
-                    <p style={{ color: "#888" }}>예측 데이터를 불러오지 못했습니다.</p>
+                    <p style={{ color: "#888" }}>
+                      예측 데이터를 불러오지 못했습니다.
+                    </p>
                   )}
                 </div>
-
               </S.SubWrap>
 
               <S.SubWrap>
@@ -424,16 +443,27 @@ const ShopDetail = () => {
 
                   {!showAllHours ? (
                     <div className="status-wrap">
-                      <p>{shop?.is_open ? "영업중" : "영업종료"}</p>
                       <p>
-                        {shop?.businessHours?.[today] ?? "영업시간 정보 없음"}
+                        {shop?.businessHours?.[todayKey]?.open_close ??
+                          "영업시간 정보 없음"}
                       </p>
+                      {shop?.businessHours?.[todayKey]?.breaktime && (
+                        <p>
+                          브레이크타임: {shop.businessHours[todayKey].breaktime}
+                        </p>
+                      )}
                     </div>
                   ) : (
                     <div className="hours-list">
-                      {shop?.businessHours?.map((time, idx) => (
-                        <p key={idx}>{time}</p>
-                      ))}
+                      {Object.entries(shop.businessHours).map(
+                        ([day, time], idx) => (
+                          <p key={idx}>
+                            {day}: {time?.open_close ?? "정보 없음"}
+                            {time?.breaktime &&
+                              ` (브레이크타임: ${time.breaktime})`}
+                          </p>
+                        )
+                      )}
                     </div>
                   )}
 
@@ -446,8 +476,12 @@ const ShopDetail = () => {
 
                 <S.Link>
                   <img src="/images/storeInfo/link.svg" alt="link" />
-                  <p>더 궁금하다면? <br /> 여기서 찾아보세요</p>
-                  <div style={{ display: "flex", gap: "8px", marginTop: "10px" }}>
+                  <p>
+                    더 궁금하다면? <br /> 여기서 찾아보세요
+                  </p>
+                  <div
+                    style={{ display: "flex", gap: "8px", marginTop: "10px" }}
+                  >
                     {shop.kakao_url && (
                       <S.LinkButton href={shop.kakao_url} target="_blank">
                         카카오맵
@@ -460,7 +494,6 @@ const ShopDetail = () => {
                     )}
                   </div>
                 </S.Link>
-
               </S.InforWrap>
             </S.Panel>
           )}
@@ -493,7 +526,6 @@ const ShopDetail = () => {
           setInputData={setCustInputList}
         />
       )}
-
     </S.Container>
   );
 };
