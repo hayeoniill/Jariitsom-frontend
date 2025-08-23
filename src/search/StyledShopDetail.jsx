@@ -428,3 +428,31 @@ export const LinkButton = styled.a`
   cursor: pointer;
   text-decoration: none;
 `;
+export const MenuList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top:15px;
+`;
+
+export const MenuItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #f9f9f9;
+  font-family: Pretendard;
+
+  .name {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .price {
+    font-size: 15px;
+    font-weight: 600;
+    color: #8b2842;
+  }
+`;
+

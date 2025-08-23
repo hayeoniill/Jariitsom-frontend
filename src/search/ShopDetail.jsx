@@ -46,6 +46,28 @@ const ShopDetail = () => {
     return `${diffHours}시간 전`;
   };
 
+  const [forecast, setForecast] = useState([]);
+
+  // 혼잡도 예측 가져오기
+  useEffect(() => {
+    if (!shop || !shop.id) return;
+
+    const fetchForecast = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}/stores/${shop.id}/forecast/?minutes=0,10,20,30,60`
+        );
+        if (res.data && res.data.items) {
+          setForecast(res.data.items);
+        }
+      } catch (err) {
+        console.error("혼잡도 예측 불러오기 실패:", err);
+      }
+    };
+
+    fetchForecast();
+  }, [shop]);
+
   //방문기록 조회
   useEffect(() => {
     if (!shop || !shop.id) return;
@@ -82,7 +104,7 @@ const ShopDetail = () => {
     };
 
     fetchVisitLogs();
-  }, [shop, showAll]); // shop 로드되거나 '더보기' 눌렀을 때
+  }, [shop, showAll]); // shop 로드되거나 더보기 눌렀을 때
 
 
   // 즐겨찾기 상태
@@ -196,6 +218,7 @@ const ShopDetail = () => {
   const cLabel =
     cLevel === "low" ? "여유" : cLevel === "medium" ? "보통" : "혼잡";
 
+
   return (
     <S.Container>
       <S.Topbox>
@@ -298,27 +321,48 @@ const ShopDetail = () => {
               <S.SubWrap>
                 <S.SubTitleWrap>
                   <S.Subtitle>미래 예상 혼잡도</S.Subtitle>
-                  <S.Rsub>
-                    ※ AI가 요일·시간대 기반으로 예측한 결과입니다.
-                  </S.Rsub>
+                  <S.Rsub>※ AI가 요일·시간대 기반으로 예측한 결과입니다.</S.Rsub>
                 </S.SubTitleWrap>
+                <div style={{ display: "flex", gap: "12px", marginTop: "10px" }}>
+                  {forecast.length > 0 ? (
+                    forecast
+                      .filter((f) => f.minutes_ahead > 0) // 0분(현재)은 제외
+                      .map((f, idx) => {
+                        const label =
+                          f.minutes_ahead === 10
+                            ? "10분 후"
+                            : f.minutes_ahead === 20
+                              ? "20분 후"
+                              : f.minutes_ahead === 30
+                                ? "30분 후"
+                                : f.minutes_ahead === 60
+                                  ? "1시간 후"
+                                  : `${f.minutes_ahead}분 후`;
 
-                <S.FutureBox $level={cLevel}>
-                  <S.Ftext>10분 후</S.Ftext>
-                  <S.FutureCImg>
-                    <img
-                      src={
-                        cLevel === "low"
-                          ? "/images/Congestion/green_text.svg"
-                          : cLevel === "medium"
-                            ? "/images/Congestion/yellow_text.svg"
-                            : "/images/Congestion/red_text.svg"
-                      }
-                      alt="CongestionImg"
-                      width="42px"
-                    />
-                  </S.FutureCImg>
-                </S.FutureBox>
+                        return (
+                          <S.FutureBox key={idx} $level={f.ai_level}>
+                            <S.Ftext>{label}</S.Ftext>
+                            <S.FutureCImg>
+                              <img
+                                src={
+                                  f.ai_level === "low"
+                                    ? "/images/Congestion/green_text.svg"
+                                    : f.ai_level === "medium"
+                                      ? "/images/Congestion/yellow_text.svg"
+                                      : "/images/Congestion/red_text.svg"
+                                }
+                                alt="예상 혼잡도"
+                                width="42px"
+                              />
+                            </S.FutureCImg>
+                          </S.FutureBox>
+                        );
+                      })
+                  ) : (
+                    <p style={{ color: "#888" }}>예측 데이터를 불러오지 못했습니다.</p>
+                  )}
+                </div>
+
               </S.SubWrap>
 
               <S.SubWrap>
@@ -401,22 +445,43 @@ const ShopDetail = () => {
                 </S.Time>
 
                 <S.Link>
-                  <img src="/images/storeInfo/link.svg" />
-                  <p>더 궁금하다면? 여기서 찾아보세요</p>
-                  {/* 외부링크 연결 */}
-                  {shop.link && (
-                    <S.LinkButton href={shop.link} target="_blank">
-                      바로가기
-                    </S.LinkButton>
-                  )}
+                  <img src="/images/storeInfo/link.svg" alt="link" />
+                  <p>더 궁금하다면? <br /> 여기서 찾아보세요</p>
+                  <div style={{ display: "flex", gap: "8px", marginTop: "10px" }}>
+                    {shop.kakao_url && (
+                      <S.LinkButton href={shop.kakao_url} target="_blank">
+                        카카오맵
+                      </S.LinkButton>
+                    )}
+                    {shop.google_url && (
+                      <S.LinkButton href={shop.google_url} target="_blank">
+                        구글맵
+                      </S.LinkButton>
+                    )}
+                  </div>
                 </S.Link>
+
               </S.InforWrap>
             </S.Panel>
           )}
-
           {/* 메뉴 */}
           {activeTab === TABS.MENU && (
-            <S.Panel id="panel-menu" role="tabpanel"></S.Panel>
+            <S.Panel id="panel-menu" role="tabpanel">
+              {shop.menus && shop.menus.length > 0 ? (
+                <S.MenuList>
+                  {shop.menus.map((menu, idx) => (
+                    <S.MenuItem key={idx}>
+                      <span className="name">{menu.name}</span>
+                      <span className="price">{menu.price}</span>
+                    </S.MenuItem>
+                  ))}
+                </S.MenuList>
+              ) : (
+                <p style={{ color: "#888", marginTop: "10px" }}>
+                  메뉴 정보가 없습니다.
+                </p>
+              )}
+            </S.Panel>
           )}
         </S.ShopBodyInfo>
       </S.ShopinfoWrap>
