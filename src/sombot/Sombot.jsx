@@ -25,7 +25,6 @@ const Sombot = () => {
       }
     };
 
-    // 위치 권한 요청
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         setCoords({
@@ -34,8 +33,8 @@ const Sombot = () => {
         });
       },
       (err) => {
-        console.error("위치 가져오기 실패:", err);
-        // 권한 거부 시 기본 좌표 (동덕여대)
+        // console.error("위치 가져오기 실패:", err);
+        console.warn("위치 권한 없음 → 기본 좌표 사용");
         setCoords({
           lat: 37.606057124618324,
           lng: 127.0413645586438,

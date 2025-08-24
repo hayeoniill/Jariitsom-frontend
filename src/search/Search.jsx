@@ -78,20 +78,29 @@ const Search = () => {
         url += `ordering=${ordering}&limit=300&`;
       }
 
-      try {
-        let headers = {};
-        if (isActive) {
-          // 즐겨찾기 보기 -> 토큰 필요
-          const token = localStorage.getItem("token");
-          if (!token) {
-            setError("로그인이 필요합니다.");
-            return;
-          }
-          headers.Authorization = `Token ${token}`;
-        }
+      // try {
+      //   let headers = {};
+      //   if (isActive) {
+      //     // 즐겨찾기 보기 -> 토큰 필요
+      //     const token = localStorage.getItem("token");
+      //     if (!token) {
+      //       setError("로그인이 필요합니다.");
+      //       return;
+      //     }
+      //     headers.Authorization = `Token ${token}`;
+      //   }
 
+      //   const res = await axios.get(url, { headers });
+      //   setDataList(res.data);
+      // } catch (err) {
+      //   console.error("가게 데이터 불러오기 실패:", err);
+      //   setError("데이터를 불러오지 못했습니다.");
+      // }
+
+      try {
         const res = await axios.get(url, { headers });
-        setDataList(res.data);
+        const stores = Array.isArray(res.data) ? res.data : res.data.results;
+        setDataList(stores || []);
       } catch (err) {
         console.error("가게 데이터 불러오기 실패:", err);
         setError("데이터를 불러오지 못했습니다.");
