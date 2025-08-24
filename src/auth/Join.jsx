@@ -95,10 +95,11 @@ const Join1 = () => {
   return (
     <>
       <J.Logo
-        src="/images/Logo/logo.svg"
+        src={`${process.env.PUBLIC_URL}/images/Logo/logo.svg`}
         alt="logo"
         onClick={() => navigate("/")}
       />
+
       <J.JoinBox>
         <J.JoinTxt>회원가입</J.JoinTxt>
 

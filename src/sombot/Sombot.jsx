@@ -120,7 +120,9 @@ const Sombot = () => {
   return (
     <>
       <SB.SombotWrapper>
-        <SB.Background src={`${process.env.PUBLIC_URL}/images/logo/sombot_dot.svg`} />
+        <SB.Background
+          src={`${process.env.PUBLIC_URL}/images/logo/sombot_dot.svg`}
+        />
 
         <SB.TopBox>
           <SB.MainTxt>솜봇이 추천해주겠솜!</SB.MainTxt>
@@ -150,7 +152,11 @@ const Sombot = () => {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={onKeyDown}
           />
-          <SB.SendImg src={`${process.env.PUBLIC_URL}/images/send.svg`} alt="send" onClick={send} />
+          <SB.SendImg
+            src={`${process.env.PUBLIC_URL}/images/send.svg`}
+            alt="send"
+            onClick={send}
+          />
         </SB.MessageInputWrapper>
       </SB.SombotWrapper>
 

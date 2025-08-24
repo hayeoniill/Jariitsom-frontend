@@ -144,7 +144,159 @@ const Search = () => {
 
       {/* 카테고리 아이콘 */}
       <S.TopBox ref={topBoxRef}>
-        {/* 카테고리 아이콘들 ... (이미 네가 수정한 대로 process.env.PUBLIC_URL 붙여서) */}
+        <S.IconBox
+          onClick={() => handleCategoryClick("home")}
+          className={mainCategory === "home" ? "active" : ""}
+        >
+          <S.TopIcon>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/Category/House.svg`}
+              alt="Home"
+              width="40px"
+            />
+          </S.TopIcon>
+          <S.TopIconText>홈</S.TopIconText>
+        </S.IconBox>
+
+        <S.IconBox
+          onClick={() => handleCategoryClick("cafe")}
+          className={mainCategory === "cafe" ? "active" : ""}
+        >
+          <S.TopIcon>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/Category/cake.svg`}
+              alt="cafe"
+              width="40px"
+            />
+          </S.TopIcon>
+          <S.TopIconText>카페/디저트</S.TopIconText>
+        </S.IconBox>
+
+        <S.IconBox
+          onClick={() => handleCategoryClick("korean")}
+          className={mainCategory === "korean" ? "active" : ""}
+        >
+          <S.TopIcon>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/Category/KFood.svg`}
+              alt="korean"
+              width="40px"
+            />
+          </S.TopIcon>
+          <S.TopIconText>한식</S.TopIconText>
+        </S.IconBox>
+
+        <S.IconBox
+          onClick={() => handleCategoryClick("japanese")}
+          className={mainCategory === "japanese" ? "active" : ""}
+        >
+          <S.TopIcon>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/Category/sushi.svg`}
+              alt="japanese"
+              width="40px"
+            />
+          </S.TopIcon>
+          <S.TopIconText>일식</S.TopIconText>
+        </S.IconBox>
+
+        <S.IconBox
+          onClick={() => handleCategoryClick("chinese")}
+          className={mainCategory === "chinese" ? "active" : ""}
+        >
+          <S.TopIcon>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/Category/cfood.svg`}
+              alt="chinese"
+              width="40px"
+            />
+          </S.TopIcon>
+          <S.TopIconText>중식</S.TopIconText>
+        </S.IconBox>
+
+        <S.IconBox
+          onClick={() => handleCategoryClick("fastfood")}
+          className={mainCategory === "fastfood" ? "active" : ""}
+        >
+          <S.TopIcon>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/Category/hamberger.svg`}
+              alt="fastfood"
+              width="40px"
+            />
+          </S.TopIcon>
+          <S.TopIconText>패스트푸드</S.TopIconText>
+        </S.IconBox>
+
+        <S.IconBox
+          onClick={() => handleCategoryClick("bunsik")}
+          className={mainCategory === "bunsik" ? "active" : ""}
+        >
+          <S.TopIcon>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/Category/bunsik.svg`}
+              alt="bunsik"
+              width="40px"
+            />
+          </S.TopIcon>
+          <S.TopIconText>분식</S.TopIconText>
+        </S.IconBox>
+
+        <S.IconBox
+          onClick={() => handleCategoryClick("healthy")}
+          className={mainCategory === "healthy" ? "active" : ""}
+        >
+          <S.TopIcon>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/Category/salad.svg`}
+              alt="healthy"
+              width="40px"
+            />
+          </S.TopIcon>
+          <S.TopIconText>건강식</S.TopIconText>
+        </S.IconBox>
+
+        <S.IconBox
+          onClick={() => handleCategoryClick("western")}
+          className={mainCategory === "western" ? "active" : ""}
+        >
+          <S.TopIcon>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/Category/pasta.svg`}
+              alt="western"
+              width="40px"
+            />
+          </S.TopIcon>
+          <S.TopIconText>양식</S.TopIconText>
+        </S.IconBox>
+
+        <S.IconBox
+          onClick={() => handleCategoryClick("bbq")}
+          className={mainCategory === "bbq" ? "active" : ""}
+        >
+          <S.TopIcon>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/Category/beef.svg`}
+              alt="bbq"
+              width="40px"
+            />
+          </S.TopIcon>
+          <S.TopIconText>고깃집</S.TopIconText>
+        </S.IconBox>
+
+        <S.IconBox
+          onClick={() => handleCategoryClick("bar")}
+          className={mainCategory === "bar" ? "active" : ""}
+        >
+          <S.TopIcon>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/Category/beer.svg`}
+              alt="bar"
+              width="40px"
+            />
+          </S.TopIcon>
+          <S.TopIconText>주점</S.TopIconText>
+        </S.IconBox>
       </S.TopBox>
 
       {/* 정렬 모달 */}
