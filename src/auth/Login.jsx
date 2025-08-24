@@ -8,6 +8,7 @@ const Login = () => {
   const navigate = useNavigate();
   const idRef = useRef();
   const pwRef = useRef();
+  const API_URL = process.env.REACT_APP_API_URL;
 
   /* useEffect(() => {
      if (!window.Kakao?.isInitialized?.()) {
@@ -24,7 +25,7 @@ const Login = () => {
    };*/
 
   const handleKakaoLogin = () => {
-    window.location.href = "http://127.0.0.1:8000/authaccounts/kakao/login/";
+    window.location.href = `${API_URL}/authaccounts/kakao/login/`;
   };
 
   const handleLogin = async () => {
@@ -37,7 +38,7 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post("http://127.0.0.1:8000/rest-auth/login/", {
+      const res = await axios.post(`${API_URL}/rest-auth/login/`, {
         username,
         password,
       });
@@ -77,8 +78,10 @@ const Login = () => {
         카카오톡으로 간편 로그인
       </L.GoKakaoBtn>
       <L.GoJoinBtn onClick={() => navigate("/Join")}>회원가입 하기</L.GoJoinBtn>
-      <L.GoMain onClick={() => navigate("/Home")}> 비회원으로 시작하기 </L.GoMain>
-
+      <L.GoMain onClick={() => navigate("/Home")}>
+        {" "}
+        비회원으로 시작하기{" "}
+      </L.GoMain>
     </>
   );
 };

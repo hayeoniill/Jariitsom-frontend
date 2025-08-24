@@ -9,6 +9,9 @@ import axios from "axios";
 const MyPage = () => {
   const navigate = useNavigate();
 
+  //api주소
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const [Logoutopen, setLogoutOpen] = useState(false);
   const [LeaveOpen, setLeaveOpen] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
@@ -22,7 +25,7 @@ const MyPage = () => {
         const token = localStorage.getItem("token");
         if (!token) return navigate("/login");
 
-        const res = await axios.get("http://127.0.0.1:8000/rest-auth/user/", {
+        const res = await axios.get(`${API_URL}/rest-auth/user/`, {
           headers: { Authorization: `Token ${token}` },
         });
 
@@ -41,7 +44,7 @@ const MyPage = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.patch(
-        "http://127.0.0.1:8000/rest-auth/user/",
+        `${API_URL}/rest-auth/user/`,
         { first_name: newNickname },
         { headers: { Authorization: `Token ${token}` } }
       );
@@ -65,14 +68,11 @@ const MyPage = () => {
           return;
         }
 
-        const response = await axios.get(
-          "http://127.0.0.1:8000/rest-auth/user/",
-          {
-            headers: {
-              Authorization: `Token ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${API_URL}/rest-auth/user/`, {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        });
         setUserInfo(response.data);
       } catch (error) {
         console.error(
@@ -135,7 +135,7 @@ const MyPage = () => {
             try {
               const token = localStorage.getItem("token");
               if (token) {
-                await axios.post("http://127.0.0.1:8000/rest-auth/logout/", {
+                await axios.post(`${API_URL}/rest-auth/logout/`, {
                   headers: { Authorization: `Token ${token}` },
                 });
               }
@@ -158,7 +158,7 @@ const MyPage = () => {
             try {
               const token = localStorage.getItem("token");
               if (token) {
-                await axios.delete("http://127.0.0.1:8000/account/", {
+                await axios.delete(`${API_URL}/account/`, {
                   headers: { Authorization: `Token ${token}` },
                 });
               }

@@ -9,8 +9,12 @@ function InputCust({ storeId, onClose, setInputData }) {
 
   const personOptions = ["1명", "2명", "3명", "4명", "5명", "6명 이상"];
   const waitOptions = [
-    "바로 입장", "10분 이내", "20분 이내",
-    "30분 이내", "1시간 이내", "1시간 이상",
+    "바로 입장",
+    "10분 이내",
+    "20분 이내",
+    "30분 이내",
+    "1시간 이내",
+    "1시간 이상",
   ];
   const congestionOptions = [
     { label: "여유", value: "low" },
@@ -19,7 +23,11 @@ function InputCust({ storeId, onClose, setInputData }) {
   ];
 
   const handleSubmit = async () => {
-    if (selectedPerson === null || selectedWait === null || selectedCongestion === null) {
+    if (
+      selectedPerson === null ||
+      selectedWait === null ||
+      selectedCongestion === null
+    ) {
       alert("모든 항목을 입력해주세요.");
       return;
     }
@@ -31,7 +39,6 @@ function InputCust({ storeId, onClose, setInputData }) {
         return;
       }
 
-      // ✅ 바로 POST (storeId 이미 받음)
       const visitRes = await axios.post(
         `${process.env.REACT_APP_API_URL}/stores/${storeId}/visitlogs/`,
         {

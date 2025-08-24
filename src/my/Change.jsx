@@ -17,12 +17,15 @@ const Change = () => {
   const [checkPw, setCheckPw] = useState("");
   const navigate = useNavigate();
 
+  //api 주소
+  const API_URL = process.env.REACT_APP_API_URL;
+
   // 내 정보 조회 (pk 얻기 위해)
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return navigate("/login");
     axios
-      .get("http://127.0.0.1:8000/rest-auth/user/", {
+      .get(`${API_URL}/rest-auth/user/`, {
         headers: { Authorization: `Token ${token}` },
       })
       .then((res) => {
@@ -53,7 +56,7 @@ const Change = () => {
         return;
       }
       await axios.patch(
-        "http://127.0.0.1:8000/rest-auth/user/",
+        `${API_URL}/rest-auth/user/`,
         { username: v },
         { headers: { Authorization: `Token ${token}` } }
       );
@@ -104,13 +107,9 @@ const Change = () => {
         alert("새 비밀번호와 확인을 모두 입력하세요.");
         return;
       }
-      await axios.post(
-        "http://127.0.0.1:8000/rest-auth/password/change/",
-        payload,
-        {
-          headers: { Authorization: `Token ${token}` },
-        }
-      );
+      await axios.post(`${API_URL}/rest-auth/password/change/`, payload, {
+        headers: { Authorization: `Token ${token}` },
+      });
       alert("비밀번호가 변경되었습니다.");
       navigate("/MyPage");
     } catch (err) {

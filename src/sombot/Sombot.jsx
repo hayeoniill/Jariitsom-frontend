@@ -78,7 +78,7 @@ const Sombot = () => {
           role: "ai",
           text: (
             <span>
-              {res.data.link_message} {" "}
+              {res.data.link_message}{" "}
               <a
                 href={res.data.link_url}
                 target="_blank"
@@ -100,7 +100,6 @@ const Sombot = () => {
         { role: "ai", text: "추천을 불러오는 중 오류가 발생했어요." },
       ]);
     }
-
   };
 
   // 엔터 입력 처리

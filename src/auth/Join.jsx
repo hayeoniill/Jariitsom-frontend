@@ -6,6 +6,8 @@ import useKakaoLogin from "./KakaoLoginButton";
 
 const Join1 = () => {
   const navigate = useNavigate();
+  //api 주소
+  const API_URL = process.env.REACT_APP_API_URL;
   // const { onKakaoLogin } = useKakaoLogin();
   const onKakaoLogin = () => {
     window.location.href = `${process.env.REACT_APP_API_URL}/authaccounts/kakao/login/`;
@@ -57,19 +59,13 @@ const Join1 = () => {
           first_name: form.first_name,
           phone: form.phone,
         };
-        const { data } = await axios.post(
-          "http://127.0.0.1:8000/user/",
-          payload
-        );
+        const { data } = await axios.post(`${API_URL}/user/`, payload);
 
         console.log("회원가입 성공:", data);
-        const loginRes = await axios.post(
-          "http://127.0.0.1:8000/rest-auth/login/",
-          {
-            username: form.username,
-            password: form.password,
-          }
-        );
+        const loginRes = await axios.post(`${API_URL}/rest-auth/login/`, {
+          username: form.username,
+          password: form.password,
+        });
         localStorage.setItem("token", loginRes.data.key);
         navigate("/Home");
       } catch (err) {
