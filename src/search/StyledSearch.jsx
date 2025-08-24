@@ -275,7 +275,7 @@ export const ShopName = styled.div`
 export const ReviewText = styled.div`
   color: #000;
   font-family: Roboto;
-  font-size: 10px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;

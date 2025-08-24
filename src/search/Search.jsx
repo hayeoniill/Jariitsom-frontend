@@ -9,7 +9,7 @@ import axios from "axios";
 const getOrdering = (sortText) => {
   switch (sortText) {
     case "별점 높은 순":
-      return "-rating"; // ⭐ 내림차순 정렬
+      return "-rating"; // 내림차순 정렬
     case "여유로운 순":
       return "relaxed";
     case "가까운 순":
@@ -342,47 +342,66 @@ const Search = () => {
 
       {/* 가게 리스트 */}
       <S.ShopWrapper>
-        {filteredData.map((e) => (
-          <S.ShopInform
-            key={e.id}
-            onClick={() => navigate(`/ShopDetail/${e.id}`, { state: e })}
-          >
-            <S.LeftBox>
-              <S.ShopImg
-                src={e.photo || "/images/default.png"}
-                width="55px"
-                alt={e.name}
-                style={{ marginRight: "16px" }}
-              />
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <S.ShopName>{e.name}</S.ShopName>
-                <S.ReviewText>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/images/star_yellow.svg`}
-                    alt="Star"
-                    width="18px"
-                  />{" "}
-                  {e.rating}/5.0
-                </S.ReviewText>
-              </div>
-            </S.LeftBox>
+        {filteredData.map((e) => {
+          // 오늘 요일 키 (예: "월", "화"...)
+          const daysKor = ["일", "월", "화", "수", "목", "금", "토"];
+          const todayKey = daysKor[new Date().getDay()];
 
-            <S.CongestionImg>
-              <img
-                src={
-                  e.ai_congestion_now === "low"
-                    ? "/images/Congestion/green_text.svg"
-                    : e.ai_congestion_now === "medium"
-                      ? "/images/Congestion/yellow_text.svg"
-                      : "/images/Congestion/red_text.svg"
-                }
-                alt="CongestionImg"
-                width="42px"
-              />
-            </S.CongestionImg>
-          </S.ShopInform>
-        ))}
+          // 오늘 영업시간
+          const todayHours = e.business_hours?.[todayKey]?.open_close || "영업시간 정보 없음";
+
+          return (
+            <S.ShopInform
+              key={e.id}
+              onClick={() => navigate(`/ShopDetail/${e.id}`, { state: e })}
+            >
+              <S.LeftBox>
+                <S.ShopImg
+                  src={e.photo || "/images/default.png"}
+                  width="55px"
+                  alt={e.name}
+                  style={{ marginRight: "16px" }}
+                />
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <S.ShopName>{e.name}</S.ShopName>
+
+                  {/*별점*/}
+                  <S.ReviewText>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/images/star_yellow.svg`}
+                      alt="Star"
+                      width="18px"
+                    />{" "}
+                    {e.rating}/5.0
+                  </S.ReviewText>
+
+                  {/*영업 여부 */}
+                  <S.ReviewText>
+                    {e.open_status || "영업 상태 정보 없음"}
+                    <div>•</div>
+                    {todayHours}
+                  </S.ReviewText>
+                </div>
+              </S.LeftBox>
+
+              <S.CongestionImg>
+                <img
+                  src={
+                    e.ai_congestion_now === "low"
+                      ? "/images/Congestion/green_text.svg"
+                      : e.ai_congestion_now === "medium"
+                        ? "/images/Congestion/yellow_text.svg"
+                        : "/images/Congestion/red_text.svg"
+                  }
+                  alt="CongestionImg"
+                  width="42px"
+                />
+              </S.CongestionImg>
+            </S.ShopInform>
+          );
+        })}
       </S.ShopWrapper>
+
 
       <NavigationBar />
     </>
