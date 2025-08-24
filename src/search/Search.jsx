@@ -178,7 +178,7 @@ const Search = () => {
         >
           <S.TopIcon>
             <img
-              src={`${process.env.PUBLIC_URL}/images/Category/KFood.svg`}
+              src={`${process.env.PUBLIC_URL}/images/Category/kfood.svg`}
               alt="korean"
               width="40px"
             />
