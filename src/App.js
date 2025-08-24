@@ -20,7 +20,7 @@ import KakaoLoginButton from "./auth/KakaoLoginButton";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route element={<Layout />}>
           <Route path="/Home" element={<Home />} />
