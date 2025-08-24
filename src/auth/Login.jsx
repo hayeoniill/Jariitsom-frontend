@@ -62,10 +62,11 @@ const Login = () => {
   return (
     <>
       <L.Logo
-        src="/images/Logo/logo.svg"
+        src={`${process.env.PUBLIC_URL}/images/Logo/logo.svg`}
         alt="logo"
         onClick={() => navigate("/")}
       />
+
       <L.InputId ref={idRef} placeholder="아이디를 입력해주세요." />
       <L.InputPw
         ref={pwRef}

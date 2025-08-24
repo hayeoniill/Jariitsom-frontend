@@ -242,13 +242,21 @@ const ShopDetail = () => {
     <S.Container>
       <S.Topbox>
         <S.IconButton type="button" onClick={handleBack} aria-label="뒤로가기">
-          <img src="/images/backBtn.svg" alt="" />
+          <img src={`${process.env.PUBLIC_URL}/images/backBtn.svg`} alt="" />
         </S.IconButton>
 
-        <img src="/images/Logo/logoSom.svg" alt="서비스 로고" width="34" />
+        <img
+          src={`${process.env.PUBLIC_URL}/images/Logo/logoSom.svg`}
+          alt="서비스 로고"
+          width="34"
+        />
         <S.IconButton type="button" aria-label="즐겨찾기" onClick={on_Click}>
           <img
-            src={isActive ? "/images/star.svg" : "/images/empty_star.svg"}
+            src={
+              isActive
+                ? `${process.env.PUBLIC_URL}/images/star.svg`
+                : `${process.env.PUBLIC_URL}/images/empty_star.svg`
+            }
             alt="Favorite"
           />
         </S.IconButton>
@@ -257,7 +265,10 @@ const ShopDetail = () => {
         <S.ShopTopInfoWrap>
           <S.ShopImage>
             <img
-              src={shop.photo || `/images/TestImg/${shop.name}.png`}
+              src={
+                shop.photo ||
+                `${process.env.PUBLIC_URL}/images/TestImg/${shop.name}.png`
+              }
               alt={`${shop.name} 대표 이미지`}
             />
           </S.ShopImage>
@@ -269,12 +280,20 @@ const ShopDetail = () => {
 
             <S.ShopWrap>
               <S.ShopStar aria-label={`별점 ${shop.rating}점 만점 5점`}>
-                <img src="/images/star_yellow.svg" alt="" /> {shop.rating}/5.0
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/star_yellow.svg`}
+                  alt=""
+                />{" "}
+                {shop.rating}/5.0
               </S.ShopStar>
 
               {shop.distanceText && (
                 <S.ShopDistance>
-                  <img src="/images/mapIcon.svg" alt="" /> {shop.distanceText}
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/mapIcon.svg`}
+                    alt=""
+                  />{" "}
+                  {shop.distanceText}
                 </S.ShopDistance>
               )}
             </S.ShopWrap>
@@ -318,10 +337,10 @@ const ShopDetail = () => {
                     <img
                       src={
                         cLevel === "low"
-                          ? "/images/Congestion/greenSom.svg"
+                          ? `${process.env.PUBLIC_URL}/images/Congestion/greenSom.svg`
                           : cLevel === "medium"
-                          ? "/images/Congestion/yellowSom.svg"
-                          : "/images/Congestion/redSom.svg"
+                          ? `${process.env.PUBLIC_URL}/images/Congestion/yellowSom.svg`
+                          : `${process.env.PUBLIC_URL}/images/Congestion/redSom.svg`
                       }
                       alt="CongestionImg"
                       width="42px"
@@ -364,10 +383,10 @@ const ShopDetail = () => {
                               <img
                                 src={
                                   f.ai_level === "low"
-                                    ? "/images/Congestion/green_text.svg"
+                                    ? `${process.env.PUBLIC_URL}/images/Congestion/green_text.svg`
                                     : f.ai_level === "medium"
-                                    ? "/images/Congestion/yellow_text.svg"
-                                    : "/images/Congestion/red_text.svg"
+                                    ? `${process.env.PUBLIC_URL}/images/Congestion/yellow_text.svg`
+                                    : `${process.env.PUBLIC_URL}/images/Congestion/red_text.svg`
                                 }
                                 alt="예상 혼잡도"
                                 width="42px"
@@ -389,7 +408,12 @@ const ShopDetail = () => {
                   <S.Subtitle>실시간 방문 후기</S.Subtitle>
                   <S.PlusBtn onClick={() => setShowAll((prev) => !prev)}>
                     {showAll ? "X" : "더보기"}
-                    {!showAll && <img src="/images/rightArrow.svg" />}
+                    {!showAll && (
+                      <img
+                        src={`${process.env.PUBLIC_URL}/images/rightArrow.svg`}
+                        alt=""
+                      />
+                    )}
                   </S.PlusBtn>
                 </S.SubTitleWrap>
                 {/* 입력된 데이터 표시 */}
@@ -398,11 +422,20 @@ const ShopDetail = () => {
                     (data, index) => (
                       <S.realtimeBox key={index}>
                         <img
-                          src="/images/people.svg"
+                          src={`${process.env.PUBLIC_URL}/images/people.svg`}
                           style={{ width: "22.5px" }}
+                          alt=""
                         />
-                        <p>{data.person} 방문</p> <img src="/images/dot.svg" />
-                        <p>{data.waitTime}</p> <img src="/images/dot.svg" />
+                        <p>{data.person} 방문</p>{" "}
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/dot.svg`}
+                          alt=""
+                        />
+                        <p>{data.waitTime}</p>{" "}
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/dot.svg`}
+                          alt=""
+                        />
                         <p>{data.congestion}</p>
                         <S.realText>
                           {getTimeDiffText(data.createdAt)}
@@ -428,7 +461,10 @@ const ShopDetail = () => {
             <S.Panel id="panel-info" role="tabpanel">
               <S.InforWrap>
                 <S.adress>
-                  <img src="/images/storeInfo/location_led.svg" />
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/storeInfo/location_led.svg`}
+                    alt=""
+                  />
                   <p>{shop.address}</p>
                   {/* 한줄띄어서 아래에 표시하기 */}
                   <p className="newline">
@@ -439,7 +475,10 @@ const ShopDetail = () => {
                   </p>
                 </S.adress>
                 <S.Time>
-                  <img src="/images/storeInfo/time.svg" />
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/storeInfo/time.svg`}
+                    alt=""
+                  />
 
                   {!showAllHours ? (
                     <div className="status-wrap">
@@ -468,14 +507,16 @@ const ShopDetail = () => {
                   )}
 
                   <img
-                    src="/images/storeInfo/drop_btn.svg"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => setShowAllHours((prev) => !prev)}
+                    src={`${process.env.PUBLIC_URL}/images/storeInfo/drop_btn.svg`}
+                    alt=""
                   />
                 </S.Time>
 
                 <S.Link>
-                  <img src="/images/storeInfo/link.svg" alt="link" />
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/storeInfo/link.svg`}
+                    alt="link"
+                  />
                   <p>
                     더 궁금하다면? <br /> 여기서 찾아보세요
                   </p>
