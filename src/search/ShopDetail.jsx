@@ -251,11 +251,7 @@ const ShopDetail = () => {
         />
         <S.IconButton type="button" aria-label="즐겨찾기" onClick={on_Click}>
           <img
-            src={
-              isActive
-                ? `${process.env.PUBLIC_URL}/images/star.svg`
-                : `${process.env.PUBLIC_URL}/images/empty_star.svg`
-            }
+            src={isActive ? "/images/star.svg" : "/images/empty_star.svg"}
             alt="Favorite"
           />
         </S.IconButton>
