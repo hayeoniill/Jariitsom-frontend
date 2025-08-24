@@ -23,9 +23,13 @@ const Search = () => {
   const [dataList, setDataList] = useState([]);
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false); // 즐겨찾기 버튼 상태
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sortText, setSortText] = useState("기본 순");
+
+  // 무한스크롤용 상태
+  const [page, setPage] = useState(1); // 현재 페이지
+  const [hasMore, setHasMore] = useState(true); // 더 가져올 데이터 여부
+  const [loading, setLoading] = useState(false); // 로딩 상태
 
   // 카테고리 (서버 스펙 맞춤)
   const location = useLocation();
@@ -55,65 +59,62 @@ const Search = () => {
   };
 
   // 데이터 불러오기
+  const fetchData = async () => {
+    if (loading || !hasMore) return;
+    setLoading(true);
+
+    const API_URL = process.env.REACT_APP_API_URL;
+    // offset을 393부터 시작
+    let url = `${API_URL}/stores/?limit=30&offset=${(page - 1) * 30}&id__gte=393&`;
+
+    if (mainCategory !== "home") {
+      url += `category=${mainCategory}&`;
+    }
+    if (isActive) {
+      url += `bookmarked=true&`;
+    }
+    const ordering = getOrdering(sortText);
+    if (ordering === "distance") {
+      url += `ordering=distance&user_lat=37.606&user_lng=127.042&`;
+    } else if (ordering) {
+      url += `ordering=${ordering}&`;
+    }
+
+    try {
+      const res = await axios.get(url);
+      const stores = Array.isArray(res.data)
+        ? res.data
+        : Array.isArray(res.data?.results)
+          ? res.data.results
+          : [];
+
+      // 중복 제거 후 추가
+      setDataList((prev) => {
+        const existingIds = new Set(prev.map((item) => item.id));
+        const newItems = stores.filter((item) => !existingIds.has(item.id));
+        return [...prev, ...newItems];
+      });
+
+      if (stores.length < 30) setHasMore(false);
+    } catch (err) {
+      console.error("가게 데이터 불러오기 실패:", err);
+      setError("데이터를 불러오지 못했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 카테고리/정렬/즐겨찾기 변경 시 데이터 초기화
   useEffect(() => {
-    const fetchData = async () => {
-      const API_URL = process.env.REACT_APP_API_URL;
-      let url = `${API_URL}/stores/?`;
-
-      // 카테고리
-      if (mainCategory !== "home") {
-        url += `category=${mainCategory}&`;
-      }
-
-      // 즐겨찾기
-      if (isActive) {
-        url += `bookmarked=true&`;
-      }
-
-      // 정렬
-      const ordering = getOrdering(sortText);
-      if (ordering === "distance") {
-        url += `ordering=distance&user_lat=37.606&user_lng=127.042&limit=300&`;
-      } else if (ordering) {
-        url += `ordering=${ordering}&limit=300&`;
-      }
-
-      // try {
-      let headers = {};
-      //   if (isActive) {
-      //     // 즐겨찾기 보기 -> 토큰 필요
-      //     const token = localStorage.getItem("token");
-      //     if (!token) {
-      //       setError("로그인이 필요합니다.");
-      //       return;
-      //     }
-      //     headers.Authorization = `Token ${token}`;
-      //   }
-
-      //   const res = await axios.get(url, { headers });
-      //   setDataList(res.data);
-      // } catch (err) {
-      //   console.error("가게 데이터 불러오기 실패:", err);
-      //   setError("데이터를 불러오지 못했습니다.");
-      // }
-
-      try {
-        const res = await axios.get(url, { headers });
-        const stores = Array.isArray(res.data)
-          ? res.data
-          : Array.isArray(res.data?.results)
-            ? res.data.results
-            : [];
-        setDataList(stores);
-      } catch (err) {
-        console.error("가게 데이터 불러오기 실패:", err);
-        setError("데이터를 불러오지 못했습니다.");
-        setDataList([]); // 에러 시에도 안전하게 빈 배열
-      }
-    };
-
-    fetchData();
+    setDataList([]);
+    setPage(1);
+    setHasMore(true);
   }, [mainCategory, isActive, sortText]);
+
+  // 페이지 변경 시 데이터 로드
+  useEffect(() => {
+    fetchData();
+  }, [page, mainCategory, isActive, sortText]);
 
   // 스크롤 맨 위로
   const topBoxRef = useRef(null);
@@ -124,6 +125,27 @@ const Search = () => {
         block: "start",
       });
   }, []);
+
+  // IntersectionObserver로 무한 스크롤
+  const observer = useRef();
+  const lastElementRef = useRef();
+  useEffect(() => {
+    if (loading) return;
+    if (observer.current) observer.current.disconnect();
+
+    observer.current = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPage((prev) => prev + 1);
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    if (lastElementRef.current) {
+      observer.current.observe(lastElementRef.current);
+    }
+  }, [loading, hasMore]);
 
   // 검색 필터링 (이름만 적용)
   const filteredData = (Array.isArray(dataList) ? dataList : []).filter(
@@ -358,7 +380,7 @@ const Search = () => {
 
       {/* 가게 리스트 */}
       <S.ShopWrapper>
-        {filteredData.map((e) => {
+        {filteredData.map((e, idx) => {
           const daysKor = ["일", "월", "화", "수", "목", "금", "토"];
           const todayKey = daysKor[new Date().getDay()];
           const todayHours =
@@ -367,6 +389,7 @@ const Search = () => {
           return (
             <S.ShopInform
               key={e.id}
+              ref={idx === filteredData.length - 1 ? lastElementRef : null}
               onClick={() => navigate(`/ShopDetail/${e.id}`, { state: e })}
             >
               <S.LeftBox>
@@ -390,7 +413,6 @@ const Search = () => {
                     />{" "}
                     {Number(e.rating).toFixed(1)}/5.0
                   </S.ReviewText>
-
 
                   {/*영업 여부 */}
                   <S.ReviewText>
@@ -418,6 +440,8 @@ const Search = () => {
           );
         })}
       </S.ShopWrapper>
+
+      {loading && <p style={{ textAlign: "center" }}>⏳ 로딩 중...</p>}
 
       <NavigationBar />
     </>
