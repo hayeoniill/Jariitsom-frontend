@@ -68,7 +68,7 @@ function Logout({ onClose, onConfirm }) {
   return (
     <ModalOverlay>
       <ModalBox>
-        <TitleLogo src="/images/Logo/logoText.svg" />
+        <TitleLogo src={`${process.env.PUBLIC_URL}/images/Logo/logoText.svg`} />
         <Title>로그아웃 하시겠습니까?</Title>
         <ButtonRow>
           <Btn onClick={onClose}>아니오</Btn>

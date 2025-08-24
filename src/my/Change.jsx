@@ -139,10 +139,11 @@ const Change = () => {
     <C.Container>
       <C.Header>
         <C.BackBtn
-          src="/images/BackBtn_black.svg"
+          src={`${process.env.PUBLIC_URL}/images/BackBtn_black.svg`}
           alt="BackBtn"
           onClick={() => navigate("/MyPage")}
         />
+
         <C.TopMent>아이디/비밀번호 변경</C.TopMent>
       </C.Header>
       <C.Body>
