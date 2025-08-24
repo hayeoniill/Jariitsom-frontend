@@ -240,9 +240,9 @@ const ShopDetail = () => {
   return (
     <S.Container>
       <S.Topbox>
-        {/* <S.IconButton type="button" onClick={handleBack} aria-label="뒤로가기">
+        <S.IconButton type="button" onClick={handleBack} aria-label="뒤로가기">
           <img src={`${process.env.PUBLIC_URL}/images/backBtn.svg`} alt="" />
-        </S.IconButton> */}
+        </S.IconButton>
 
         <img src="/images/Logo/logoSom.svg" alt="서비스 로고" width="34" />
 
