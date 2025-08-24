@@ -99,11 +99,16 @@ const Search = () => {
 
       try {
         const res = await axios.get(url, { headers });
-        const stores = Array.isArray(res.data) ? res.data : res.data.results;
-        setDataList(stores || []);
+        const stores = Array.isArray(res.data)
+          ? res.data
+          : Array.isArray(res.data?.results)
+          ? res.data.results
+          : [];
+        setDataList(stores);
       } catch (err) {
         console.error("가게 데이터 불러오기 실패:", err);
         setError("데이터를 불러오지 못했습니다.");
+        setDataList([]); // 에러 시에도 안전하게 빈 배열
       }
     };
 
@@ -121,8 +126,8 @@ const Search = () => {
   }, []);
 
   // 검색 필터링 (이름만 적용)
-  const filteredData = dataList.filter((item) =>
-    item.name.toLowerCase().includes(search.toLowerCase())
+  const filteredData = (Array.isArray(dataList) ? dataList : []).filter(
+    (item) => item.name?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (

@@ -40,18 +40,14 @@ function LowList() {
   // 서버에서 데이터 불러오기
   useEffect(() => {
     const fetchData = async () => {
-      {
-        /*  const token = localStorage.getItem("token");
-            if (!token) return;*/
-      }
-
       try {
         const res = await axios.get(`${API_URL}/stores/?limit=300`);
-        // 응답이 배열인지, results 안에 배열이 있는지 확인
-        const stores = Array.isArray(res.data) ? res.data : res.data.results;
-        setDataList(stores || []);
+
+        const stores = res.data?.results || [];
+        setDataList(stores);
       } catch (err) {
         console.error("가게 데이터 불러오기 실패:", err);
+        setDataList([]); // 에러 시에도 배열 보장
       }
     };
 
