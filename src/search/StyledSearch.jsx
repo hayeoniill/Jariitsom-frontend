@@ -264,7 +264,7 @@ export const ShopImg = styled.img`
 export const ShopName = styled.div`
   color: #000;
   font-family: Roboto;
-  font-size: 15px;
+  font-size: 13px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
