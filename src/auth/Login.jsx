@@ -10,22 +10,24 @@ const Login = () => {
   const pwRef = useRef();
   const API_URL = process.env.REACT_APP_API_URL;
 
-  /* useEffect(() => {
-     if (!window.Kakao?.isInitialized?.()) {
-       window.Kakao?.init(process.env.REACT_APP_KAKAO_JS_KEY);
-     }
-   }, []);
- 
-   const loginWithKakao = () => {
-     window.Kakao?.Auth.authorize({
-       redirectUri: "http://localhost:3000/auth/kakao/callback",
-       scope: "profile_nickname profile_image",
-       state: "kakao_oauth_" + Date.now(),
-     });
-   };*/
+  // useEffect(() => {
+  //   if (!window.Kakao?.isInitialized?.()) {
+  //     window.Kakao?.init(process.env.REACT_APP_KAKAO_JS_KEY);
+  //   }
+  // }, []);
 
-  const handleKakaoLogin = () => {
-    window.location.href = `${API_URL}/authaccounts/kakao/login/`;
+  // const loginWithKakao = () => {
+  //   window.Kakao?.Auth.authorize({
+  //     redirectUri: "http://localhost:3000/auth/kakao/callback",
+  //     scope: "profile_nickname profile_image",
+  //     state: "kakao_oauth_" + Date.now(),
+  //   });
+  // };
+
+  const handleKakaoLogin = (e) => {
+    // window.location.href = `${API_URL}/authaccounts/kakao/login/`;
+    e.preventDefault();
+    window.location.assign(`${API_URL}/authaccounts/kakao/login/`);
   };
 
   const handleLogin = async () => {
