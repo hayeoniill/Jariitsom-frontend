@@ -124,33 +124,51 @@ function LowList() {
   const navigate = useNavigate();
   const [dataList, setDataList] = useState([]);
   const [recommended, setRecommended] = useState([]);
+  // api주소 추가
+  const API_URL = process.env.REACT_APP_API_URL;
 
   // 서버에서 데이터 불러오기
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     {
+  //       /*  const token = localStorage.getItem("token");
+  //           if (!token) return;*/
+  //     }
+
+  //     try {
+  //       // const res = await axios.get("http://localhost:8000/stores/?limit=300", {
+  //       //   /* {
+  //       //             headers: { Authorization: `Token ${token}` },
+  //       //         } */
+  //       // });
+  //       // setDataList(res.data); // 전체 가게 데이터 저장
+  //     } catch (err) {
+  //       console.error("가게 데이터 불러오기 실패:", err);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
+
   useEffect(() => {
     const fetchData = async () => {
-      {
-        /*  const token = localStorage.getItem("token");
-            if (!token) return;*/
-      }
-
       try {
-        const res = await axios.get("http://localhost:8000/stores/?limit=300", {
-          /* {
-                    headers: { Authorization: `Token ${token}` },
-                } */
-        });
-        setDataList(res.data); // 전체 가게 데이터 저장
+        const res = await axios.get(`${API_URL}/stores/?limit=300`);
+        const stores = res.data?.results || [];
+        setDataList(stores);
       } catch (err) {
         console.error("가게 데이터 불러오기 실패:", err);
+        setDataList([]);
       }
     };
 
     fetchData();
   }, []);
 
-  // ai_congestion_now === "low" 필터 + 랜덤 뽑기
   useEffect(() => {
-    if (dataList.length === 0) return;
+    // if (dataList.length === 0) return;
+
+    if (!Array.isArray(dataList) || dataList.length === 0) return;
 
     const lowList = dataList.filter((item) => item.ai_congestion_now === "low");
 
@@ -165,6 +183,9 @@ function LowList() {
 
     setRecommended(pickRandom(lowList, 2)); // 최대 2개 랜덤 선택
   }, [dataList]);
+
+  // 추가
+  if (!Array.isArray(dataList)) return null;
 
   return (
     <BoxContainer>

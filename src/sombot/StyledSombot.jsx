@@ -54,7 +54,7 @@ export const ChatContainer = styled.div`
   overflow-y: auto;
   padding: 16px;
   height: calc(100vh - var(--nav-h) - 20px);
-  padding-bottom: calc(var(--input-h) + 110px);
+  padding-bottom: calc(var(--input-h) + 100px);
   box-sizing: border-box;
 
   &::-webkit-scrollbar {
@@ -105,10 +105,10 @@ export const AIBubble = styled.div`
 `;
 
 export const MessageInputWrapper = styled.div`
-  position: fixed;
+  position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: calc(var(--nav-h) + 100px);
+  bottom: calc(var(--nav-h) + 10px);
   width: 342px;
   height: 45px;
   z-index: 1000;
