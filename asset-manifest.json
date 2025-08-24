@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Jariitsom-frontend/static/css/main.e6c13ad2.css",
-    "main.js": "/Jariitsom-frontend/static/js/main.b16f184f.js",
+    "main.js": "/Jariitsom-frontend/static/js/main.d8718004.js",
     "static/js/453.f89bfc77.chunk.js": "/Jariitsom-frontend/static/js/453.f89bfc77.chunk.js",
     "index.html": "/Jariitsom-frontend/index.html",
     "main.e6c13ad2.css.map": "/Jariitsom-frontend/static/css/main.e6c13ad2.css.map",
-    "main.b16f184f.js.map": "/Jariitsom-frontend/static/js/main.b16f184f.js.map",
+    "main.d8718004.js.map": "/Jariitsom-frontend/static/js/main.d8718004.js.map",
     "453.f89bfc77.chunk.js.map": "/Jariitsom-frontend/static/js/453.f89bfc77.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.b16f184f.js"
+    "static/js/main.d8718004.js"
   ]
 }
