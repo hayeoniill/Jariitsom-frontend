@@ -46,11 +46,10 @@ function LowList() {
       }
 
       try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_API_URL}/stores/?limit=300`,
-          {}
-        );
-        setDataList(res.data); // 전체 가게 데이터 저장
+        const res = await axios.get(`${API_URL}/stores/?limit=300`);
+        // 응답이 배열인지, results 안에 배열이 있는지 확인
+        const stores = Array.isArray(res.data) ? res.data : res.data.results;
+        setDataList(stores || []);
       } catch (err) {
         console.error("가게 데이터 불러오기 실패:", err);
       }
