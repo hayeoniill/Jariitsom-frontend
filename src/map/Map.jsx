@@ -11,7 +11,6 @@ const CONGESTION_ICON = {
   high: `${process.env.PUBLIC_URL}/images/Congestion/redSom.svg`,
 };
 
-
 const API = process.env.REACT_APP_API_URL;
 
 const MapPage = () => {

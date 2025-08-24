@@ -121,7 +121,7 @@ const Sombot = () => {
     <>
       <SB.SombotWrapper>
         <SB.Background
-          src={`${process.env.PUBLIC_URL}/images/logo/sombot_dot.svg`}
+          src={`${process.env.PUBLIC_URL}/images/Logo/sombot_dot.svg`}
         />
 
         <SB.TopBox>
