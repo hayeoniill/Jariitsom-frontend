@@ -15,6 +15,7 @@ const ShopDetail = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(null);
   const [custInputList, setCustInputList] = useState([]);
+  const API_URL = process.env.REACT_APP_API_URL;
   // 거리 시간
   const [shop, setShop] = useState(() => {
     if (location.state) {
@@ -149,8 +150,6 @@ const ShopDetail = () => {
 
     checkBookmark();
   }, [shop]);
-
-  const API_URL = process.env.REACT_APP_API_URL;
 
   const on_Click = async () => {
     if (!shop || !shop.id) return;
