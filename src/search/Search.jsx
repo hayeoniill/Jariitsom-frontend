@@ -79,7 +79,7 @@ const Search = () => {
       }
 
       // try {
-      //   let headers = {};
+      let headers = {};
       //   if (isActive) {
       //     // 즐겨찾기 보기 -> 토큰 필요
       //     const token = localStorage.getItem("token");
