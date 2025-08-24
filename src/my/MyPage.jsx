@@ -93,7 +93,7 @@ const MyPage = () => {
     <>
       <MP.Title>마이페이지</MP.Title>
       <MP.profileBox>
-        <MP.profilePic src="/images/Logo/logoSom.svg" />
+        <MP.profilePic src={`${process.env.PUBLIC_URL}/images/Logo/logoSom.svg`} />
       </MP.profileBox>
 
       <MP.NameTitle>닉네임</MP.NameTitle>

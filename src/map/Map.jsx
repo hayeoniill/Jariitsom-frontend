@@ -1,21 +1,20 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as M from "./StyledMap";
-import { useNavigate } from "react-router-dom";
 import NavigationBar from "../component/NavigationBar";
 import { Map as KakaoMap, MapMarker } from "react-kakao-maps-sdk";
 
 const FILTERS = ["전체", "음식점", "카페"];
 
 const CONGESTION_ICON = {
-  low: "/images/Congestion/greenSom.svg", //여유
-  medium: "/images/Congestion/yellowSom.svg", //보통
-  high: "/images/Congestion/redSom.svg", //혼잡
+  low: `${process.env.PUBLIC_URL}/images/Congestion/greenSom.svg`,
+  medium: `${process.env.PUBLIC_URL}/images/Congestion/yellowSom.svg`,
+  high: `${process.env.PUBLIC_URL}/images/Congestion/redSom.svg`,
 };
+
 
 const API = process.env.REACT_APP_API_URL;
 
 const MapPage = () => {
-  const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState("전체");
   // const [myPos, setMyPos] = useState(null); 실시간 내위치 받아오기
 
@@ -154,7 +153,7 @@ const MapPage = () => {
               position={myPos}
               zIndex={1}
               image={{
-                src: "/images/Map/mypos.svg",
+                src: `${process.env.PUBLIC_URL}/images/Map/mypos.svg`,
                 size: { width: 35, height: 35 },
                 options: { offset: { x: 10, y: 10 } },
               }}
