@@ -15,12 +15,7 @@ export default function useKakaoLogin() {
   }, []);
 
   const onKakaoLogin = () => {
-    if (!window.Kakao) return alert("Kakao SDK 로딩 중이야. 잠시만!");
-    window.Kakao.Auth.authorize({
-      redirectUri: `${process.env.REACT_APP_API_URL}/auth/kakao/callback/`,
-      scope: "profile_nickname,account_email",
-      state: "from=signup",
-    });
+    window.location.href = `${process.env.REACT_APP_API_URL}/authaccounts/kakao/login/`;
   };
 
   return { onKakaoLogin };
