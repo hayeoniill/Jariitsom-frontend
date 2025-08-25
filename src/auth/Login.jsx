@@ -27,7 +27,7 @@ const Login = () => {
   const handleKakaoLogin = (e) => {
     // window.location.href = `${API_URL}/authaccounts/kakao/login/`;
     e.preventDefault();
-    window.location.assign(`${API_URL}/authaccounts/kakao/login/`);
+    window.location.assign(`${API_URL}/api/authaccounts/kakao/login/`);
   };
 
   const handleLogin = async () => {
