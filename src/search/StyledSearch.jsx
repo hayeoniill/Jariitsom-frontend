@@ -209,10 +209,11 @@ export const ShopWrapper = styled.div`
   position: absolute;
   top: 269px;
   margin-top: 10px;
+  max-height: 55vh;
+  bottom: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 512px;
   overflow-y: auto;
   margin-left: 15px;
 

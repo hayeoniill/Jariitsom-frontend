@@ -5,21 +5,29 @@ import FavoriteList from "../component/FavoriteList";
 import CongestionList from "../component/CongestionList";
 
 export const Title = styled.div`
-   color: #000;
-  font-family: Pretendard; 
+  color: #000;
+  font-family: Pretendard;
   font-size: 18px;
-  font-style: normal; 
-  font-weight: 700; 
-  line-height: 22px; /* 122.222% */ 
-  letter-spacing: -0.408px; 
-  position: absolute; 
-  top:64px; 
-  left:147px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px; /* 122.222% */
+  letter-spacing: -0.408px;
+  position: absolute;
+  top: 64px;
+  left: 147px;
 `;
 export const Bar = styled.div`
- height: 1.5px; 
- background: #f0f0f0f0; 
- margin-top: 100px; ;
+  height: 1.5px;
+  background: #f0f0f0f0;
+  margin-top: 100px;
+`;
+export const Wrap = styled.div`
+  width: 100%;
+  height: calc(100% - 160px);
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const FavoriteShop = () => {
@@ -27,7 +35,10 @@ const FavoriteShop = () => {
     <>
       <Title>즐겨찾기 가게</Title>
       <Bar></Bar>
-      <FavoriteList></FavoriteList>
+      <Wrap>
+        <FavoriteList></FavoriteList>
+      </Wrap>
+
       <NavigationBar />
     </>
   );
