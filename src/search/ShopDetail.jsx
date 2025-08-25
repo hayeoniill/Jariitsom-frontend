@@ -316,7 +316,7 @@ const ShopDetail = () => {
             <S.ShopWrap>
               <S.ShopStar aria-label={`별점 ${shop.rating}점 만점 5점`}>
                 <img src="/images/star_yellow.svg" alt="" />
-                {shop.rating}/5.0
+                {Number(shop.rating).toFixed(1)}/5.0
               </S.ShopStar>
 
               {shop.distanceText && (
