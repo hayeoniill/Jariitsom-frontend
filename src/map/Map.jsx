@@ -158,23 +158,23 @@ const MapPage = () => {
                 size: { width: 35, height: 35 },
                 options: { offset: { x: 10, y: 10 } },
               }}
-              onClick={() => navigate(`/ShopDetail/${s.id}`, { state: s })}
             />
           )}
           {/* 가게 마커 */}
           {stores.map((s) => {
-            const congestion = s.congestion || "green"; // 응답에 포함된 congestion 사용
+            const congestion = s.congestion || "green";
             const iconSrc = CONGESTION_ICON[congestion];
 
             return (
               <MapMarker
                 key={s.id}
-                position={{ lat: s.latitude, lng: s.longitude }} // lat/lng 필드명 맞춤
+                position={{ lat: s.latitude, lng: s.longitude }}
                 image={{
                   src: iconSrc,
                   size: { width: 25, height: 25 },
                   options: { offset: { x: 20, y: 40 } },
                 }}
+                onClick={() => navigate(`/ShopDetail/${s.id}`, { state: s })}
               />
             );
           })}
