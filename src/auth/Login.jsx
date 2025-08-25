@@ -26,7 +26,7 @@ const Login = () => {
    };*/
 
   const handleKakaoLogin = () => {
-    window.location.href = "http://127.0.0.1:8000/authaccounts/kakao/login/";
+    window.location.href = `${process.env.PUBLIC_URL}/authaccounts/kakao/login/`;
   };
 
   const handleLogin = async () => {
