@@ -182,24 +182,68 @@ const ShopDetail = () => {
   }, [shop]);
 
   // 특정가게 상세페이지 조화
+  // useEffect(() => {
+  //   // 1) location.state로 넘어온 shop이 없을 경우 → API 호출
+  //   if (!shop && id) {
+  //     const fetchShop = async () => {
+  //       try {
+  //         {
+  //           /*  const token = localStorage.getItem("token");*/
+  //         }
+  //         const res = await axios.get(
+  //           `${process.env.REACT_APP_API_URL}/stores/${id}/`,
+  //           {
+  //             /**  {
+  //             headers: { Authorization: `Token ${token}` },
+  //           } */
+  //           }
+  //         );
+
+  //         // 서버 응답(JSON)
+  //         const s = res.data;
+  //         const mappedShop = {
+  //           ...s,
+  //           businessHours: s.business_hours || [],
+  //           walking_time: {
+  //             front_gate: s.main_gate_walk_minutes
+  //               ? `${s.main_gate_walk_minutes}분`
+  //               : "정보 없음",
+  //             back_gate: s.back_gate_walk_minutes
+  //               ? `${s.back_gate_walk_minutes}분`
+  //               : "정보 없음",
+  //           },
+  //           link: s.kakao_url || null,
+  //           statusText: s.is_open ? "영업중" : "영업종료",
+  //           distanceText: s.user_distance
+  //             ? `${s.user_distance}m`
+  //             : "거리 정보 없음",
+  //         };
+
+  //         setShop(mappedShop);
+
+  //         // 새로고침 대비
+  //         sessionStorage.setItem("lastShop", JSON.stringify(mappedShop));
+  //       } catch (err) {
+  //         console.error("가게 상세 불러오기 실패:", err);
+  //       }
+  //     };
+  //     fetchShop();
+  //   }
+  // }, [id, shop]);
+
+  // 맵에서도 특정페이지 불러올 수 있게
   useEffect(() => {
-    // 1) location.state로 넘어온 shop이 없을 경우 → API 호출
-    if (!shop && id) {
+    if (!id) return;
+
+    // 데이터가 없거나(photo 같은 필드 없는 경우) → API 호출
+    const needsFetch = !shop || !shop.photo;
+
+    if (needsFetch) {
       const fetchShop = async () => {
         try {
-          {
-            /*  const token = localStorage.getItem("token");*/
-          }
           const res = await axios.get(
-            `${process.env.REACT_APP_API_URL}/stores/${id}/`,
-            {
-              /**  {
-              headers: { Authorization: `Token ${token}` },
-            } */
-            }
+            `${process.env.REACT_APP_API_URL}/stores/${id}/`
           );
-
-          // 서버 응답(JSON)
           const s = res.data;
           const mappedShop = {
             ...s,
@@ -218,10 +262,7 @@ const ShopDetail = () => {
               ? `${s.user_distance}m`
               : "거리 정보 없음",
           };
-
           setShop(mappedShop);
-
-          // 새로고침 대비
           sessionStorage.setItem("lastShop", JSON.stringify(mappedShop));
         } catch (err) {
           console.error("가게 상세 불러오기 실패:", err);
