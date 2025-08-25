@@ -9,7 +9,7 @@ import axios from "axios";
 const getOrdering = (sortText) => {
   switch (sortText) {
     case "별점 높은 순":
-      return "-rating"; // 내림차순 정렬
+      return "rating"; // 내림차순 정렬
     case "여유로운 순":
       return "relaxed";
     case "가까운 순":
@@ -93,8 +93,8 @@ const Search = () => {
         const stores = Array.isArray(res.data)
           ? res.data
           : Array.isArray(res.data?.results)
-            ? res.data.results
-            : [];
+          ? res.data.results
+          : [];
         setDataList(stores);
       } catch (err) {
         console.error("가게 데이터 불러오기 실패:", err);
@@ -338,8 +338,9 @@ const Search = () => {
       {/* 즐겨찾기 버튼 */}
       <S.Favorite isActive={isActive} onClick={on_Click}>
         <img
-          src={`${process.env.PUBLIC_URL}/images/Filter/${isActive ? "heart_red.svg" : "heart_gray.svg"
-            }`}
+          src={`${process.env.PUBLIC_URL}/images/Filter/${
+            isActive ? "heart_red.svg" : "heart_gray.svg"
+          }`}
           alt="Favorite"
           width="14px"
           style={{ marginRight: "4px" }}
@@ -382,7 +383,6 @@ const Search = () => {
                     {Number(e.rating).toFixed(1)}/5.0
                   </S.ReviewText>
 
-
                   {/*영업 여부 */}
                   <S.ReviewText>
                     {e.open_status || "영업 상태 정보 없음"}
@@ -398,8 +398,8 @@ const Search = () => {
                     e.ai_congestion_now === "low"
                       ? `${process.env.PUBLIC_URL}/images/Congestion/green_text.svg`
                       : e.ai_congestion_now === "medium"
-                        ? `${process.env.PUBLIC_URL}/images/Congestion/yellow_text.svg`
-                        : `${process.env.PUBLIC_URL}/images/Congestion/red_text.svg`
+                      ? `${process.env.PUBLIC_URL}/images/Congestion/yellow_text.svg`
+                      : `${process.env.PUBLIC_URL}/images/Congestion/red_text.svg`
                   }
                   alt="CongestionImg"
                   width="42px"

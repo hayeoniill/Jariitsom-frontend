@@ -140,6 +140,7 @@ const ShopDetail = () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get(`${API_URL}/stores/?bookmarked=true`, {
+          params: { bookmarked: true }, //추가
           headers: { Authorization: `Token ${token}` },
         });
         setIsActive(res.data.some((item) => item.id === shop.id));
