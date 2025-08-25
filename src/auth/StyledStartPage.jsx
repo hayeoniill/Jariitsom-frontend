@@ -1,4 +1,11 @@
 import styled from "styled-components";
+export const Container = styled.div`
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  margin-bottom: 10px;
+`;
 
 export const LogoImg = styled.img`
   margin-top: 240px;

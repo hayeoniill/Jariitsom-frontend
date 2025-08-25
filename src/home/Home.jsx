@@ -148,17 +148,19 @@ const Home = () => {
         </H.CategoryContainer>
       </H.IconBox>
 
-      <H.TitleContainer>
-        <H.FavoriteShopTitle>즐겨찾기 가게 혼잡도</H.FavoriteShopTitle>
-        <H.plusBtn onClick={goFavorite}> 더보기 &gt; </H.plusBtn>
-      </H.TitleContainer>
-      <CongestionList />
+      <H.MainWrap>
+        <H.TitleContainer>
+          <H.FavoriteShopTitle>즐겨찾기 가게 혼잡도</H.FavoriteShopTitle>
+          <H.plusBtn onClick={goFavorite}> 더보기 &gt; </H.plusBtn>
+        </H.TitleContainer>
+        <CongestionList />
 
-      <H.TitleBox>
-        <H.placeImg src={`${process.env.PUBLIC_URL}/images/place.svg`} />
-        <H.HomeTitle>지금 여유로운 곳 추천</H.HomeTitle>
-      </H.TitleBox>
-      <LowList />
+        <H.TitleBox>
+          <H.placeImg src={`${process.env.PUBLIC_URL}/images/place.svg`} />
+          <H.HomeTitle>지금 여유로운 곳 추천</H.HomeTitle>
+        </H.TitleBox>
+        <LowList />
+      </H.MainWrap>
       {/*
             <H.TitleBox>
                 <H.placeImg src="/images/place.svg" />

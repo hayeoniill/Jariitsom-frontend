@@ -9,9 +9,9 @@ const Join1 = () => {
   //api 주소
   const API_URL = process.env.REACT_APP_API_URL;
   // const { onKakaoLogin } = useKakaoLogin();
-  const onKakaoLogin = () => {
-    window.location.href = `${process.env.REACT_APP_API_URL}/authaccounts/kakao/login/`;
-  };
+  // const onKakaoLogin = () => {
+  //   window.location.href = `${process.env.REACT_APP_API_URL}/authaccounts/kakao/login/`;
+  // };
 
   const [form, setForm] = useState({
     username: "",
@@ -150,9 +150,9 @@ const Join1 = () => {
         시작하기
       </J.NextBtn>
 
-      <J.GoKakaoBtn onClick={onKakaoLogin}>
+      {/* <J.GoKakaoBtn onClick={onKakaoLogin}>
         카카오톡으로 간편 회원가입
-      </J.GoKakaoBtn>
+      </J.GoKakaoBtn> */}
     </>
   );
 };

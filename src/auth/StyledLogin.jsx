@@ -4,6 +4,7 @@ export const Logo = styled.img`
   margin-left: 163px;
   margin-top: 100px;
   width: 65px;
+  cursor: pointer;
 `;
 
 export const InputId = styled.input`

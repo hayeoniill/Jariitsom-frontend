@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
 export const Logo = styled.img`
+  margin: 0 auto;
+  display: block;
   margin-top: 20px;
   width: 50px;
-  margin-left: 170px;
+  // margin-left: 170px;
+
+  cursor: pointer;
 `;
 
 export const JoinBox = styled.div`
@@ -12,6 +16,10 @@ export const JoinBox = styled.div`
   align-self: flex-start;
   margin-left: 24px;
   text-align: left;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const JoinTxt = styled.div`
@@ -134,9 +142,9 @@ export const NextBtn = styled.button`
   display: flex;
   margin-left: 24px;
   cursor: pointer;
-  
+
   &:disabled {
-    background:#D0D0D0;
+    background: #d0d0d0;
   }
   &:hover {
     opacity: 80%;
@@ -167,10 +175,10 @@ export const GoKakaoBtn = styled.button`
 `;
 
 export const Caution = styled.div`
-color: #F00;
-font-family: Pretendard;
-font-size: 12px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-`
+  color: #f00;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+`;

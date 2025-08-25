@@ -6,7 +6,7 @@ const StartPage = () => {
   const navigate = useNavigate();
 
   return (
-    <>
+    <SP.Container>
       <SP.LogoImg
         src={`${process.env.PUBLIC_URL}/images/Logo/logoSom.svg`}
         alt="logo"
@@ -25,7 +25,7 @@ const StartPage = () => {
         {" "}
         이미 회원이신가요? <SP.LogLink>로그인하기</SP.LogLink>{" "}
       </SP.GoLogin>
-    </>
+    </SP.Container>
   );
 };
 export default StartPage;

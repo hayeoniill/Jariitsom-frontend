@@ -24,11 +24,11 @@ const Login = () => {
   //   });
   // };
 
-  const handleKakaoLogin = (e) => {
-    // window.location.href = `${API_URL}/authaccounts/kakao/login/`;
-    e.preventDefault();
-    window.location.assign(`${API_URL}/authaccounts/kakao/login/`);
-  };
+  // const handleKakaoLogin = (e) => {
+  //   // window.location.href = `${API_URL}/authaccounts/kakao/login/`;
+  //   e.preventDefault();
+  //   window.location.assign(`${API_URL}/authaccounts/kakao/login/`);
+  // };
 
   const handleLogin = async () => {
     const username = idRef.current.value;
@@ -77,9 +77,9 @@ const Login = () => {
       />
       <L.LoginBtn onClick={handleLogin}>로그인</L.LoginBtn>
       <L.Bar />
-      <L.GoKakaoBtn onClick={handleKakaoLogin}>
+      {/* <L.GoKakaoBtn onClick={handleKakaoLogin}>
         카카오톡으로 간편 로그인
-      </L.GoKakaoBtn>
+      </L.GoKakaoBtn> */}
       <L.GoJoinBtn onClick={() => navigate("/Join")}>회원가입 하기</L.GoJoinBtn>
       <L.GoMain onClick={() => navigate("/Home")}>
         {" "}
