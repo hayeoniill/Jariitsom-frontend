@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as M from "./StyledMap";
 import NavigationBar from "../component/NavigationBar";
 import { Map as KakaoMap, MapMarker } from "react-kakao-maps-sdk";
+import { useNavigate } from "react-router-dom";
 
 const FILTERS = ["전체", "음식점", "카페"];
 
@@ -25,6 +26,7 @@ const MapPage = () => {
   const [statusById, setStatusById] = useState({});
   const [bounds, setBounds] = useState(null);
   const startedRef = useRef(false);
+  const navigate = useNavigate();
 
   // // 1) 현위치 추적 (실시간 위치정보 가져오기 주석처리)
   // useEffect(() => {
@@ -156,6 +158,7 @@ const MapPage = () => {
                 size: { width: 35, height: 35 },
                 options: { offset: { x: 10, y: 10 } },
               }}
+              onClick={() => navigate(`/ShopDetail/${s.id}`, { state: s })}
             />
           )}
           {/* 가게 마커 */}
