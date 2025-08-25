@@ -66,7 +66,7 @@ const Login = () => {
   return (
     <>
       <L.Logo
-        src=`${process.env.PUBLIC_URL}/images/Logo/logo.svg`
+        src={`${process.env.PUBLIC_URL}/images/Logo/logo.svg`}
         alt="logo"
         onClick={() => navigate("/")}
       />
