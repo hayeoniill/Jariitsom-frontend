@@ -134,7 +134,6 @@ function LowList() {
   //       /*  const token = localStorage.getItem("token");
   //           if (!token) return;*/
   //     }
-
   //     try {
   //       // const res = await axios.get("http://localhost:8000/stores/?limit=300", {
   //       //   /* {
@@ -152,13 +151,19 @@ function LowList() {
 
   useEffect(() => {
     const fetchData = async () => {
+      let url = `${API_URL}/stores/?`;
+
       try {
-        const res = await axios.get(`${API_URL}/stores/?limit=300`);
-        const stores = res.data?.results || [];
+        const res = await axios.get(url);
+        const stores = Array.isArray(res.data)
+          ? res.data
+          : Array.isArray(res.data?.results)
+            ? res.data.results
+            : [];
         setDataList(stores);
       } catch (err) {
         console.error("가게 데이터 불러오기 실패:", err);
-        setDataList([]);
+        setDataList([]); // 에러 시에도 안전하게 빈 배열
       }
     };
 
