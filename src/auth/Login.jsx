@@ -8,6 +8,8 @@ const Login = () => {
   const navigate = useNavigate();
   const idRef = useRef();
   const pwRef = useRef();
+  //api
+  const API_URL = process.env.REACT_APP_API_URL;
 
   /* useEffect(() => {
      if (!window.Kakao?.isInitialized?.()) {
@@ -37,10 +39,13 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post("http://127.0.0.1:8000/rest-auth/login/", {
-        username,
-        password,
-      });
+      const res = await axios.post(
+        `${process.env.PUBLIC_URL}/rest-auth/login/`,
+        {
+          username,
+          password,
+        }
+      );
 
       const token = res.data?.key;
       if (token) {
