@@ -68,7 +68,7 @@ const Search = () => {
       // 즐겨찾기
       let headers = {};
       if (isActive) {
-        url += `bookmarked=true&`;
+        url += `is_bookmarked=true&`; //주소변경
 
         // 로그인 토큰 필요
         const token = localStorage.getItem("token");
